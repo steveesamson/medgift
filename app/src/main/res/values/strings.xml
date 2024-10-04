@@ -5,6 +5,6 @@
     <string name="lblEmail">Email</string>
     <string name="lblPassword">Password</string>
     <string name="lblLoginBtn">Login</string>
-    <string name="lblSignup">Signup</string>
+    <string name="lblSignup">SignUp</string>
     <string name="txtNoAccount">Don\'t have an account?</string>
 </resources>
