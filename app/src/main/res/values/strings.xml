@@ -1,10 +1,18 @@
 <resources>
     <string name="app_name">medgift</string>
-    <string name="appTitle">Welcome to MedGift</string>
+    <string name="welcomeTitle">Welcome to MedGift</string>
     <string name="application_logo">Application Logo</string>
     <string name="lblEmail">Email</string>
     <string name="lblPassword">Password</string>
     <string name="lblLoginBtn">Login</string>
-    <string name="lblSignup">SignUp</string>
+    <string name="lblSignup">Sign up</string>
     <string name="txtNoAccount">Don\'t have an account?</string>
+    <string name="registerTitle">Hello! Register to get started</string>
+    <string name="lblFullname">Full Name</string>
+    <string name="lblConfirmPassword">Confirm Password</string>
+    <string name="txtHasAccount">Already have an account?</string>
+    <string name="lblLogin">Login</string>
+    <string name="rdlblGifter">I am a Healthcare Service Gifter</string>
+    <string name="rdlblProvider">I am a Healthcare Service Provider</string>
+    <string name="lblRegisterBtn">Register</string>
 </resources>
