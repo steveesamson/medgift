@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.apollo.medgift.R;
 
-public class healthTipsListView extends AppCompatActivity {
+public class HealthTipsListView extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

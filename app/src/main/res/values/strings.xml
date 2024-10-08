@@ -15,4 +15,11 @@
     <string name="rdlblGifter">I am a Healthcare Service Gifter</string>
     <string name="rdlblProvider">I am a Healthcare Service Provider</string>
     <string name="lblRegisterBtn">Register</string>
+    <string name="more_health_tips"><![CDATA[More Health Tips >]]></string>
+    <string name="health_tips">Health Tips</string>
+    <string name="for_you">For You</string>
+    <string name="group_gifting">Group Gifting</string>
+    <string name="gift_care">Gift Care</string>
+    <string name="virtual_services">Virtual Services</string>
+    <string name="service_categories">Service Categories</string>
 </resources>
