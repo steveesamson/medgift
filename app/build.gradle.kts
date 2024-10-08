@@ -43,4 +43,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    // ViewPager2
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
+
+    // RoundedImageView
+    implementation("com.makeramen:roundedimageview:2.3.0")
 }
