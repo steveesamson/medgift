@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void bindEvents() {
         this.mainBinding.btnSignup.setOnClickListener(this);
+        this.mainBinding.btnLogin.setOnClickListener(this);
     }
 
 
@@ -38,11 +39,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+    private void login() {
+        Intent intent = new Intent(this, HomePageActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onClick(View view) {
         int vId = view.getId();
         if(vId == this.mainBinding.btnSignup.getId()){
             register();
+        } else if (vId == this.mainBinding.btnLogin.getId()) { // Handle btnLogin click
+            // VALIDATE INPUTS HERE
+            login();
         }
     }
 }
