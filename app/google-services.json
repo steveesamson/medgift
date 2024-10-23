@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "101306067158",
+    "project_id": "medgift-capstone",
+    "storage_bucket": "medgift-capstone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101306067158:android:62f2e601af555922dc8177",
+        "android_client_info": {
+          "package_name": "com.apollo.medgift"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdyACZd9EmXpZWl0oFXXmkTgQNNSMS1pU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
