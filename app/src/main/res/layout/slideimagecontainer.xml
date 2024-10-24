@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:adjustViewBounds="true"
     app:riv_corner_radius="12dp"
-    android:layout_marginRight="2dp">
+    android:layout_marginRight="2dp"
+    android:layout_marginEnd="2dp">
 
 </com.makeramen.roundedimageview.RoundedImageView>

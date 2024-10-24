@@ -8,13 +8,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class GroupGiftActivity extends AppCompatActivity {
+import com.apollo.medgift.databinding.ActivityGroupGiftBinding;
+import com.apollo.medgift.databinding.ActivityManageGroupGiftBinding;
+
+public class ManageGroupGiftActivity extends AppCompatActivity {
+    private ActivityManageGroupGiftBinding manageGroupGiftBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_group_gift);
+        manageGroupGiftBinding = ActivityManageGroupGiftBinding.inflate(getLayoutInflater());
+        setContentView(manageGroupGiftBinding.getRoot());
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

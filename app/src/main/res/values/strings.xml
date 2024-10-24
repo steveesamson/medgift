@@ -25,7 +25,7 @@
     <string name="service_categories">Service Categories</string>
     <string name="btn_send_invites">Send Invites</string>
     <string name="add_collaborator">Add Collaborator</string>
-    <string name="email_input">Enter Email:</string>
-    <string name="create_group_gift">Create Group Gift</string>
+    <string name="contributor_email_input">Enter Contributor Email</string>
+    <string name="invite_contributors">Invite Contributors</string>
 
 </resources>
