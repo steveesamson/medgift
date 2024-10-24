@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:orientation="vertical"
-            android:background="@color/lightgray">
+            android:background="@color/white">
 
             <TextView
                 android:id="@+id/group_gift_title"
@@ -45,41 +45,27 @@
                 android:layout_marginBottom="24dp"
                 android:textColor="@color/black" />
 
-
             <LinearLayout
                 android:id="@+id/invite_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_marginBottom="16dp">
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="8dp">
-
-
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="0dp"
+                        android:id="@+id/lytEmailInput"
+                        style="@style/TextLayout"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="@string/email_input"
-                        app:hintEnabled="true"
-                        app:boxStrokeColor="@color/primary"
-                    app:boxBackgroundColor="@android:color/white">
+                        android:hint="@string/email_input">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/email_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textEmailAddress"
-                        android:padding="12dp">
-
-                    </com.google.android.material.textfield.TextInputEditText>
-                </com.google.android.material.textfield.TextInputLayout>
-
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtCollaborator"
+                            style="@style/TextEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageButton
                         android:id="@+id/add_collaborator_button"
@@ -90,9 +76,6 @@
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="@string/add_collaborator"
                         android:src="@drawable/add"/>
-                </LinearLayout>
-
-
             </LinearLayout>
 
             <Button
