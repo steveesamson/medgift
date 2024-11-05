@@ -21,6 +21,18 @@
     <string name="for_you">For You</string>
     <string name="group_gifting">Group Gifting</string>
     <string name="gift_care">Gift Care</string>
-    <string name="virtual_services">Virtual Services</string>
     <string name="service_categories">Service Categories</string>
+    <string name="home">Home</string>
+    <string name="categories">Categories</string>
+    <string name="about_us">About Us</string>
+    <string name="logout">Log Out</string>
+    <string name="available_gifts">Available Gifts</string>
+    <string name="manage_recipients">Manage Recipients</string>
+    <string name="manage_gifts">Manage Gifts</string>
+    <string name="sample_title">Title</string>
+    <string name="sample_provider">Provider</string>
+    <string name="sample_location">Location</string>
+    <string name="sample_description">Description</string>
+    <string name="sample_rating_count">1,244</string>
+    <string name="sample_price">$ xxx.xx</string>
 </resources>

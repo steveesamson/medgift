@@ -7,4 +7,35 @@
         android:icon="@drawable/ic_notification"
         android:title="@string/notification"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_notification"
+        android:title="@string/home"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/categories"
+        android:icon="@drawable/ic_notification"
+        android:title="@string/categories"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/healthTips"
+        android:icon="@drawable/ic_notification"
+        android:title="@string/health_tips"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/aboutUs"
+        android:icon="@drawable/ic_notification"
+        android:title="@string/about_us"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/logOut"
+        android:icon="@drawable/ic_notification"
+        android:title="@string/logout"
+        app:showAsAction="never" />
+
 </menu>
