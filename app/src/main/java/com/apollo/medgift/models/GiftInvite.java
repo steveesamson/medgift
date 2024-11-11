@@ -1,11 +1,10 @@
 package com.apollo.medgift.models;
 
-public class Notification {
+public class GiftInvite {
     private String key;
-    private String userId;
-    private String giftServiceId;
+    private String giftId;
+    private String inviteeId;
     private String message;
-    private String status = NotificationStatus.PENDING;
     private String creationDate;
 
     public String getKey() {
@@ -16,20 +15,20 @@ public class Notification {
         this.key = key;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getGiftId() {
+        return giftId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setGiftId(String giftId) {
+        this.giftId = giftId;
     }
 
-    public String getGiftServiceId() {
-        return giftServiceId;
+    public String getInviteeId() {
+        return inviteeId;
     }
 
-    public void setGiftServiceId(String giftServiceId) {
-        this.giftServiceId = giftServiceId;
+    public void setInviteeId(String inviteeId) {
+        this.inviteeId = inviteeId;
     }
 
     public String getMessage() {
@@ -38,14 +37,6 @@ public class Notification {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getCreationDate() {
