@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.mainBinding.btnLogin.setOnClickListener(this);
     }
 
-
     private void register(){
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);

@@ -1,8 +1,10 @@
 package com.apollo.medgift;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -64,6 +66,17 @@ public class HomePageActivity extends MainMenuActivity {
         HealthTipsRecyclerViewAdapter healthTipsAdapter = new HealthTipsRecyclerViewAdapter(this, titleList, contentList);
         healthTipsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         healthTipsRecyclerView.setAdapter(healthTipsAdapter);
+
+
+        //more health tips click listener
+
+        binding.moreHealthTipsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomePageActivity.this,HealthTipsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // For you list
         RecyclerView forYouRecyclerView = binding.forYouRecyclerView;
