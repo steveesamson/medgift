@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:text="@string/service_categories"
+                    android:text="@string/get_started"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -65,8 +65,7 @@
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:weightSum="3">
+                        android:weightSum="2">
 
                         <LinearLayout
                             android:id="@+id/category_card_1"
@@ -74,14 +73,14 @@
                             android:layout_height="100dp"
                             android:layout_weight="1"
                             android:background="@drawable/rounded_corner_category_bg"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:paddingLeft="15dp">
 
                             <ImageView
                                 android:id="@+id/ic_category_card_1"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
                                 app:srcCompat="@drawable/ic_availablegifts" />
 
@@ -89,15 +88,14 @@
                                 android:id="@+id/category_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/available_gifts"
+                                android:text="@string/available_services"
                                 android:textColor="#FFFFFF"
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
                         <Space
-                            android:layout_width="10dp"
+                            android:layout_width="20dp"
                             android:layout_height="wrap_content" />
 
                         <LinearLayout
@@ -106,14 +104,14 @@
                             android:layout_height="100dp"
                             android:layout_weight="1"
                             android:background="@drawable/rounded_corner_category_bg"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:paddingLeft="15dp">
 
                             <ImageView
                                 android:id="@+id/ic_category_card_2"
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
-                                android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
                                 app:srcCompat="@drawable/ic_manage_recipients" />
 
@@ -121,16 +119,20 @@
                                 android:id="@+id/category_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/manage_recipients"
+                                android:text="@string/recipients"
                                 android:textColor="#FFFFFF"
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
-                        <Space
-                            android:layout_width="10dp"
-                            android:layout_height="wrap_content" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="left"
+                        android:weightSum="2">
 
                         <LinearLayout
                             android:id="@+id/category_card_3"
@@ -138,14 +140,14 @@
                             android:layout_height="100dp"
                             android:layout_weight="1"
                             android:background="@drawable/rounded_corner_category_bg"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:paddingLeft="15dp">
 
                             <ImageView
                                 android:id="@+id/ic_category_card_3"
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
-                                android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
                                 app:srcCompat="@drawable/ic_manage_gifts" />
 
@@ -153,20 +155,15 @@
                                 android:id="@+id/category_3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/manage_gifts"
+                                android:text="@string/gifts"
                                 android:textColor="#FFFFFF"
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
-                    </TableRow>
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="left"
-                        android:weightSum="3">
+                        <Space
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content" />
 
                         <LinearLayout
                             android:id="@+id/category_card_4"
@@ -174,14 +171,14 @@
                             android:layout_height="100dp"
                             android:layout_weight="1"
                             android:background="@drawable/rounded_corner_category_bg"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:paddingLeft="15dp">
 
                             <ImageView
                                 android:id="@+id/ic_category_card_4"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:layout_gravity="center"
                                 android:layout_marginBottom="5dp"
                                 app:srcCompat="@drawable/ic_groupgifting" />
 
@@ -189,37 +186,10 @@
                                 android:id="@+id/category_4"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/group_gifting"
+                                android:text="@string/group_gifts"
                                 android:textColor="#FFFFFF"
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <Space
-                            android:layout_width="10dp"
-                            android:layout_height="wrap_content" />
-
-                        <LinearLayout
-                            android:id="@+id/category_card_5"
-                            android:layout_width="0dp"
-                            android:layout_height="100dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
-                        </LinearLayout>
-
-                        <Space
-                            android:layout_width="10dp"
-                            android:layout_height="wrap_content" />
-
-                        <LinearLayout
-                            android:id="@+id/category_card_6"
-                            android:layout_width="0dp"
-                            android:layout_height="100dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
                         </LinearLayout>
 
                     </TableRow>
@@ -235,20 +205,20 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <ListView
-                    android:id="@+id/forYouListView"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/forYouRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="380dp"
-                    android:divider="@android:color/transparent"
-                    android:layout_marginBottom="30dp"/>
+                    android:layout_marginBottom="30dp"
+                    android:divider="@android:color/transparent" />
 
-<!--                <LinearLayout-->
-<!--                    android:id="@+id/forYouContainer"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="150dp"-->
-<!--                    android:layout_marginBottom="30dp"-->
-<!--                    android:background="@color/lightgray"-->
-<!--                    android:orientation="horizontal"></LinearLayout>-->
+                <!--                <LinearLayout-->
+                <!--                    android:id="@+id/forYouContainer"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="150dp"-->
+                <!--                    android:layout_marginBottom="30dp"-->
+                <!--                    android:background="@color/lightgray"-->
+                <!--                    android:orientation="horizontal"></LinearLayout>-->
 
                 <TextView
                     android:id="@+id/title_3"
@@ -265,11 +235,11 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <ListView
-                        android:id="@+id/healthTipsListView"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/healthTipsRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="170dp"
-                        android:divider="@android:color/transparent"/>
+                        android:divider="@android:color/transparent" />
 
                     <TextView
                         android:id="@+id/moreHealthTipsButton"
