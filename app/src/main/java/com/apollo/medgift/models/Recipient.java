@@ -1,6 +1,8 @@
 package com.apollo.medgift.models;
 
-public class Recipient extends User {
+import java.io.Serializable;
+
+public class Recipient extends User  implements Serializable {
     private String address;
     private String createdBy;
 

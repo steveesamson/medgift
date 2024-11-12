@@ -1,6 +1,8 @@
 package com.apollo.medgift.models;
 
-public class GiftInvite {
+import java.io.Serializable;
+
+public class GiftInvite implements Serializable {
     private String key;
     private String giftId;
     private String inviteeId;

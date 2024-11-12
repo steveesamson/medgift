@@ -1,6 +1,8 @@
 package com.apollo.medgift.models;
 
-public class NotificationStatus {
+import java.io.Serializable;
+
+public class NotificationStatus implements Serializable {
     public  final static  String PENDING = "Pending";
     public  final static  String SENT = "Sent";
 }

@@ -52,4 +52,14 @@
         <item>Remote</item>
     </string-array>
 
+    <string name="addRecipientTitle">Create Recipient</string>
+    <string name="lblFirstName">First name</string>
+    <string name="lblLastName">Last name</string>
+    <string name="lblDOB">Date of birth</string>
+    <string name="lblPhone">Phone</string>
+    <string name="rdlblFemale">Female</string>
+    <string name="rdlblMale">Male</string>
+    <string name="lblAddress">Address</string>
+    <string name="lblSaveBtn">Save</string>
+    <string name="recipientTitle">My Recipients</string>
 </resources>

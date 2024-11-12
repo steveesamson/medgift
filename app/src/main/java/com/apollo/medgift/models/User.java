@@ -9,7 +9,7 @@ public class User {
     protected String dateOfBirth;
     protected String phone;
     protected String email;
-    protected String role;
+
 
     public String getKey() {
         return key;
@@ -67,11 +67,5 @@ public class User {
         this.email = email;
     }
 
-    public String getRole() {
-        return role;
-    }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
 }

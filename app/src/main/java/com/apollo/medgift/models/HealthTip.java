@@ -1,6 +1,8 @@
 package com.apollo.medgift.models;
 
-public class HealthTip {
+import java.io.Serializable;
+
+public class HealthTip implements Serializable {
     private String key;
     private String title;
     private  String content;

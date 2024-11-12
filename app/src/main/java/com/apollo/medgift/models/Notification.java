@@ -1,6 +1,8 @@
 package com.apollo.medgift.models;
 
-public class Notification {
+import java.io.Serializable;
+
+public class Notification implements Serializable {
     private String key;
     private String userId;
     private String giftServiceId;

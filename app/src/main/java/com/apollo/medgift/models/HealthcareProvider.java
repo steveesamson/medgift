@@ -1,7 +1,9 @@
 package com.apollo.medgift.models;
 
-public class HealthcareProvider  extends User{
-    private final String role = "Provider";
+import java.io.Serializable;
+
+public class HealthcareProvider  extends User implements Serializable {
+    private String role = "Provider";
     private String address;
     private String about;
 
@@ -19,5 +21,9 @@ public class HealthcareProvider  extends User{
 
     public void setAbout(String about) {
         this.about = about;
+    }
+
+    public String getRole() {
+        return role;
     }
 }
