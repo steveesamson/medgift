@@ -33,7 +33,23 @@
     <string name="sample_provider">Provider</string>
     <string name="sample_location">Location</string>
     <string name="sample_description">Description</string>
-    <string name="sample_rating_count">1,244</string>
+    <string name="sample_rating_count">1,944</string>
     <string name="sample_price">$ xxx.xx</string>
     <string name="get_started">Get Started</string>
+    <string name="service_name">Service Name</string>
+    <string name="service_assignee">Service Assignee</string>
+    <string name="hospital">Hospital</string>
+    <string name="price">Price</string>
+    <string name="description">Description</string>
+    <string name="save">Save</string>
+    <string name="select_type">Select Type</string>
+    <string name="title">Title</string>
+    <string name="publish_now">Publish Now</string>
+    <string-array name="spinner_categories">
+        <item>Select Type</item>
+        <item>Virtual</item>
+        <item>In Person</item>
+        <item>Remote</item>
+    </string-array>
+
 </resources>

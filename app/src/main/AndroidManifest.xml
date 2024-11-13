@@ -13,22 +13,22 @@
         android:theme="@style/Theme.Medgift"
         tools:targetApi="31">
         <activity
-            android:name=".ProviderHomePageActivity"
+            android:name=".views.provider.PublishHealthTipsActivity"
             android:exported="false" />
         <activity
-            android:name=".views.ForYouListView"
+            android:name=".views.provider.CreateServiceActivity"
             android:exported="false" />
         <activity
-            android:name=".views.HealthTipsListView"
+            android:name=".views.ProviderHomePageActivity"
             android:exported="false" />
         <activity
-            android:name=".HomePageActivity"
+            android:name=".views.HomePageActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".views.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".views.LogInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

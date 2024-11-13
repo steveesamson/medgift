@@ -1,25 +1,24 @@
-package com.apollo.medgift;
+package com.apollo.medgift.views;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.apollo.medgift.R;
 import com.apollo.medgift.adapters.ForYouRecyclerViewAdapter;
 import com.apollo.medgift.adapters.HealthTipsRecyclerViewAdapter;
 import com.apollo.medgift.adapters.HomeSlideImageAdapter;
-import com.apollo.medgift.core.MainMenuActivity;
+import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.databinding.ActivityHomepageBinding;
 import com.apollo.medgift.models.HomeSlideImageItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomePageActivity extends MainMenuActivity {
+public class HomePageActivity extends BaseActivity {
 
     ActivityHomepageBinding binding;
 
@@ -71,12 +70,5 @@ public class HomePageActivity extends MainMenuActivity {
         forYouRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         forYouRecyclerView.setAdapter(forYouAdapter);
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.homemenu, menu);
-        return true;
     }
 }
