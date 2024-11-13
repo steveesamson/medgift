@@ -49,11 +49,7 @@ public class GiftActivity extends BaseActivity{
         setContentView(giftBinding.getRoot());
         // Setup tool bar and title
         setupToolbar(giftBinding.homeAppBar.getRoot(), getString(R.string.giftTitle), true); //new toolbar
-        ViewCompat.setOnApplyWindowInsetsListener(giftBinding.giftActivity, (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        applyWindowInsetsListenerTo(this,giftBinding.giftActivity);
 
         setPageUp();
     }
