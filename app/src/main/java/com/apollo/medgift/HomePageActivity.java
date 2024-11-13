@@ -1,8 +1,10 @@
 package com.apollo.medgift;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,7 +21,7 @@ import com.apollo.medgift.models.HomeSlideImageItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomePageActivity extends MainMenuActivity {
+public class HomePageActivity extends MainMenuActivity implements View.OnClickListener {
 
     ActivityHomepageBinding binding;
 
@@ -71,6 +73,8 @@ public class HomePageActivity extends MainMenuActivity {
         forYouRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         forYouRecyclerView.setAdapter(forYouAdapter);
 
+        bindEvents();
+
     }
 
     @Override
@@ -78,5 +82,23 @@ public class HomePageActivity extends MainMenuActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.homemenu, menu);
         return true;
+    }
+    private void bindEvents()
+    {
+        this.binding.categoryCard3.setOnClickListener(this);
+
+    }
+    private void gift(){
+        Intent intent = new Intent(this, GiftActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        if (v.getId() == binding.categoryCard3.getId())
+        {
+            gift();
+        }
     }
 }
