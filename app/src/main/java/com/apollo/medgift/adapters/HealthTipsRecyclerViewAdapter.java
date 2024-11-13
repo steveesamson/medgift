@@ -26,7 +26,7 @@ public class HealthTipsRecyclerViewAdapter extends RecyclerView.Adapter<HealthTi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.activity_healthtipslistview, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.healthtipsrecyclerview, parent, false);
         return new ViewHolder(view);
     }
 

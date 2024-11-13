@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:autofillHints="select"
+    tools:context=".views.provider.CreateServiceActivity">
+
+    <include
+        android:id="@+id/homeAppBar"
+        layout="@layout/homeappbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/homeAppBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="30dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lytServiceName"
+                style="@style/TextLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/service_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtServiceName"
+                    style="@style/TextEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lytServiceAssignee"
+                style="@style/TextLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/service_assignee">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtServiceAssignee"
+                    style="@style/TextEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lytHospital"
+                style="@style/TextLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/hospital">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtHospital"
+                    style="@style/TextEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lytPrice"
+                style="@style/TextLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/price">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtPrice"
+                    style="@style/TextEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/spinnerCategory"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/spinner_background"
+                android:padding="10dp"
+                android:spinnerMode="dropdown"
+                android:textColor="#9C9C9C" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lytDescription"
+                style="@style/TextLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/description">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtDescription"
+                    style="@style/TextEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine"
+                    android:minLines="5"
+                    android:scrollbars="vertical" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnCreateServiceSave"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/rounded_button_blue"
+                android:text="@string/save"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

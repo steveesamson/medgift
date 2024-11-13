@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/loginActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".views.LogInActivity">
 
     <LinearLayout
+        style="@style/Pane"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        style="@style/Pane"
         android:gravity="center"
 
         android:orientation="vertical">

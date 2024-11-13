@@ -1,4 +1,4 @@
-package com.apollo.medgift;
+package com.apollo.medgift.views;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void login(){
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, LogInActivity.class);
         startActivity(intent);
     }
 
