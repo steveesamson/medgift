@@ -18,7 +18,7 @@ import java.util.List;
 
 public class RecipientAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context context;
+    private final Context context;
     private List<Recipient> recipients = new ArrayList<>();
     public RecipientAdapter(List<Recipient> recipients, Context context){
         this.context = context;
@@ -44,7 +44,7 @@ public class RecipientAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     class RecipientHolder extends RecyclerView.ViewHolder {
-        private RecipientItemBinding itemBinding;
+        private final RecipientItemBinding itemBinding;
         private Recipient recipient;
         public RecipientHolder(RecipientItemBinding itemBinding){
             super(itemBinding.getRoot());
@@ -60,7 +60,7 @@ public class RecipientAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         // Delete here
                     }else { // Display recipient form for details
                         Intent intent = new Intent(context, AddRecipientActivity.class);
-                        intent.putExtra(Recipient.MODEL_NAME, RecipientHolder.this.recipient);
+                        intent.putExtra(Recipient.STORE, RecipientHolder.this.recipient);
                         context.startActivity(intent);
                     }
                 }
@@ -69,7 +69,7 @@ public class RecipientAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public void bindData(Recipient recipient){
             this.recipient = recipient;
-            itemBinding.txtName.setText(String.format("%s %s (%s)", recipient.getFirstName(), recipient.getLastName(), recipient.getEmail()));
+            itemBinding.txtName.setText(String.format("%s %s (%s)", recipient.getFirstName(), recipient.getLastName(), recipient.getPhone()));
         }
     }
 }

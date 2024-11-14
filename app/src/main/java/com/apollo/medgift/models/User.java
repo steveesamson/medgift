@@ -1,23 +1,24 @@
 package com.apollo.medgift.models;
 
-public class User {
 
-    protected String key;
-    protected String firstName;
-    protected String lastName;
-    protected String gender;
-    protected String dateOfBirth;
-    protected String phone;
-    protected String email;
+public class User extends  BaseModel  {
+    public static final String STORE ="User";
+    public enum Role {
+        PROVIDER,
+        GIFTER
+    }
+    private String role = "Gifter";// Gifter/Provider
+    private String firstName;
+    private String lastName;
+    private String gender;
+    private String dateOfBirth;
+    private String phone;
+    private String email;
 
-
-    public String getKey() {
-        return key;
+    public User(Role role){
+        this.role = role.name();
     }
 
-    public void setKey(String key) {
-        this.key = key;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -66,6 +67,12 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+
 
 
 }

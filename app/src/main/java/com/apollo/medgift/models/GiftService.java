@@ -1,11 +1,10 @@
 package com.apollo.medgift.models;
 
-import java.io.Serializable;
 
-public class GiftService implements Serializable {
+public class GiftService extends  BaseModel {
 
+    public static final String STORE ="GiftService";
 
-    private String key;
     private String giftId;
     private String gifterId;
     private String serviceId;
@@ -13,14 +12,6 @@ public class GiftService implements Serializable {
     private String contributionDate;
     private String deliveryDate;
     private String confirmationDate;
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
 
     public String getGiftId() {
         return giftId;

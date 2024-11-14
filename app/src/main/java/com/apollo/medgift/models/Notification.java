@@ -2,21 +2,14 @@ package com.apollo.medgift.models;
 
 import java.io.Serializable;
 
-public class Notification implements Serializable {
-    private String key;
+public class Notification extends  BaseModel  {
+    public static final String STORE ="Notification";
+
     private String userId;
     private String giftServiceId;
     private String message;
     private String status = NotificationStatus.PENDING;
     private String creationDate;
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
 
     public String getUserId() {
         return userId;

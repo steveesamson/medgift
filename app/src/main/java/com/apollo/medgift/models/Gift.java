@@ -2,21 +2,13 @@ package com.apollo.medgift.models;
 
 import java.io.Serializable;
 
-public class Gift implements Serializable {
-    private String key;
+public class Gift extends BaseModel {
+    public static final String STORE ="Gift";
     private String name;
     private String recipientId;
     private String description;
     private int isGroup = 0; // 0 = false, 1 = true
     private String createdBy;
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
 
     public String getName() {
         return name;
