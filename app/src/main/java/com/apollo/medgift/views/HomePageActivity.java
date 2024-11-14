@@ -1,6 +1,8 @@
 package com.apollo.medgift.views;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,22 +16,23 @@ import com.apollo.medgift.adapters.HomeSlideImageAdapter;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.databinding.ActivityHomepageBinding;
 import com.apollo.medgift.models.HomeSlideImageItem;
+import com.apollo.medgift.views.gifter.RecipientActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomePageActivity extends BaseActivity {
+public class HomePageActivity extends BaseActivity implements View.OnClickListener{
 
     ActivityHomepageBinding binding;
 
-    String titleList[] = {"Stay Hydrated", "Stay Hydrated"};
-    String contentList[] = {"Drinking enough water is crucial for maintaining overall health. Aim for 8 glasses of water a day.", "Drinking enough water is crucial for maintaining overall health. Aim for 8 glasses of water a day."};
+    String[] titleList = {"Stay Hydrated", "Stay Hydrated"};
+    String[] contentList = {"Drinking enough water is crucial for maintaining overall health. Aim for 8 glasses of water a day.", "Drinking enough water is crucial for maintaining overall health. Aim for 8 glasses of water a day."};
 
-    String gift_title[] = {"Telemedicine Consultations", "Telemedicine Consultations"};
-    String gift_provider[] = {"Provider - 1", "Provider - 2"};
-    String gift_location[] = {"Canada", "Canada"};
-    String gift_description[] = {"Connect with a doctor remotely for a virtual check-up or to address health concerns from the comfort of your home.", "Connect with a doctor remotely for a virtual check-up or to address health concerns from the comfort of your home."};
-    String gift_price[] = {"$ 423.00", "$ 565.00"};
+    String[] gift_title = {"Telemedicine Consultations", "Telemedicine Consultations"};
+    String[] gift_provider = {"Provider - 1", "Provider - 2"};
+    String[] gift_location = {"Canada", "Canada"};
+    String[] gift_description = {"Connect with a doctor remotely for a virtual check-up or to address health concerns from the comfort of your home.", "Connect with a doctor remotely for a virtual check-up or to address health concerns from the comfort of your home."};
+    String[] gift_price = {"$ 423.00", "$ 565.00"};
     int[] images = {R.drawable.sample_image1, R.drawable.sample_image2};
 
     @Override
@@ -69,6 +72,21 @@ public class HomePageActivity extends BaseActivity {
         ForYouRecyclerViewAdapter forYouAdapter = new ForYouRecyclerViewAdapter(this, images, gift_title, gift_provider, gift_location, gift_description, gift_price);
         forYouRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         forYouRecyclerView.setAdapter(forYouAdapter);
+        registerListeners();
+    }
 
+    private void registerListeners() {
+        binding.quickBtnRecipient.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        Intent intent = null;
+        // Handle Recipient navigation
+        if(view == binding.quickBtnRecipient){
+            intent = new  Intent(getApplicationContext(), RecipientActivity.class);
+            startActivity(intent);
+        }
     }
 }

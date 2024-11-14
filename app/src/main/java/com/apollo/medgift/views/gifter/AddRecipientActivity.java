@@ -1,4 +1,4 @@
-package com.apollo.medgift.views;
+package com.apollo.medgift.views.gifter;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +10,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.databinding.ActivityAddrecipientBinding;
 import com.apollo.medgift.models.Recipient;
 
-public class AddRecipientActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddRecipientActivity extends BaseActivity implements View.OnClickListener {
 
     private ActivityAddrecipientBinding addrecipientBinding;
     private Recipient recipient;

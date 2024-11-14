@@ -3,6 +3,7 @@ package com.apollo.medgift.models;
 import java.io.Serializable;
 
 public class Recipient extends User  implements Serializable {
+    public static final transient String MODEL_NAME="Recipient";
     private String address;
     private String createdBy;
 
