@@ -1,20 +1,15 @@
 package com.apollo.medgift.models;
 
-public class Notification {
-    private String key;
+import com.apollo.medgift.common.BaseModel;
+
+public class Notification extends BaseModel {
+    public static final String STORE ="Notification";
+
     private String userId;
     private String giftServiceId;
     private String message;
     private String status = NotificationStatus.PENDING;
     private String creationDate;
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
 
     public String getUserId() {
         return userId;

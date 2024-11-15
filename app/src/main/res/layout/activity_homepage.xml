@@ -99,13 +99,15 @@
                             android:layout_height="wrap_content" />
 
                         <LinearLayout
-                            android:id="@+id/category_card_2"
+                            android:id="@+id/quickBtnRecipient"
                             android:layout_width="0dp"
                             android:layout_height="100dp"
                             android:layout_weight="1"
                             android:background="@drawable/rounded_corner_category_bg"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
+                            android:focusable="true"
+                            android:clickable="true"
                             android:paddingLeft="15dp">
 
                             <ImageView

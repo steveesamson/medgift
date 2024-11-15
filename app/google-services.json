@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "983727468677",
+    "firebase_url": "https://sublety-dbbc7-default-rtdb.firebaseio.com",
+    "project_id": "sublety-dbbc7",
+    "storage_bucket": "sublety-dbbc7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983727468677:android:9ca789b5aefe4c757279ec",
+        "android_client_info": {
+          "package_name": "com.apollo.medgift"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt6MLT4xQkt4iE5FHzwBoIbnJUYVQoK-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983727468677:android:9515bd6a45bb98927279ec",
+        "android_client_info": {
+          "package_name": "com.ssamson8912.sublety"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt6MLT4xQkt4iE5FHzwBoIbnJUYVQoK-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

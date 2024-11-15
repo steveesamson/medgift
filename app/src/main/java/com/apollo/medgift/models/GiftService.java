@@ -1,9 +1,12 @@
 package com.apollo.medgift.models;
 
-public class GiftService {
 
+import com.apollo.medgift.common.BaseModel;
 
-    private String key;
+public class GiftService extends BaseModel {
+
+    public static final String STORE ="GiftService";
+
     private String giftId;
     private String gifterId;
     private String serviceId;
@@ -11,14 +14,6 @@ public class GiftService {
     private String contributionDate;
     private String deliveryDate;
     private String confirmationDate;
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
 
     public String getGiftId() {
         return giftId;

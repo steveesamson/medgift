@@ -1,7 +1,7 @@
 package com.apollo.medgift.models;
 
 public class HomeSlideImageItem {
-    private int image;
+    private final int image;
 
     public HomeSlideImageItem(int image) {
         this.image = image;

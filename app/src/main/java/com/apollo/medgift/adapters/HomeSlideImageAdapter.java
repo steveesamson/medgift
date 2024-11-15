@@ -17,8 +17,8 @@ import java.util.List;
 
 public class HomeSlideImageAdapter extends RecyclerView.Adapter<HomeSlideImageAdapter.SlideViewHolder> {
 
-    private List<HomeSlideImageItem> homeSlideImageItems;
-    private ViewPager2 viewPager2;
+    private final List<HomeSlideImageItem> homeSlideImageItems;
+    private final ViewPager2 viewPager2;
 
     public HomeSlideImageAdapter(List<HomeSlideImageItem> homeSlideImageItems, ViewPager2 viewPager2) {
         this.homeSlideImageItems = homeSlideImageItems;

@@ -1,19 +1,14 @@
 package com.apollo.medgift.models;
 
-public class GiftInvite {
-    private String key;
+import com.apollo.medgift.common.BaseModel;
+
+public class GiftInvite extends BaseModel {
+    public static final String STORE ="GiftInvite";
+
     private String giftId;
     private String inviteeId;
     private String message;
     private String creationDate;
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
 
     public String getGiftId() {
         return giftId;

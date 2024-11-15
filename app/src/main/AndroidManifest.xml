@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Medgift"
         tools:targetApi="31">
         <activity
+            android:name=".views.gifter.RecipientActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.gifter.AddRecipientActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.provider.PublishHealthTipsActivity"
             android:exported="false" />
         <activity
