@@ -7,8 +7,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.apollo.medgift.models.BaseModel;
-import com.apollo.medgift.views.models.BaseViewModel;
+import com.apollo.medgift.models.Recipient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,7 +53,14 @@ public class Firebase {
         vModel.getModel().observe((LifecycleOwner) context, list -> {
             // Update the selected filters UI.
             collection.clear();
-            collection.addAll((Collection<? extends T>) list);
+            // Test data please. To be removed
+            List<BaseModel> ls = new ArrayList<>();
+            ls.add(new Recipient("Steve", "Samson", "00099887"));
+            ls.add(new Recipient("Sam", "Ugwu", "00099887"));
+            ls.add(new Recipient("Thomas", "Lowe", "00099887"));
+            ls.add(new Recipient("Asari", "Ikenga", "00099887"));
+            ls.add(new Recipient("Chinyera", "Don", "00099887"));
+            collection.addAll((Collection<? extends T>) ls);
             adapter.notifyDataSetChanged();
         });
 

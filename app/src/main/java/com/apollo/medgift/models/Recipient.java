@@ -1,8 +1,8 @@
 package com.apollo.medgift.models;
 
-import java.io.Serializable;
+import com.apollo.medgift.common.BaseModel;
 
-public class Recipient extends  BaseModel {
+public class Recipient extends BaseModel {
     public static final String STORE ="Recipient";
 
     private String firstName;
@@ -14,6 +14,7 @@ public class Recipient extends  BaseModel {
     private String createdBy;
 
 
+    public Recipient(){}
     public Recipient(String fname, String lname, String phone){
         this.firstName = fname;
         this.lastName =lname;

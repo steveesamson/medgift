@@ -1,6 +1,6 @@
 package com.apollo.medgift.models;
 
-import java.io.Serializable;
+import com.apollo.medgift.common.BaseModel;
 
 public class Gift extends BaseModel {
     public static final String STORE ="Gift";

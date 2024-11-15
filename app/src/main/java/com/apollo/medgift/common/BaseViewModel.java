@@ -1,9 +1,7 @@
-package com.apollo.medgift.views.models;
+package com.apollo.medgift.common;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.apollo.medgift.models.BaseModel;
 
 import java.util.List;
 

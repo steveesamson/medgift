@@ -1,4 +1,4 @@
-package com.apollo.medgift.models;
+package com.apollo.medgift.common;
 
 import java.io.Serializable;
 

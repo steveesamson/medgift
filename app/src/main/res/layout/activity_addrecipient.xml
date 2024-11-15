@@ -147,19 +147,37 @@
                     android:id="@+id/rdFemale"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="20dp"
                     android:text="@string/rdlblFemale"
                     android:textSize="15sp"
                     />
             </RadioGroup>
+        <LinearLayout
+            android:id="@+id/headerPane"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginVertical="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content">
             <Button
                 android:id="@+id/btnSave"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/rounded_button_blue"
+                android:layout_marginEnd="10dp"
+                style="@style/PrimaryButton"
                 android:text="@string/lblSaveBtn"
                 android:textStyle="bold" />
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                style="@style/SecondaryButton"
+                android:text="@string/lblCancelBtn"
+                android:textStyle="bold" />
+        </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

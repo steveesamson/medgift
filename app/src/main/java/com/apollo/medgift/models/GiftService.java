@@ -1,7 +1,9 @@
 package com.apollo.medgift.models;
 
 
-public class GiftService extends  BaseModel {
+import com.apollo.medgift.common.BaseModel;
+
+public class GiftService extends BaseModel {
 
     public static final String STORE ="GiftService";
 

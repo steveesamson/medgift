@@ -1,6 +1,8 @@
 package com.apollo.medgift.views.gifter;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
@@ -10,8 +12,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.apollo.medgift.R;
 import com.apollo.medgift.adapters.gifters.RecipientAdapter;
 import com.apollo.medgift.common.BaseActivity;
+import com.apollo.medgift.common.BaseModel;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.databinding.ActivityRecipientBinding;
 import com.apollo.medgift.models.Recipient;
@@ -37,22 +41,30 @@ public class RecipientActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        recipients.add(new Recipient("Steve", "Samson", "00099887"));
-        recipients.add(new Recipient("Sam", "Ugwu", "00099887"));
-        recipients.add(new Recipient("Thomas", "Lowe", "00099887"));
-        recipients.add(new Recipient("Asari", "Ikenga", "00099887"));
-        recipients.add(new Recipient("Chinyera", "Don", "00099887"));
+
         recipientBinding = ActivityRecipientBinding.inflate(getLayoutInflater());
         setContentView(recipientBinding.getRoot());
+        setToolBar(recipientBinding.homeAppBar.getRoot(), getString(R.string.recipientTitle));
         ViewCompat.setOnApplyWindowInsetsListener(recipientBinding.recipientActivity, (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         setPageUp();
     }
 
     private void setPageUp() {
+
+        recipientBinding.btnAddRecipient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddRecipientActivity.class);
+                Recipient recipient = new Recipient();
+                intent.putExtra(Recipient.STORE, recipient);
+                startActivity(intent);
+            }
+        });
         this.db = Firebase.database(Recipient.STORE);
         RecyclerView recyclerView = recipientBinding.recipientsList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -76,9 +88,12 @@ public class RecipientActivity extends BaseActivity {
 
     // Fetch Recipient and begin to
     // listen to changes on the list
-    private void fetchAndListenOnRecipients(){
-        RecipientVModel recipientVModel = new ViewModelProvider(this).get(RecipientVModel.class);
-        this.recipientsListener = Firebase.registerListener(db, this, this.recipientAdapter, recipientVModel, this.recipients);
+    private void fetchAndListenOnRecipients() {
+        if (db != null) {
+            RecipientVModel recipientVModel = new ViewModelProvider(this).get(RecipientVModel.class);
+
+            this.recipientsListener = Firebase.registerListener(db, this, this.recipientAdapter, recipientVModel, this.recipients);
+        }
     }
 
 

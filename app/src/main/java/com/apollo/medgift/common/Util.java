@@ -7,26 +7,10 @@ import android.util.Patterns;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.apollo.medgift.models.BaseModel;
-import com.apollo.medgift.models.Recipient;
-import com.apollo.medgift.views.models.BaseViewModel;
 import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Util, alass to house all shared operations
@@ -69,6 +53,29 @@ public class Util {
                         dialog.dismiss();
                     }
                 }).show();
+    }
+    public  static void showConfirm(Context context, String title, String ask,  DialogInterface.OnClickListener confirm){
+        AlertDialog dialog = new MaterialAlertDialogBuilder(context)
+                .setTitle(title)
+                .setMessage(ask)
+                .setPositiveButton("Yes", confirm)
+                .setNegativeButton("No", (dialog1, which) -> {
+                    dialog1.dismiss();
+                }).show();
+//        dialog.show();
+//        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+//        alert.setTitle(title);
+//        alert.setMessage(ask);
+//        alert.setPositiveButton("Yes", (DialogInterface.OnClickListener) confirm);
+//
+//        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        alert.show();
     }
 
     // Conenience for loading storage images into imageview

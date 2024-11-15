@@ -41,15 +41,8 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
 
         binding = ActivityHomepageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        Toolbar homeAppBar = binding.homeAppBar.getRoot();
-        setSupportActionBar(homeAppBar);
-
-        // Set Appbar Title
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("MedGift");
-        }
-
+        // Set toolbar
+        setToolBar(binding.homeAppBar.getRoot(), getString(R.string.app_name));
         // Image Slider
         ViewPager2 viewPager2 = binding.imageSlider;
 

@@ -53,6 +53,8 @@
     </string-array>
 
     <string name="addRecipientTitle">Create Recipient</string>
+    <string name="btnAddRecipient">Add Recipient</string>
+    <string name="editRecipientTitle">Create Recipient</string>
     <string name="lblFirstName">First name</string>
     <string name="lblLastName">Last name</string>
     <string name="lblDOB">Date of birth</string>
@@ -62,4 +64,6 @@
     <string name="lblAddress">Address</string>
     <string name="lblSaveBtn">Save</string>
     <string name="recipientTitle">Recipients</string>
+    <string name="btnDeleteHint">Delete button</string>
+    <string name="lblCancelBtn">Cancel</string>
 </resources>
