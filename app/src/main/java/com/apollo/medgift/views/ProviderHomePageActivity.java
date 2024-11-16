@@ -10,11 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.apollo.medgift.R;
+import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.databinding.ActivityProviderhomepageBinding;
 import com.apollo.medgift.views.provider.CreateServiceActivity;
 import com.apollo.medgift.views.provider.PublishHealthTipsActivity;
 
-public class ProviderHomePageActivity extends AppCompatActivity {
+public class ProviderHomePageActivity extends BaseActivity {
 
     ActivityProviderhomepageBinding binding;
 
@@ -25,13 +26,8 @@ public class ProviderHomePageActivity extends AppCompatActivity {
         binding =  ActivityProviderhomepageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Toolbar homeAppBar = binding.homeAppBar.getRoot();
-        setSupportActionBar(homeAppBar);
-
-        // Set Appbar Title
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("MedGift");
-        }
+        // Setup tool bar and title
+        setupToolbar(binding.homeAppBar.getRoot(), "MedGift", false);
 
         // Set click listener for category_card_1 to open CreateServiceActivity
         binding.categoryCard1.setOnClickListener(new View.OnClickListener() {
@@ -49,12 +45,5 @@ public class ProviderHomePageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.providermenu, menu);
-        return true;
     }
 }

@@ -21,64 +21,109 @@ import com.google.firebase.auth.FirebaseUser;
 public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
     }
 
-    protected void setToolBar(Toolbar toolBar, String title ){
-        setSupportActionBar(toolBar);
+    // Set up toolbar with a dynamic title
+    protected void setupToolbar(Toolbar toolbar, String title, boolean showBackButton) {
+        setSupportActionBar(toolbar);
 
-        // Set Appbar Title
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(title);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(showBackButton);
+            getSupportActionBar().setDisplayShowHomeEnabled(showBackButton);
         }
     }
 
-    // Handle session
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = Firebase.currentUser();
-        if(currentUser == null){
-            finish();
-        }
-    }
-
+    // Inflate menu based on user type
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Retrieve usertype based on user status
+        String userType = getUserType();
+
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.homemenu, menu);
+
+        // Check for user type and inflate menu
+        if (userType.equals("Gifter")) {
+            inflater.inflate(R.menu.homemenu, menu);
+        } else if (userType.equals("Provider")) {
+            inflater.inflate(R.menu.providermenu, menu);
+        }
         return true;
     }
 
+    // Retrieve user type from shared pref or backend
+    private String getUserType() {
+        return "Gifter"; // temp user type
+    }
+
+    // Handle menu items selector based on user type
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.home) {
-            // Navigate to HomePageActivity
-            startActivity(new Intent(this, HomePageActivity.class));
+        // Handle back button click globally
+        if (id == android.R.id.home) {
+            onBackPressed();
             return true;
-        } else if (id == R.id.categories) {
-            startActivity(new Intent(this, ProviderHomePageActivity.class));
+        }
+
+        // Set usertype
+        String userType = getUserType();
+
+        // Handle user types
+        if (userType.equals("Gifter")) {
+            return handleGifterMenuSelection(id);
+        } else if (userType.equals("Provider")) {
+            return handleProviderMenuSelection(id);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Handle Gifter menu
+    private boolean handleGifterMenuSelection(int itemId) {
+        if (itemId == R.id.home) {
+            navigateTo(HomePageActivity.class);
             return true;
-        } else if (id == R.id.healthTips) {
+        } else if (itemId == R.id.categories) {
+            navigateTo(ProviderHomePageActivity.class);
+            return true;
+        } else if (itemId == R.id.healthTips) {
             //
             return true;
-        } else if (id == R.id.aboutUs) {
+        } else if (itemId == R.id.aboutUs) {
             //
             return true;
-        } else if (id == R.id.logOut) {
+        } else if (itemId == R.id.logOut) {
             logout();
             return true;
         } else {
-            return super.onOptionsItemSelected(item);
+            return false;
         }
     }
 
+    // Handle Provider menu
+    private boolean handleProviderMenuSelection(int itemId) {
+        if (itemId == R.id.home) {
+            navigateTo(ProviderHomePageActivity.class);
+            return true;
+        } else if (itemId == R.id.logOut) {
+            logout();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Helper method to start activity
+    private void navigateTo(Class<?> destinationClass) {
+        startActivity(new Intent(this, destinationClass));
+    }
+
+    // LogOut on click
     protected void logout() {
-        Firebase.logout();
+        navigateTo(LogInActivity.class);
         Intent intent = new Intent(this, LogInActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
