@@ -51,6 +51,18 @@ public class Util {
 
     }
 
+    public static boolean exists(BaseModel model){
+        return  model != null && model.getKey() != null && !model.getKey().isEmpty();
+    }
+
+    public static String success(String type, boolean exists){
+        return String.format("%s %s successfully", type, exists? "updated" : "added");
+    }
+
+    public static String fail(String type, boolean exists){
+        return String.format("%s %s failed",  (exists? "Updating" : "Adding"), type.toLowerCase());
+    }
+
     public static String getEmpty(String type){
         return String.format("No %s added yet.", type);
     }

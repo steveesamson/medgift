@@ -66,8 +66,7 @@ public class RecipientActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AddRecipientActivity.class);
-                Recipient recipient = new Recipient();
-                intent.putExtra(Recipient.STORE, recipient);
+                intent.putExtra(Recipient.STORE, new Recipient());
                 startActivity(intent);
             }
         });
@@ -98,7 +97,9 @@ public class RecipientActivity extends BaseActivity {
         if (db != null) {
             RecipientVModel recipientVModel = new ViewModelProvider(this).get(RecipientVModel.class);
             ValueEvents<Recipient> valueEvents = new ValueEvents<Recipient>();
+            Util.startProgress(recipientBinding.progress, "Fetching recipients...");
             recipientsListener = valueEvents.registerListener(db, this, recipientAdapter, recipientVModel, recipients, Recipient.class, (list) -> {
+                Util.stopProgress(recipientBinding.progress);
                 recipientBinding.emptyItem.txtEmpty.setText(list.isEmpty()? Util.getEmpty("recipients") : "");
                 recipientBinding.emptyItem.getRoot().setVisibility(list.isEmpty()? View.VISIBLE : View.GONE);
             });

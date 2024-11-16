@@ -3,6 +3,7 @@ package com.apollo.medgift.views.gifter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 
@@ -37,16 +38,13 @@ public class AddRecipientActivity extends BaseActivity implements View.OnClickLi
         Intent intent = getIntent();
         recipient = (Recipient) intent.getSerializableExtra(Recipient.STORE);
 
-        if (recipient.getKey() != null) {
-            // Setup tool bar and title
-            setupToolbar(addRecipientBinding.homeAppBar.getRoot(), getString(R.string.editRecipientTitle), false); //new toolbar
-//            setToolBar(addRecipientBinding.homeAppBar.getRoot(), getString(R.string.editRecipientTitle));
-        } else {
+        boolean exists = Util.exists(recipient);
+        String title = getString(exists? R.string.editRecipientTitle : R.string.addRecipientTitle);
+        addRecipientBinding.addRecipientHeader.setText(title);
+        setToolBar(addRecipientBinding.homeAppBar.getRoot(), title, true);
+        if (!exists) {
             recipient.setCreatedBy(Firebase.currentUser().getUid());
-            setupToolbar(addRecipientBinding.homeAppBar.getRoot(), getString(R.string.addRecipientTitle), false); // new toolbar
-//            setToolBar(addRecipientBinding.homeAppBar.getRoot(), getString(R.string.addRecipientTitle));
         }
-
         setup();
     }
 
@@ -62,13 +60,15 @@ public class AddRecipientActivity extends BaseActivity implements View.OnClickLi
         addRecipientBinding.btnSave.setOnClickListener(this);
         addRecipientBinding.btnCancel.setOnClickListener(this);
         addRecipientBinding.rgGender.setOnCheckedChangeListener(this);
-        addRecipientBinding.rdMale.setChecked(true);
-        if (recipient.getGender().equals("M")) {
-
-            addRecipientBinding.rdMale.setChecked(true);
-        } else if (recipient.getGender().equals("F")) {
-
-            addRecipientBinding.rdFemale.setChecked(true);
+        addRecipientBinding.rdMale.setChecked(false);
+        addRecipientBinding.rdFemale.setChecked(false);
+        String gender = recipient.getGender();
+        if (gender != null){
+            if(gender.equals("M")){
+                addRecipientBinding.rdMale.setChecked(true);
+            } else if (gender.equals("F")) {
+                addRecipientBinding.rdFemale.setChecked(true);
+            }
         }
     }
 
@@ -120,6 +120,11 @@ public class AddRecipientActivity extends BaseActivity implements View.OnClickLi
             formIsValid = false;
         }
 
+        if(recipient.getGender() == null || recipient.getGender().isEmpty()){
+            Util.notify(this, "Gender is required");
+            formIsValid = false;
+        }
+
         if (formIsValid) {
             recipient.setFirstName(firstName);
             recipient.setLastName(lastName);
@@ -128,17 +133,19 @@ public class AddRecipientActivity extends BaseActivity implements View.OnClickLi
             recipient.setAddress(address);
             recipient.setDateOfBirth(dob);
 
+            boolean exists = Util.exists(recipient);
             Util.startProgress(addRecipientBinding.progress, "Adding recipient...");
+
             Firebase.save(recipient, Recipient.STORE, (task) -> {
                 Util.stopProgress(addRecipientBinding.progress);
                 if (task.isSuccessful()) {
 
                     recipient = null;
-                    Util.notify(AddRecipientActivity.this, "Recipient added successfully.");
+                    Util.notify(AddRecipientActivity.this, Util.success("Recipient", exists));
                     finish();
 
                 } else {
-                    Util.notify(AddRecipientActivity.this, "Adding recipient failed.");
+                    Util.notify(AddRecipientActivity.this, Util.fail("Recipient", exists));
                 }
             });
         }
