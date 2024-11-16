@@ -38,10 +38,13 @@ public class AddRecipientActivity extends BaseActivity implements View.OnClickLi
         recipient = (Recipient) intent.getSerializableExtra(Recipient.STORE);
 
         if (recipient.getKey() != null) {
-            setToolBar(addRecipientBinding.homeAppBar.getRoot(), getString(R.string.editRecipientTitle));
+            // Setup tool bar and title
+            setupToolbar(addRecipientBinding.homeAppBar.getRoot(), getString(R.string.editRecipientTitle), false); //new toolbar
+//            setToolBar(addRecipientBinding.homeAppBar.getRoot(), getString(R.string.editRecipientTitle));
         } else {
             recipient.setCreatedBy(Firebase.currentUser().getUid());
-            setToolBar(addRecipientBinding.homeAppBar.getRoot(), getString(R.string.addRecipientTitle));
+            setupToolbar(addRecipientBinding.homeAppBar.getRoot(), getString(R.string.addRecipientTitle), false); // new toolbar
+//            setToolBar(addRecipientBinding.homeAppBar.getRoot(), getString(R.string.addRecipientTitle));
         }
 
         setup();

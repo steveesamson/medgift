@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -14,11 +13,9 @@ import com.apollo.medgift.adapters.ForYouRecyclerViewAdapter;
 import com.apollo.medgift.adapters.HealthTipsRecyclerViewAdapter;
 import com.apollo.medgift.adapters.HomeSlideImageAdapter;
 import com.apollo.medgift.common.BaseActivity;
-import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.databinding.ActivityHomepageBinding;
 import com.apollo.medgift.models.HomeSlideImageItem;
 import com.apollo.medgift.views.gifter.RecipientActivity;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +42,10 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
 
         binding = ActivityHomepageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        // Set toolbar
-        setToolBar(binding.homeAppBar.getRoot(), getString(R.string.app_name));
+
+        // Setup tool bar and title
+        setupToolbar(binding.homeAppBar.getRoot(), "MedGift", false);
+
         // Image Slider
         ViewPager2 viewPager2 = binding.imageSlider;
 
@@ -79,7 +78,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View view) {
 
-        Intent intent = null;
+        Intent intent;
         // Handle Recipient navigation
         if(view == binding.quickBtnRecipient){
             intent = new  Intent(getApplicationContext(), RecipientActivity.class);

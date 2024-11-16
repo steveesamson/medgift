@@ -28,7 +28,7 @@
     <string name="logout">Log Out</string>
     <string name="available_services">Available Services</string>
     <string name="recipients">Recipients</string>
-    <string name="gifts">Gifts</string>
+    <string name="gift">Gift</string>
     <string name="sample_title">Title</string>
     <string name="sample_provider">Provider</string>
     <string name="sample_location">Location</string>
