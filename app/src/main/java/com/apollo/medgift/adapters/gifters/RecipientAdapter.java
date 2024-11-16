@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.RecipientItemBinding;
 import com.apollo.medgift.models.Recipient;
@@ -27,12 +28,13 @@ public class RecipientAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.recipients = recipients;
     }
 
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        RecipientItemBinding itemBinding = RecipientItemBinding.inflate(layoutInflater, parent, false);
-        return new RecipientHolder(itemBinding);
+                RecipientItemBinding itemBinding = RecipientItemBinding.inflate(layoutInflater, parent, false);
+                return new RecipientHolder(itemBinding);
     }
 
     @Override
@@ -40,6 +42,7 @@ public class RecipientAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         RecipientHolder recipientHolder = (RecipientHolder) holder;
         recipientHolder.bindData(this.recipients.get(position));
     }
+
 
     @Override
     public int getItemCount() {
@@ -64,7 +67,7 @@ public class RecipientAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public void bindData(Recipient recipient) {
             this.recipient = recipient;
-            itemBinding.txtName.setText(String.format("%s %s (%s)", recipient.getFirstName(), recipient.getLastName(), recipient.getPhone()));
+            itemBinding.txtName.setText(String.format("%s %s <%s>", recipient.getFirstName(), recipient.getLastName(), recipient.getPhone()));
         }
 
         @Override
@@ -73,6 +76,11 @@ public class RecipientAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 // Delete here
                 Util.showConfirm(context, "Delete", "Do your really want to delete this recipient?", (dialog, which) -> {
                     // Implement delete
+                    Firebase.delete(recipient, Recipient.STORE,(task) -> {
+                        if(task.isSuccessful()){
+                            Util.notify(context, "Recipient deleted!");
+                        }
+                    });
                     dialog.dismiss();
                 });
             } else if(view == itemBinding.txtName){ // Display recipient form for details

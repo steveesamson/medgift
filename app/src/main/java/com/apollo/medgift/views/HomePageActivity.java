@@ -14,9 +14,11 @@ import com.apollo.medgift.adapters.ForYouRecyclerViewAdapter;
 import com.apollo.medgift.adapters.HealthTipsRecyclerViewAdapter;
 import com.apollo.medgift.adapters.HomeSlideImageAdapter;
 import com.apollo.medgift.common.BaseActivity;
+import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.databinding.ActivityHomepageBinding;
 import com.apollo.medgift.models.HomeSlideImageItem;
 import com.apollo.medgift.views.gifter.RecipientActivity;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,8 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     String[] gift_description = {"Connect with a doctor remotely for a virtual check-up or to address health concerns from the comfort of your home.", "Connect with a doctor remotely for a virtual check-up or to address health concerns from the comfort of your home."};
     String[] gift_price = {"$ 423.00", "$ 565.00"};
     int[] images = {R.drawable.sample_image1, R.drawable.sample_image2};
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

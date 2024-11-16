@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">medgift</string>
+    <string name="app_name">MedGift</string>
     <string name="welcomeTitle">Welcome to MedGift</string>
     <string name="application_logo">Application Logo</string>
     <string name="lblEmail">Email</string>
@@ -12,7 +12,7 @@
     <string name="lblConfirmPassword">Confirm Password</string>
     <string name="txtHasAccount">Already have an account?</string>
     <string name="lblLogin">Login</string>
-    <string name="rdlblGifter">I am a Healthcare Service Gifter</string>
+    <string name="rdlblGifter">I am a Gifter</string>
     <string name="rdlblProvider">I am a Healthcare Service Provider</string>
     <string name="lblRegisterBtn">Register</string>
     <string name="notification">Notification</string>
@@ -52,9 +52,10 @@
         <item>Remote</item>
     </string-array>
 
+    <string name="lblLoading">Just a second...</string>
     <string name="addRecipientTitle">Create Recipient</string>
     <string name="btnAddRecipient">Add Recipient</string>
-    <string name="editRecipientTitle">Create Recipient</string>
+    <string name="editRecipientTitle">Edit Recipient</string>
     <string name="lblFirstName">First name</string>
     <string name="lblLastName">Last name</string>
     <string name="lblDOB">Date of birth</string>
@@ -66,4 +67,6 @@
     <string name="recipientTitle">Recipients</string>
     <string name="btnDeleteHint">Delete button</string>
     <string name="lblCancelBtn">Cancel</string>
+    <string name="hintFirstName">First name</string>
+    <string name="hintLastName">Last name</string>
 </resources>
