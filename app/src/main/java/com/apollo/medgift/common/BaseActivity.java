@@ -87,7 +87,6 @@ public class BaseActivity extends AppCompatActivity {
             navigateTo(HomePageActivity.class);
             return true;
         } else if (itemId == R.id.categories) {
-            navigateTo(ProviderHomePageActivity.class);
             return true;
         } else if (itemId == R.id.healthTips) {
             //
