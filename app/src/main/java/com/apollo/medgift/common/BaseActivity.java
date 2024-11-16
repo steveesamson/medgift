@@ -2,6 +2,7 @@ package com.apollo.medgift.common;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.HomePageActivity;
 import com.apollo.medgift.views.LogInActivity;
 import com.apollo.medgift.views.ProviderHomePageActivity;
@@ -21,7 +23,8 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
+    protected String ROLE="";
+    protected String DISPLAY="";
     // Set up toolbar with a dynamic title
     protected void setupToolbar(Toolbar toolbar, String title, boolean showBackButton) {
         setSupportActionBar(toolbar);
@@ -40,6 +43,10 @@ public class BaseActivity extends AppCompatActivity {
         FirebaseUser currentUser = Firebase.currentUser();
         if(currentUser == null){
             finish();
+        }else{
+            String[] nameRole = currentUser.getDisplayName().split("\\|");
+            DISPLAY = nameRole[0];
+            ROLE = nameRole[1];
         }
     }
 
@@ -50,12 +57,13 @@ public class BaseActivity extends AppCompatActivity {
         // Retrieve usertype based on user status
         String userType = getUserType();
 
+
         MenuInflater inflater = getMenuInflater();
 
         // Check for user type and inflate menu
-        if (userType.equals("Gifter")) {
+        if (userType.equals(User.Role.GIFTER.name())) {
             inflater.inflate(R.menu.homemenu, menu);
-        } else if (userType.equals("Provider")) {
+        } else if (userType.equals(User.Role.PROVIDER.name())) {
             inflater.inflate(R.menu.providermenu, menu);
         }
         return true;
@@ -63,7 +71,8 @@ public class BaseActivity extends AppCompatActivity {
 
     // Retrieve user type from shared pref or backend
     private String getUserType() {
-        return "Gifter"; // temp user type
+
+        return ROLE;
     }
 
     // Handle menu items selector based on user type
@@ -81,9 +90,9 @@ public class BaseActivity extends AppCompatActivity {
         String userType = getUserType();
 
         // Handle user types
-        if (userType.equals("Gifter")) {
+        if (userType.equals(User.Role.GIFTER.name())) {
             return handleGifterMenuSelection(id);
-        } else if (userType.equals("Provider")) {
+        } else if (userType.equals(User.Role.PROVIDER.name())) {
             return handleProviderMenuSelection(id);
         }
         return super.onOptionsItemSelected(item);

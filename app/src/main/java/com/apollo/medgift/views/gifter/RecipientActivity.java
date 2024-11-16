@@ -49,8 +49,7 @@ public class RecipientActivity extends BaseActivity {
         recipientBinding = ActivityRecipientBinding.inflate(getLayoutInflater());
         setContentView(recipientBinding.getRoot());
         // Setup tool bar and title
-        setupToolbar(recipientBinding.homeAppBar.getRoot(), getString(R.string.recipientTitle), false); //new toolbar
-//        setToolBar(recipientBinding.homeAppBar.getRoot(), getString(R.string.recipientTitle));
+        setupToolbar(recipientBinding.homeAppBar.getRoot(), getString(R.string.recipientTitle), true); //new toolbar
         ViewCompat.setOnApplyWindowInsetsListener(recipientBinding.recipientActivity, (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
