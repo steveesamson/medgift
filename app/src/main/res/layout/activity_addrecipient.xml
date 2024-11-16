@@ -39,17 +39,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/homeAppBar">
-            <TextView
-                android:id="@+id/addRecipientHeader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="20dp"
-                android:text="@string/addRecipientTitle"
-                android:textAlignment="center"
-                android:textColor="@color/title"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lytFName"
                 style="@style/TextLayout"
@@ -171,14 +161,6 @@
                 android:layout_marginEnd="10dp"
                 style="@style/PrimaryButton"
                 android:text="@string/lblSaveBtn"
-                android:textStyle="bold" />
-            <Button
-                android:id="@+id/btnCancel"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_marginTop="10dp"
-                style="@style/SecondaryButton"
-                android:text="@string/lblCancelBtn"
                 android:textStyle="bold" />
         </LinearLayout>
 

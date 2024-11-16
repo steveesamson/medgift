@@ -85,6 +85,10 @@ public class Firebase {
                 .addOnCompleteListener(onComplete);
     }
 
+    public static String getRole(){
+        return currentUser().getDisplayName().split("\\|")[1];
+    }
+
     public static void save(BaseModel model, String storeName, OnCompleteListener<Void> onComplete) {
         String key = model.getKey();
 

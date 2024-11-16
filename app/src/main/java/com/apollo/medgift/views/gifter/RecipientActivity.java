@@ -49,8 +49,7 @@ public class RecipientActivity extends BaseActivity {
         recipientBinding = ActivityRecipientBinding.inflate(getLayoutInflater());
         setContentView(recipientBinding.getRoot());
         // Setup tool bar and title
-        setupToolbar(recipientBinding.homeAppBar.getRoot(), getString(R.string.recipientTitle), false); //new toolbar
-//        setToolBar(recipientBinding.homeAppBar.getRoot(), getString(R.string.recipientTitle));
+        setupToolbar(recipientBinding.homeAppBar.getRoot(), getString(R.string.recipientTitle), true); //new toolbar
         ViewCompat.setOnApplyWindowInsetsListener(recipientBinding.recipientActivity, (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -66,8 +65,7 @@ public class RecipientActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AddRecipientActivity.class);
-                Recipient recipient = new Recipient();
-                intent.putExtra(Recipient.STORE, recipient);
+                intent.putExtra(Recipient.STORE, new Recipient());
                 startActivity(intent);
             }
         });
@@ -98,7 +96,9 @@ public class RecipientActivity extends BaseActivity {
         if (db != null) {
             RecipientVModel recipientVModel = new ViewModelProvider(this).get(RecipientVModel.class);
             ValueEvents<Recipient> valueEvents = new ValueEvents<Recipient>();
+            Util.startProgress(recipientBinding.progress, "Fetching recipients...");
             recipientsListener = valueEvents.registerListener(db, this, recipientAdapter, recipientVModel, recipients, Recipient.class, (list) -> {
+                Util.stopProgress(recipientBinding.progress);
                 recipientBinding.emptyItem.txtEmpty.setText(list.isEmpty()? Util.getEmpty("recipients") : "");
                 recipientBinding.emptyItem.getRoot().setVisibility(list.isEmpty()? View.VISIBLE : View.GONE);
             });

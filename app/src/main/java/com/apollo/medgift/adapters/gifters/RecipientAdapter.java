@@ -67,7 +67,7 @@ public class RecipientAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public void bindData(Recipient recipient) {
             this.recipient = recipient;
-            itemBinding.txtName.setText(String.format("%s %s <%s>", recipient.getFirstName(), recipient.getLastName(), recipient.getPhone()));
+            itemBinding.txtName.setText(String.format("%s %s", recipient.getFirstName(), recipient.getLastName()));
         }
 
         @Override

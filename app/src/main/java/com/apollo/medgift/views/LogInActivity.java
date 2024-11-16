@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityLoginBinding;
+import com.apollo.medgift.models.User;
 
 
 public class LogInActivity extends AppCompatActivity implements View.OnClickListener{
@@ -71,8 +72,18 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             Firebase.login(email, password, (task) ->{
 
                 if(task.isSuccessful()){
-                    Intent intent = new Intent(LogInActivity.this, HomePageActivity.class);
-                    startActivity(intent);
+                    String ROLE = Firebase.getRole();
+                    Log.i("ROLE:", ROLE);
+                    Intent intent = null;
+
+                    if(ROLE.equals(User.Role.GIFTER.name())){
+                        intent = new Intent(LogInActivity.this, HomePageActivity.class);
+                        startActivity(intent);
+                    }else if(ROLE.equals(User.Role.PROVIDER.name())){
+                        intent = new Intent(LogInActivity.this, ProviderHomePageActivity.class);
+                        startActivity(intent);
+                    }
+
                 }else{
                     Util.notify(LogInActivity.this, "Invalid credentials.");
                 }
