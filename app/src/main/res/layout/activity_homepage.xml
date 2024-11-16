@@ -157,7 +157,7 @@
                                 android:id="@+id/category_3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/gifts"
+                                android:text="@string/gift"
                                 android:textColor="#FFFFFF"
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
@@ -172,26 +172,25 @@
                             android:layout_width="0dp"
                             android:layout_height="100dp"
                             android:layout_weight="1"
-                            android:background="@drawable/rounded_corner_category_bg"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
                             android:paddingLeft="15dp">
 
-                            <ImageView
-                                android:id="@+id/ic_category_card_4"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_marginBottom="5dp"
-                                app:srcCompat="@drawable/ic_groupgifting" />
+<!--                            <ImageView-->
+<!--                                android:id="@+id/ic_category_card_4"-->
+<!--                                android:layout_width="40dp"-->
+<!--                                android:layout_height="40dp"-->
+<!--                                android:layout_marginBottom="5dp"-->
+<!--                                app:srcCompat="@drawable/ic_groupgifting" />-->
 
-                            <TextView
-                                android:id="@+id/category_4"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/group_gifts"
-                                android:textColor="#FFFFFF"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
+<!--                            <TextView-->
+<!--                                android:id="@+id/category_4"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="@string/group_gifts"-->
+<!--                                android:textColor="#FFFFFF"-->
+<!--                                android:textSize="12sp"-->
+<!--                                android:textStyle="bold" />-->
                         </LinearLayout>
 
                     </TableRow>

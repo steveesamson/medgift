@@ -14,6 +14,7 @@ import com.apollo.medgift.views.HomePageActivity;
 import com.apollo.medgift.views.LogInActivity;
 import com.apollo.medgift.views.ProviderHomePageActivity;
 import com.apollo.medgift.R;
+import com.google.firebase.auth.FirebaseUser;
 
 public class BaseActivity extends AppCompatActivity {
     @Override
@@ -29,6 +30,16 @@ public class BaseActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(title);
             getSupportActionBar().setDisplayHomeAsUpEnabled(showBackButton);
             getSupportActionBar().setDisplayShowHomeEnabled(showBackButton);
+        }
+    }
+
+    // Handle session
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = Firebase.currentUser();
+        if(currentUser == null){
+            finish();
         }
     }
 
@@ -119,7 +130,7 @@ public class BaseActivity extends AppCompatActivity {
 
     // LogOut on click
     protected void logout() {
-        navigateTo(LogInActivity.class);
+        Firebase.logout();
         Intent intent = new Intent(this, LogInActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
