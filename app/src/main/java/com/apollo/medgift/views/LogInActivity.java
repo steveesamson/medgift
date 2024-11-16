@@ -1,11 +1,17 @@
 package com.apollo.medgift.views;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.content.Intent;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
+import com.apollo.medgift.common.Firebase;
+import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityLoginBinding;
 
 
@@ -17,7 +23,11 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         loginBinding = ActivityLoginBinding.inflate(getLayoutInflater());
         EdgeToEdge.enable(this);
         setContentView(loginBinding.getRoot());
-
+        ViewCompat.setOnApplyWindowInsetsListener(loginBinding.loginActivity, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
         bindEvents();
     }
 
@@ -28,22 +38,55 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void register(){
+
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 
+    // Clear previous errors
+    private void clearErrors() {
+        loginBinding.lytEmail.setError("");
+        loginBinding.lytPassword.setError("");
+    }
+
     private void login() {
-        Intent intent = new Intent(this, HomePageActivity.class);
-        startActivity(intent);
+        clearErrors();
+
+        String email = Util.valueOf(loginBinding.edtEmail);
+        String password = Util.valueOf(loginBinding.edtPassword);
+        boolean formIsValid = true;
+
+        if(email.isEmpty() || !Util.isEmail(email)){
+            loginBinding.lytEmail.setError("Email is required.");
+            formIsValid = false;
+        }
+
+        if(password.isEmpty()){
+            loginBinding.lytPassword.setError("Password is required.");
+            formIsValid = false;
+        }
+
+        if(formIsValid){
+            Util.startProgress(loginBinding.progress, "Signing in...");
+            Firebase.login(email, password, (task) ->{
+
+                if(task.isSuccessful()){
+                    Intent intent = new Intent(LogInActivity.this, HomePageActivity.class);
+                    startActivity(intent);
+                }else{
+                    Util.notify(LogInActivity.this, "Invalid credentials.");
+                }
+                Util.stopProgress(loginBinding.progress);
+            });
+
+        }
     }
 
     @Override
     public void onClick(View view) {
-        int vId = view.getId();
-        if(vId == this.loginBinding.btnSignup.getId()){
+        if(view == this.loginBinding.btnSignup){
             register();
-        } else if (vId == this.loginBinding.btnLogin.getId()) { // Handle btnLogin click
-            // VALIDATE INPUTS HERE
+        } else if (view == this.loginBinding.btnLogin) { // Handle btnLogin click
             login();
         }
     }

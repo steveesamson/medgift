@@ -2,6 +2,8 @@ package com.apollo.medgift.models;
 
 import com.apollo.medgift.common.BaseModel;
 
+import java.io.Serializable;
+
 public class Recipient extends BaseModel {
     public static final String STORE ="Recipient";
 
@@ -10,9 +12,9 @@ public class Recipient extends BaseModel {
     private String gender;
     private String dateOfBirth;
     private String phone;
+    private String email;
     private String address;
     private String createdBy;
-
 
     public Recipient(){}
     public Recipient(String fname, String lname, String phone){
@@ -20,6 +22,7 @@ public class Recipient extends BaseModel {
         this.lastName =lname;
         this.phone  = phone;
     }
+
     public String getFirstName() {
         return firstName;
     }
@@ -74,5 +77,13 @@ public class Recipient extends BaseModel {
 
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

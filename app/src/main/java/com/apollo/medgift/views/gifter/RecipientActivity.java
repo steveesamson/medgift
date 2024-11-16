@@ -8,6 +8,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +17,10 @@ import com.apollo.medgift.R;
 import com.apollo.medgift.adapters.gifters.RecipientAdapter;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.BaseModel;
+import com.apollo.medgift.common.BaseViewModel;
 import com.apollo.medgift.common.Firebase;
+import com.apollo.medgift.common.Util;
+import com.apollo.medgift.common.ValueEvents;
 import com.apollo.medgift.databinding.ActivityRecipientBinding;
 import com.apollo.medgift.models.Recipient;
 import com.apollo.medgift.views.models.RecipientVModel;
@@ -91,8 +95,12 @@ public class RecipientActivity extends BaseActivity {
     private void fetchAndListenOnRecipients() {
         if (db != null) {
             RecipientVModel recipientVModel = new ViewModelProvider(this).get(RecipientVModel.class);
+            ValueEvents<Recipient> valueEvents = new ValueEvents<Recipient>();
+            recipientsListener = valueEvents.registerListener(db, this, recipientAdapter, recipientVModel, recipients, Recipient.class, (list) -> {
+                recipientBinding.emptyItem.txtEmpty.setText(list.isEmpty()? Util.getEmpty("recipients") : "");
+                recipientBinding.emptyItem.getRoot().setVisibility(list.isEmpty()? View.VISIBLE : View.GONE);
+            });
 
-            this.recipientsListener = Firebase.registerListener(db, this, this.recipientAdapter, recipientVModel, this.recipients);
         }
     }
 

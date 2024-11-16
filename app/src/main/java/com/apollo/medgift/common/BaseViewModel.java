@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-public class BaseViewModel<T extends  BaseModel> extends ViewModel {
+public class BaseViewModel<T> extends ViewModel {
 
     public  void setModel(List<T> rms) {
     }

@@ -1,28 +1,20 @@
 package com.apollo.medgift.common;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.apollo.medgift.models.Recipient;
+import com.apollo.medgift.models.User;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Utility to manage all google Firebase services
@@ -45,49 +37,10 @@ public class Firebase {
         return FirebaseAuth.getInstance();
     }
 
-    // Create and bind listener for db
-    public static <T extends BaseModel> ValueEventListener registerListener(DatabaseReference db, Context context, RecyclerView.Adapter<RecyclerView.ViewHolder> adapter, ViewModel viewModel, List<T> collection){
 
-        BaseViewModel vModel = (BaseViewModel<T>)viewModel;
-
-        vModel.getModel().observe((LifecycleOwner) context, list -> {
-            // Update the selected filters UI.
-            collection.clear();
-            // Test data please. To be removed
-            List<BaseModel> ls = new ArrayList<>();
-            ls.add(new Recipient("Steve", "Samson", "00099887"));
-            ls.add(new Recipient("Sam", "Ugwu", "00099887"));
-            ls.add(new Recipient("Thomas", "Lowe", "00099887"));
-            ls.add(new Recipient("Asari", "Ikenga", "00099887"));
-            ls.add(new Recipient("Chinyera", "Don", "00099887"));
-            collection.addAll((Collection<? extends T>) ls);
-            adapter.notifyDataSetChanged();
-        });
-
-
-        ValueEventListener listener =  new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshots) {
-                List<BaseModel> list = new ArrayList<>();
-                GenericTypeIndicator<T> ts = new GenericTypeIndicator<T>() {};
-                for (DataSnapshot snapshot : snapshots.getChildren()) {
-                    T r = snapshot.getValue(ts);
-                    if (r != null) {
-                        r.setKey(snapshot.getKey());
-                        list.add(r);
-                    }
-                }
-                vModel.setModel(list);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-        // Start listening
-        db.addValueEventListener(listener);
-        return listener;
+    // Get current user
+    public static FirebaseUser currentUser(){
+        return FirebaseAuth.getInstance().getCurrentUser();
     }
 
 
@@ -111,15 +64,51 @@ public class Firebase {
         });
     }
 
-//    // On Room deletion, remove all related
-//    // inspections and images
-//    public  static void removeInspectionsForRoom(Room room){
-//        Firebase.removeStorage(room.getImageUri());
-//        Firebase.database(Inspection.STORE).orderByChild("room").equalTo(room.getKey()).getRef().removeValue(new DatabaseReference.CompletionListener() {
-//            @Override
-//            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-//            }
-//        });
-//    }
+    public static void createUser(String email, String password, OnCompleteListener<AuthResult> onComplete){
+           FirebaseAuth auth = FirebaseAuth.getInstance();
+            auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(onComplete);
+    }
+
+    public static void updateProfile(User user, OnCompleteListener<Void> onComplete){
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(String.format("%s %s|%s", user.getFirstName(), user.getLastName(), user.getRole()))
+                .build();
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseUser.updateProfile(profileUpdates)
+                .addOnCompleteListener(onComplete);
+    }
+
+    public static  void login(String email, String password, OnCompleteListener<AuthResult> onComplete ){
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(onComplete);
+    }
+
+    public static void save(BaseModel model, String storeName, OnCompleteListener<Void> onComplete) {
+        String key = model.getKey();
+
+        DatabaseReference db = Firebase.database(storeName);
+
+        // If this is a fresh model,
+        // Get and assign a key
+        if (key == null || key.isEmpty()) {
+            key = db.push().getKey();
+        }
+        if(key != null){
+            // Save to Firebase
+            db.child(key).setValue(model).addOnCompleteListener(onComplete);
+        }
+    }
+
+    public static void logout() {
+        FirebaseAuth.getInstance().signOut();
+    }
+
+
+    public static void delete( BaseModel model, String storeName, OnCompleteListener<Void> onComplete){
+        Firebase.database(storeName).child(model.getKey()).removeValue().addOnCompleteListener(onComplete);
+    }
+
 }
 

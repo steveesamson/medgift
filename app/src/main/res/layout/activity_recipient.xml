@@ -1,75 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/recipientActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.gifter.RecipientActivity">
-    <include
-        android:id="@+id/homeAppBar"
-        layout="@layout/homeappbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <LinearLayout
-        android:id="@+id/mainLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintVertical_weight="1"
-        android:orientation="vertical"
-        android:paddingBottom="20dp"
-        style="@style/Pane"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeAppBar">
-        <LinearLayout
-            android:id="@+id/headerPane"
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginVertical="20dp"
-            android:layout_gravity="center_vertical"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/addRecipientHeader"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/recipientTitle"
-                android:textAlignment="textStart"
-                android:textColor="@color/title"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                />
-            <TextView
-                android:id="@+id/btnAddRecipient"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btnAddRecipient"
-                android:focusable="true"
-                android:clickable="true"
-                style="@style/TextButton"
-                />
-        </LinearLayout>
 
-        <ScrollView
-            android:id="@+id/scrollView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recipientActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/homeAppBar"
+            layout="@layout/homeappbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recipientsList"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/mainLayout"
+            style="@style/Pane"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeAppBar"
+            app:layout_constraintVertical_weight="1">
+
+            <LinearLayout
+                android:id="@+id/headerPane"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:divider="@android:color/transparent"
-                android:layout_marginBottom="30dp"/>
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="20dp"
+                android:orientation="horizontal">
 
-        </ScrollView>
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/addRecipientHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/recipientTitle"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/title"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/btnAddRecipient"
+                    style="@style/TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/btnAddRecipient" />
+            </LinearLayout>
+            <include
+                android:id="@+id/emptyItem"
+                layout="@layout/empty_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recipientsList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:divider="@android:color/transparent"/>
 
+            </ScrollView>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include
+        android:id="@+id/progress"
+        layout="@layout/progress" />
+</FrameLayout>
