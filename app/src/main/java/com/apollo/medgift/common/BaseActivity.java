@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +14,6 @@ import com.apollo.medgift.views.HomePageActivity;
 import com.apollo.medgift.views.LogInActivity;
 import com.apollo.medgift.views.ProviderHomePageActivity;
 import com.apollo.medgift.R;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseUser;
 
 public class BaseActivity extends AppCompatActivity {
     @Override
