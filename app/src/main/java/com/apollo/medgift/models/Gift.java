@@ -9,6 +9,7 @@ public class Gift extends BaseModel {
     private String description;
     private int isGroup = 0; // 0 = false, 1 = true
     private String createdBy;
+    private List<Contributor> contributors;
 
     public String getName() {
         return name;
@@ -34,12 +35,19 @@ public class Gift extends BaseModel {
         this.description = description;
     }
 
-    public int getIsGroup() {
-        return isGroup;
+    public boolean getIsGroup() {
+        return isGroup == 1;
     }
 
-    public void setIsGroup(int isGroup) {
-        this.isGroup = isGroup;
+    public void setIsGroup(boolean isGroup) {
+        this.isGroup = isGroup ? 1 : 0;
+    }
+    public List<Contributor> getContributors() {
+        return contributors;
+    }
+
+    public void setContributors(List<Contributor> contributors) {
+        this.contributors = contributors;
     }
 
     public String getCreatedBy() {
