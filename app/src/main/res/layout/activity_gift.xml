@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:padding="30dp"
+    android:padding="10dp"
     android:orientation="vertical"
     tools:context=".views.gifter.GiftActivity">
 
@@ -37,12 +37,19 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/mainLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:orientation="vertical"
             android:paddingBottom="30dp">
+
+            <TextView
+                android:id="@+id/giftList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="No Gifts Created yet"
+                android:textSize="14sp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/giftRecyclerView"
@@ -51,6 +58,7 @@
                 android:layout_marginBottom="30dp"/>
 
         </LinearLayout>
+
 
     </ScrollView>
 
