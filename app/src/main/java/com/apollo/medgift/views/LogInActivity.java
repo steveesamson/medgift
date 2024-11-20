@@ -24,11 +24,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         loginBinding = ActivityLoginBinding.inflate(getLayoutInflater());
         EdgeToEdge.enable(this);
         setContentView(loginBinding.getRoot());
-        ViewCompat.setOnApplyWindowInsetsListener(loginBinding.loginActivity, (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        Util.applyWindowInsetsListenerTo(this, loginBinding.loginActivity);
+
         bindEvents();
     }
 

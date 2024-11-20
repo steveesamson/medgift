@@ -28,11 +28,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         EdgeToEdge.enable(this);
 
         setContentView(registerBinding.getRoot());
-        ViewCompat.setOnApplyWindowInsetsListener(registerBinding.registerForm, (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        Util.applyWindowInsetsListenerTo(this, registerBinding.registerForm);
+
         bindEvents();
     }
 
