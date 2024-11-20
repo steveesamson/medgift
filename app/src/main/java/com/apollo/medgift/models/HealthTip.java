@@ -8,7 +8,15 @@ public class HealthTip extends BaseModel {
     private String title;
     private  String content;
     private String creationDate;
+    private String createdBy;
 
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
     public String getTitle() {
         return title;
