@@ -6,12 +6,21 @@ import android.content.DialogInterface;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.activity.ComponentActivity;
+import androidx.activity.EdgeToEdge;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import com.apollo.medgift.databinding.ProgressBinding;
+import com.apollo.medgift.views.LogInActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
@@ -24,19 +33,20 @@ import java.util.Calendar;
 public class Util {
 
 
-
     // These following methods help in managing
     // the display/hiding of the the progress during
     // network activities.
-    public static void startProgress(ProgressBinding progress, String message){
+    public static void startProgress(ProgressBinding progress, String message) {
         progress.progressText.setText(message);
         progress.progressLoader.setVisibility(View.VISIBLE);
     }
-    public static void stopProgress(ProgressBinding progress){
+
+    public static void stopProgress(ProgressBinding progress) {
         progress.progressLoader.setVisibility(View.GONE);
     }
+
     // Extracts resource name from Uri string
-    public static String uriToName(String url){
+    public static String uriToName(String url) {
         try {
             String[] parts = url.split("/");
 
@@ -44,38 +54,38 @@ public class Util {
             String last = parts[lastIndex];
             last = last.substring(0, last.indexOf("?"));
             return last.replace("%2F", "/").trim();
-        }catch(Exception x){
+        } catch (Exception x) {
             Log.e("Storage Extraction: ", x.toString());
             return null;
         }
 
     }
 
-    public static boolean exists(BaseModel model){
-        return  model != null && model.getKey() != null && !model.getKey().isEmpty();
+    public static boolean exists(BaseModel model) {
+        return model != null && model.getKey() != null && !model.getKey().isEmpty();
     }
 
-    public static String success(String type, boolean exists){
-        return String.format("%s %s successfully", type, exists? "updated" : "added");
+    public static String success(String type, boolean exists) {
+        return String.format("%s %s successfully", type, exists ? "updated" : "added");
     }
 
-    public static String fail(String type, boolean exists){
-        return String.format("%s %s failed",  (exists? "Updating" : "Adding"), type.toLowerCase());
+    public static String fail(String type, boolean exists) {
+        return String.format("%s %s failed", (exists ? "Updating" : "Adding"), type.toLowerCase());
     }
 
-    public static String getEmpty(String type){
+    public static String getEmpty(String type) {
         return String.format("No %s added yet.", type);
     }
 
     // Convenience for simple toasts
-    public static void notify(Context context, String message){
+    public static void notify(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
     // Reusable Dialog for informing users of
     // outcomes of actions
-    public  static void showDialog(Context context, String title, String body){
-         new MaterialAlertDialogBuilder(context)
+    public static void showDialog(Context context, String title, String body) {
+        new MaterialAlertDialogBuilder(context)
                 .setTitle(title)
                 .setMessage(body)
                 .setPositiveButton("Ok, thanks", new DialogInterface.OnClickListener() {
@@ -85,7 +95,8 @@ public class Util {
                     }
                 }).show();
     }
-    public  static void showConfirm(Context context, String title, String ask,  DialogInterface.OnClickListener confirm){
+
+    public static void showConfirm(Context context, String title, String ask, DialogInterface.OnClickListener confirm) {
         new MaterialAlertDialogBuilder(context)
                 .setTitle(title)
                 .setMessage(ask)
@@ -100,18 +111,22 @@ public class Util {
         Glide.with(context).load(path).into(imageView);
     }
 
-    public static boolean isEmail(String input){
+    public static boolean isEmail(String input) {
         return !input.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(input).matches();
     }
-    private static final String POSTAL_CODE = "^[A-Z][0-9][A-Z]\\s[0-9][A-Z][0-9]$";
-    public static boolean isPostalCode(String input){
 
-        return !input.isEmpty() &&  input.matches(POSTAL_CODE);
+    private static final String POSTAL_CODE = "^[A-Z][0-9][A-Z]\\s[0-9][A-Z][0-9]$";
+
+    public static boolean isPostalCode(String input) {
+
+        return !input.isEmpty() && input.matches(POSTAL_CODE);
     }
-    public static boolean isPhoneNo(String input){
+
+    public static boolean isPhoneNo(String input) {
         return !input.isEmpty() && Patterns.PHONE.matcher(input).matches();
     }
-    public static boolean isMinLen6(String input){
+
+    public static boolean isMinLen6(String input) {
         return !input.isEmpty() && input.length() >= 6;
     }
 
@@ -120,17 +135,17 @@ public class Util {
     }
 
     // Get the text from input fields
-    public static String valueOf(TextInputEditText input){
+    public static String valueOf(TextInputEditText input) {
         return String.valueOf(input.getText());
     }
 
 
-    public static String valueOf(AutoCompleteTextView input){
+    public static String valueOf(AutoCompleteTextView input) {
         return String.valueOf(input.getText());
     }
 
     // Display date picker for date fields
-    public static void showDatePickerFor(TextInputEditText edtDate, Context context ){
+    public static void showDatePickerFor(TextInputEditText edtDate, Context context) {
         // This is the date field
         // Retrieve a Calendar instance
         Calendar cal = Calendar.getInstance();
@@ -160,6 +175,15 @@ public class Util {
 
         // Display the date picker dialog
         datePicker.show();
+    }
+
+    public static void applyWindowInsetsListenerTo(ComponentActivity activity, ViewGroup view) {
+        EdgeToEdge.enable(activity);
+        ViewCompat.setOnApplyWindowInsetsListener(view, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
     }
 }
 

@@ -13,6 +13,7 @@ import com.apollo.medgift.adapters.ForYouRecyclerViewAdapter;
 import com.apollo.medgift.adapters.HealthTipsRecyclerViewAdapter;
 import com.apollo.medgift.adapters.HomeSlideImageAdapter;
 import com.apollo.medgift.common.BaseActivity;
+import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityHomepageBinding;
 import com.apollo.medgift.models.HomeSlideImageItem;
 import com.apollo.medgift.views.gifter.RecipientActivity;
@@ -42,7 +43,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
 
         binding = ActivityHomepageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        Util.applyWindowInsetsListenerTo(this, binding.main);
         // Setup tool bar and title
         setupToolbar(binding.homeAppBar.getRoot(), "MedGift", false);
 

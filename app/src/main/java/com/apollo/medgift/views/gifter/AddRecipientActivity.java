@@ -26,14 +26,10 @@ public class AddRecipientActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         addRecipientBinding = ActivityAddrecipientBinding.inflate(getLayoutInflater());
         setContentView(addRecipientBinding.getRoot());
-        ViewCompat.setOnApplyWindowInsetsListener(addRecipientBinding.addRecipient, (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        applyWindowInsetsListenerTo(this, addRecipientBinding.addRecipient);
+
         Intent intent = getIntent();
         recipient = (Recipient) intent.getSerializableExtra(Recipient.STORE);
 
