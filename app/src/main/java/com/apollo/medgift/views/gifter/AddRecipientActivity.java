@@ -6,11 +6,6 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.RadioGroup;
 
-import androidx.activity.EdgeToEdge;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
 import com.apollo.medgift.R;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Firebase;
@@ -37,7 +32,7 @@ public class AddRecipientActivity extends BaseActivity implements View.OnClickLi
         String title = getString(exists ? R.string.editRecipientTitle : R.string.addRecipientTitle);
         setupToolbar(addRecipientBinding.homeAppBar.getRoot(), title, true);
         if (!exists) {
-            recipient.setCreatedBy(Firebase.currentUser().getUid());
+            recipient.setCreatedBy(Firebase.currentUser().getUserId());
         }
         setup();
     }

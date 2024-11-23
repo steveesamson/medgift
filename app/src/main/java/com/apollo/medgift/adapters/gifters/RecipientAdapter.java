@@ -61,7 +61,8 @@ public class RecipientAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         private void setupListeners() {
             itemBinding.btnDelete.setOnClickListener(this);
-            itemBinding.txtName.setOnClickListener(this);
+            itemView.setOnClickListener(this);
+            itemBinding.btnSendGift.setOnClickListener(this);
 
         }
 
@@ -83,7 +84,10 @@ public class RecipientAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     });
                     dialog.dismiss();
                 });
-            } else if(view == itemBinding.txtName){ // Display recipient form for details
+            } else if(view == itemBinding.btnSendGift){
+                // Send a gift to this recipient
+                // Send  a gift here
+            } else { // Display recipient form for details
                 Intent intent = new Intent(context, AddRecipientActivity.class);
                 intent.putExtra(Recipient.STORE, RecipientHolder.this.recipient);
                 context.startActivity(intent);

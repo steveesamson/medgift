@@ -2,6 +2,7 @@ package com.apollo.medgift.common;
 
 import androidx.annotation.NonNull;
 
+import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.models.User;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,8 +40,12 @@ public class Firebase {
 
 
     // Get current user
-    public static FirebaseUser currentUser(){
-        return FirebaseAuth.getInstance().getCurrentUser();
+    public static SessionUser currentUser(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user == null){
+            return null;
+        }
+        return new SessionUser(user);
     }
 
 
@@ -85,9 +90,9 @@ public class Firebase {
                 .addOnCompleteListener(onComplete);
     }
 
-    public static String getRole(){
-        return currentUser().getDisplayName().split("\\|")[1];
-    }
+//    public static String getRole(){
+//        return currentUser().getDisplayName().split("\\|")[1];
+//    }
 
     public static void save(BaseModel model, String storeName, OnCompleteListener<Void> onComplete) {
         String key = model.getKey();
