@@ -1,33 +1,18 @@
 package com.apollo.medgift.views.provider;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.apollo.medgift.R;
-import com.apollo.medgift.adapters.provider.HealthTipAdapter;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityAddhealthtipBinding;
 import com.apollo.medgift.models.HealthTip;
-import com.apollo.medgift.models.Recipient;
 import com.apollo.medgift.models.User;
-import com.apollo.medgift.views.gifter.AddRecipientActivity;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.Context;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AddHealthTipActivity extends BaseActivity implements View.OnClickListener {
     private ActivityAddhealthtipBinding addhealthtipBinding;
@@ -49,16 +34,18 @@ public class AddHealthTipActivity extends BaseActivity implements View.OnClickLi
         String title = getString(exists ? R.string.editHealthtipTitle : R.string.addHealthtipTitle);
         setupToolbar(addhealthtipBinding.homeAppBar.getRoot(), title, true);
         if (!exists) {
-            healthTip.setCreatedBy(Firebase.currentUser().getUid());
+
+            healthTip.setCreatedBy(Firebase.currentUser().getUserId());
             healthTip.setCreatedByName(Firebase.currentUser().getEmail());
         }
         setup();
-        }
+    }
+
     private void setup() {
         addhealthtipBinding.tipTitle.setText(healthTip.getTitle());
         addhealthtipBinding.tipDescription.setText(healthTip.getContent());
         addhealthtipBinding.btnAddTip.setOnClickListener(this);
-        if (User.Role.GIFTER.name().equals(Firebase.getRole())) {
+        if (User.Role.GIFTER.name().equals(Firebase.currentUser().getUserRole())) {
             // hide button for "Gifter"
             // disable the edit texts
             addhealthtipBinding.btnAddTip.setVisibility(View.GONE);
@@ -73,10 +60,11 @@ public class AddHealthTipActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-        private void clearErrors() {
+    private void clearErrors() {
         addhealthtipBinding.lytTitle.setError("");
         addhealthtipBinding.lytDescription.setError("");
     }
+
     private void saveHealthTip() {
         clearErrors();
 
@@ -124,4 +112,4 @@ public class AddHealthTipActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    }
+}
