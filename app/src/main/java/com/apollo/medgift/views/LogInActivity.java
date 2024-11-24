@@ -69,7 +69,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             Firebase.login(email, password, (task) ->{
 
                 if(task.isSuccessful()){
-                    String ROLE = Firebase.getRole();
+                    String ROLE = Firebase.currentUser().getUserRole();
                     Log.i("ROLE:", ROLE);
                     Intent intent = null;
 

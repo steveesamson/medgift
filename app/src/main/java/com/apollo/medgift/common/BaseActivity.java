@@ -18,6 +18,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.HomePageActivity;
 import com.apollo.medgift.views.LogInActivity;
@@ -25,15 +26,12 @@ import com.apollo.medgift.views.ProviderHomePageActivity;
 import com.apollo.medgift.R;
 import com.google.firebase.auth.FirebaseUser;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity {
+    private static final String TAG = BaseActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
-    protected String ROLE = "";
-    protected String DISPLAY = "";
-
     // Set up toolbar with a dynamic title
     protected void setupToolbar(Toolbar toolbar, String title, boolean showBackButton) {
         setSupportActionBar(toolbar);
@@ -58,14 +56,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser currentUser = Firebase.currentUser();
-        if (currentUser == null) {
+        SessionUser sessionUser = Firebase.currentUser();
+        if(sessionUser == null){
             finish();
-        } else {
-            String[] nameRole = currentUser.getDisplayName().split("\\|");
-            DISPLAY = nameRole[0];
-            ROLE = nameRole[1];
         }
+
     }
 
     // Inflate menu based on user type
@@ -74,7 +69,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         // Retrieve usertype based on user status
         String userType = getUserType();
-
+        Log.i(TAG, userType);
 
         MenuInflater inflater = getMenuInflater();
 
@@ -90,7 +85,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     // Retrieve user type from shared pref or backend
     private String getUserType() {
 
-        return ROLE;
+        return Firebase.currentUser().getUserRole();
     }
 
     // Handle menu items selector based on user type
