@@ -21,6 +21,9 @@
         <activity android:name=".views.gifter.GiftActivity"
             android:exported="false" />
         <activity
+            android:name=".views.gifter.GiftActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.provider.PublishHealthTipsActivity"
             android:exported="false" />
         <activity
