@@ -65,8 +65,13 @@
     <string name="lblAddress">Address</string>
     <string name="lblSaveBtn">Save</string>
     <string name="recipientTitle">Recipients</string>
+    <string name="giftTitle">Gifts</string>
     <string name="btnDeleteHint">Delete button</string>
     <string name="lblCancelBtn">Cancel</string>
     <string name="hintFirstName">First name</string>
     <string name="hintLastName">Last name</string>
+
+    <string name="btnAddGift">Add Gift +</string>
+    <string name="editGiftTitle">Edit Gift</string>
+    <string name="addGiftTitle">Add Gift</string>
 </resources>

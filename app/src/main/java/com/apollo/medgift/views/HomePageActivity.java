@@ -17,7 +17,6 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityHomepageBinding;
 import com.apollo.medgift.models.HomeSlideImageItem;
 import com.apollo.medgift.views.gifter.RecipientActivity;
-import com.apollo.medgift.views.gifter.AddGiftActivity;
 import com.apollo.medgift.views.gifter.GiftActivity;
 
 import java.util.ArrayList;
@@ -76,25 +75,23 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
 
     private void registerListeners() {
         binding.quickBtnRecipient.setOnClickListener(this);
+        binding.quickBtnGift.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
 
-        Intent intent;
+        Intent intent,giftIntent;
         // Handle Recipient navigation
         if(view == binding.quickBtnRecipient){
             intent = new  Intent(getApplicationContext(), RecipientActivity.class);
             startActivity(intent);
         }
-        binding.categoryCard3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to AddGiftActivity (GiftActivity)
-                Intent intent = new Intent(HomePageActivity.this, GiftActivity.class);
-                startActivity(intent);
-            }
-        });
+        if(view == binding.quickBtnGift){
+            giftIntent = new Intent(getApplicationContext(),GiftActivity.class);
+            startActivity(giftIntent);
+        }
+
 
     }
 

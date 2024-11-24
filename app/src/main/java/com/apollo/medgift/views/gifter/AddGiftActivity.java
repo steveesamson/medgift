@@ -2,6 +2,7 @@ package com.apollo.medgift.views.gifter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -12,136 +13,184 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.apollo.medgift.R;
 import com.apollo.medgift.adapters.ContributorAdapter;
 import com.apollo.medgift.common.BaseActivity;
+import com.apollo.medgift.common.Firebase;
+import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityAddgiftBinding;
+import com.apollo.medgift.databinding.ActivityAddrecipientBinding;
 import com.apollo.medgift.databinding.ContributorDialogBinding;
-import com.apollo.medgift.models.Contributor;
+import com.apollo.medgift.models.Gift;
+import com.apollo.medgift.models.Recipient;
+import com.apollo.medgift.models.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AddGiftActivity extends BaseActivity implements View.OnClickListener {
 
-    ActivityAddgiftBinding addgiftBinding;
-    ContributorAdapter contributorAdapter;
-    List<Contributor> contributors = new ArrayList<>();
+    private ActivityAddgiftBinding addGiftBinding;
+    private ContributorAdapter contributorAdapter;
+    private Gift gift;
+    private List<User> contributors;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        contributors = new ArrayList<>();
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        //setContentView(R.layout.activity_addgift);
-        addgiftBinding = ActivityAddgiftBinding.inflate(getLayoutInflater());
-        View view = addgiftBinding.getRoot();
-        setContentView(view);
+        addGiftBinding = ActivityAddgiftBinding.inflate(getLayoutInflater());
+        setContentView(addGiftBinding.getRoot());
 
-        Toolbar toolbar = addgiftBinding.homeAppBar.getRoot();
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Add Gift");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        CheckBox isGroupGift = addgiftBinding.isGroupGift;
-        LinearLayout contributorsLyt = addgiftBinding.contributorsLyt;
-        TextView inviteContributors = addgiftBinding.inviteContributors;
+        ViewCompat.setOnApplyWindowInsetsListener(addGiftBinding.addGift, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        Intent intent = getIntent();
+        gift = (Gift)intent.getSerializableExtra(Gift.STORE);
 
-        isGroupGift.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        boolean exists = Util.exists(gift);
+        String title = getString(exists ? R.string.editGiftTitle : R.string.addGiftTitle);
+        setupToolbar(addGiftBinding.homeAppBar.getRoot(), title, true);
+        setup();
+
+    }
+
+    private void setup() {
+        addGiftBinding.edtGiftName.setText(gift.getName());
+        addGiftBinding.edtRecipientId.setText(gift.getRecipientId());
+        addGiftBinding.edtGiftDescription.setText(gift.getDescription());
+
+        addGiftBinding.isGroupGift.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                contributorsLyt.setVisibility(View.VISIBLE);
+                addGiftBinding.contributorsLyt.setVisibility(View.VISIBLE);
             } else {
-                contributorsLyt.setVisibility(View.GONE);
+                addGiftBinding.contributorsLyt.setVisibility(View.GONE);
             }
         });
-        inviteContributors.setOnClickListener(this);
 
-        RecyclerView recyclerView = addgiftBinding.contributorsRecyclerView;
-        recyclerView.setVisibility(View.VISIBLE);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        addGiftBinding.inviteContributors.setOnClickListener(this);
+        addGiftBinding.btnSave.setOnClickListener(this);
+
+        addGiftBinding.contributorsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         contributorAdapter = new ContributorAdapter(this, contributors);
-        recyclerView.setAdapter(contributorAdapter);
+        addGiftBinding.contributorsRecyclerView.setAdapter(contributorAdapter);
+        updateContributors();
+    }
 
-        addgiftBinding.btnSave.setOnClickListener(v -> {
-            String giftName = addgiftBinding.edtGiftName.getText().toString();
-            String giftDescription = addgiftBinding.edtGiftDescription.getText().toString();
+    private void clearErrors() {
+        addGiftBinding.edtGiftName.setError("");
+        addGiftBinding.edtRecipientId.setError("");
+        addGiftBinding.edtGiftDescription.setError("");
+    }
 
-            if (giftName.isEmpty() || giftDescription.isEmpty()) {
-                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                return;
-            }
+    private void saveGift() {
+        clearErrors();
 
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("gift_name", giftName);
-            resultIntent.putExtra("gift_description", giftDescription);
-            resultIntent.putExtra("is_group_gift", isGroupGift.isChecked());
-            resultIntent.putExtra("contributors", new ArrayList<>(contributors));
-            setResult(RESULT_OK, resultIntent);
-            Log.d("AddGiftActivity", "Finishing with result: " + giftName.toString() + ", " + contributors.size() + " contributors");
-            finish();
-        });
+        String giftName = Util.valueOf(addGiftBinding.edtGiftName);
+        String recipientId= Util.valueOf(addGiftBinding.edtRecipientId);
+        String giftDescription = Util.valueOf(addGiftBinding.edtGiftDescription);
+        boolean isGroupGift = addGiftBinding.isGroupGift.isChecked();
+
+        boolean formIsValid = true;
+
+        if (TextUtils.isEmpty(giftName)) {
+            addGiftBinding.lytGiftName.setError("Gift name is required.");
+            formIsValid = false;
+        }
+        if (TextUtils.isEmpty(giftDescription)) {
+            addGiftBinding.lytGiftDescription.setError("Gift description is required.");
+            formIsValid = false;
+        }
+
+        if (formIsValid)
+        {
+            gift.setName(giftName);
+            gift.setRecipientId(recipientId);
+            gift.setDescription(giftDescription);
+
+            boolean exists = Util.exists(gift);
+            Util.startProgress(addGiftBinding.progress, "Adding Gift...");
+
+            Firebase.save(gift, Gift.STORE, (task) -> {
+                Util.stopProgress(addGiftBinding.progress);
+                if (task.isSuccessful()) {
+
+                    gift = null;
+                    Util.notify(AddGiftActivity.this, Util.success("Gift", exists));
+                    finish();
+
+                } else {
+                    Util.notify(AddGiftActivity.this, Util.fail("Gift", exists));
+                }
+            });
+        }
+
     }
 
 
     @Override
-    public void onClick(View v) {
-        if (v.getId() == addgiftBinding.inviteContributors.getId()) {
-
+    public void onClick(View view) {
+        if (view == addGiftBinding.btnSave)
+        {
+            saveGift();
+        }
+        else if (view == addGiftBinding.inviteContributors)
+        {
             showInviteContributorsDialog();
         }
-
     }
 
     private void showInviteContributorsDialog() {
         ContributorDialogBinding dialogBinding = ContributorDialogBinding.inflate(getLayoutInflater());
 
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Invite Contributor")
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Invite Contributor")
                 .setView(dialogBinding.getRoot())
                 .setPositiveButton("Invite", (dialog, which) -> {
-                    String email = dialogBinding.edtContributorEmail.getText().toString().trim();
-                    String firstName = dialogBinding.edtContributorFirstName.getText().toString().trim();
-                    String lastName = dialogBinding.edtContributorLastName.getText().toString().trim();
+                    String email = Util.valueOf(dialogBinding.edtContributorEmail);
+                    if (!TextUtils.isEmpty(email)) {
+                        User contributor = new User(User.Role.GIFTER);
+                        contributor.setEmail(email);
 
-                    if (!email.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty()) {
-                        Contributor contributor = new Contributor(firstName, lastName, email);
                         contributors.add(contributor);
-                        Log.d("AddGiftActivity", "Contributor added: " + contributor.getFirstName() + " " + contributor.getLastName() + " | Email: " + contributor.getEmail());
+                        Log.d("AddGiftActivity", "Contributor added: " + email);
                         contributorAdapter.notifyDataSetChanged();
                         updateContributors();
-                        Toast.makeText(this, "Contributor Invited: " + firstName + " " + lastName, Toast.LENGTH_SHORT).show();
 
-                        dialog.dismiss();
+                        Util.notify(this, "Contributor invited: " + email);
                     } else {
-
-                        Toast.makeText(this, "Please fill in all fields correctly.", Toast.LENGTH_SHORT).show();
+                        Util.notify(this, "Please provide a valid email.");
                     }
                 })
-                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-
-        builder.create().show();
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
     }
 
     private void updateContributors() {
+        if (contributors.isEmpty())
+        {
 
-        if (contributors.isEmpty()) {
-
-            addgiftBinding.contributorsList.setVisibility(View.VISIBLE);
-            addgiftBinding.contributorsRecyclerView.setVisibility(View.GONE);
-        } else {
-
-            addgiftBinding.contributorsList.setVisibility(View.GONE);
-            addgiftBinding.contributorsRecyclerView.setVisibility(View.VISIBLE);
+            addGiftBinding.contributorsRecyclerView.setVisibility(View.GONE);
         }
+        else
+        {
 
+            addGiftBinding.contributorsRecyclerView.setVisibility(View.VISIBLE);
+        }
     }
-
-
-
-
-
 }

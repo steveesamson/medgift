@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.apollo.medgift.R;
-import com.apollo.medgift.models.Contributor;
+import com.apollo.medgift.models.User;
 
 
 import java.util.List;
@@ -18,10 +18,10 @@ import java.util.List;
 public class ContributorAdapter extends RecyclerView.Adapter<ContributorAdapter.ViewHolder> {
 
     private final Context context;
-    private final List<Contributor> contributorList;
+    private final List<User> contributorList;
 
 
-    public ContributorAdapter(Context context, List<Contributor> contributorList) {
+    public ContributorAdapter(Context context, List<User> contributorList) {
         this.context = context;
         this.contributorList = contributorList;
     }
@@ -37,8 +37,7 @@ public class ContributorAdapter extends RecyclerView.Adapter<ContributorAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Contributor contributor = contributorList.get(position);
-        holder.name.setText(contributor.getFirstName() + " " + contributor.getLastName());
+        User contributor = contributorList.get(position);
         holder.email.setText(contributor.getEmail());
     }
 
@@ -53,8 +52,7 @@ public class ContributorAdapter extends RecyclerView.Adapter<ContributorAdapter.
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.contributorName);
-            email = itemView.findViewById(R.id.contributorEmail);
+            name = itemView.findViewById(R.id.edtContributorEmail);
         }
     }
 }
