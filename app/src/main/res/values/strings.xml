@@ -65,6 +65,7 @@
     <string name="lblAddress">Address</string>
     <string name="lblSaveBtn">Save</string>
     <string name="recipientTitle">Recipients</string>
+    <string name="healthTipTitle">Health Tip</string>
     <string name="btnDeleteHint">Delete button</string>
     <string name="lblCancelBtn">Cancel</string>
     <string name="hintFirstName">First name</string>

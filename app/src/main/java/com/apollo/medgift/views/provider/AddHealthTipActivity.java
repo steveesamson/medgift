@@ -20,6 +20,7 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityAddhealthtipBinding;
 import com.apollo.medgift.models.HealthTip;
 import com.apollo.medgift.models.Recipient;
+import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.gifter.AddRecipientActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
@@ -31,8 +32,6 @@ import java.util.List;
 public class AddHealthTipActivity extends BaseActivity implements View.OnClickListener {
     private ActivityAddhealthtipBinding addhealthtipBinding;
     private HealthTip healthTip;
-    SharedPreferences sharedPreferences;
-    String Role="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +58,9 @@ public class AddHealthTipActivity extends BaseActivity implements View.OnClickLi
         addhealthtipBinding.tipTitle.setText(healthTip.getTitle());
         addhealthtipBinding.tipDescription.setText(healthTip.getContent());
         addhealthtipBinding.btnAddTip.setOnClickListener(this);
-        if ("GIFTER".equals(getUserRole())) {
+        if (User.Role.GIFTER.name().equals(Firebase.getRole())) {
             // hide button for "Gifter"
+            // disable the edit texts
             addhealthtipBinding.btnAddTip.setVisibility(View.GONE);
             addhealthtipBinding.tipTitle.setEnabled(false);
             addhealthtipBinding.tipTitle.setFocusable(false);
@@ -122,12 +122,6 @@ public class AddHealthTipActivity extends BaseActivity implements View.OnClickLi
             // Handle save here
             saveHealthTip();
         }
-    }
-    public String getUserRole(){
-        // getting shared preference data
-        sharedPreferences = getSharedPreferences("Role", MODE_PRIVATE);
-        Role = sharedPreferences.getString("UserRole", "Role");
-        return Role;
     }
 
     }

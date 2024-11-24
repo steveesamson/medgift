@@ -26,6 +26,7 @@ import com.apollo.medgift.databinding.ActivityHealthtipBinding;
 import com.apollo.medgift.databinding.ActivityRecipientBinding;
 import com.apollo.medgift.models.HealthTip;
 import com.apollo.medgift.models.Recipient;
+import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.gifter.AddRecipientActivity;
 import com.apollo.medgift.views.models.HealthtipVModel;
 import com.apollo.medgift.views.models.RecipientVModel;
@@ -41,8 +42,7 @@ public class HealthTipActivity extends BaseActivity {
     private final List<HealthTip> healthTips = new ArrayList<>();
     private HealthTipAdapter healthTipAdapter;
     private DatabaseReference db;
-    String Role="";
-    SharedPreferences sharedPreferences;
+
     private ValueEventListener healthTipListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +52,9 @@ public class HealthTipActivity extends BaseActivity {
         healthtipBinding = ActivityHealthtipBinding.inflate(getLayoutInflater());
         setContentView(healthtipBinding.getRoot());
         // Setup tool bar and title
-        setupToolbar(healthtipBinding.homeAppBar.getRoot(), getString(R.string.recipientTitle), true);
+        setupToolbar(healthtipBinding.homeAppBar.getRoot(), getString(R.string.healthTipTitle), true);
         applyWindowInsetsListenerTo(this, healthtipBinding.healthTipActivity);
 
-        //getting role
-        Intent intent=getIntent();
-        Role = intent.getStringExtra("Role");
-        sharedPreferences = getSharedPreferences("Role", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("UserRole", Role);
-        editor.apply();
         setPageUp();
 
     }
@@ -78,7 +71,7 @@ public class HealthTipActivity extends BaseActivity {
         this.db = Firebase.database(HealthTip.STORE);
 
         // checking role of user
-        checkUserRole(Role);
+        checkUserRole();
 
         RecyclerView recyclerView = healthtipBinding.healthTipList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -111,8 +104,8 @@ public class HealthTipActivity extends BaseActivity {
 
         }
     }
-    private void checkUserRole(String role) {
-        if ("GIFTER".equals(role)) {
+    private void checkUserRole() {
+        if (User.Role.GIFTER.name().equals(Firebase.getRole())) {
             // hide button for "Gifter"
             healthtipBinding.btnAddHealthtip.setVisibility(View.GONE);
         } else {

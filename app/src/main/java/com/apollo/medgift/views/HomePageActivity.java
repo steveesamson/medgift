@@ -36,7 +36,6 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     String[] gift_description = {"Connect with a doctor remotely for a virtual check-up or to address health concerns from the comfort of your home.", "Connect with a doctor remotely for a virtual check-up or to address health concerns from the comfort of your home."};
     String[] gift_price = {"$ 423.00", "$ 565.00"};
     int[] images = {R.drawable.sample_image1, R.drawable.sample_image2};
-    String Role ="";
 
 
 
@@ -52,9 +51,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         binding.moreHealthTipsButton.setOnClickListener(this);
         // Image Slider
         ViewPager2 viewPager2 = binding.imageSlider;
-        // getting role
-        Intent intent=getIntent();
-         Role = intent.getStringExtra("Role");
+
 
          //https://www.youtube.com/watch?v=U7bqZkmVps8
         List<HomeSlideImageItem> homeSliderItem = new ArrayList<>();
@@ -89,12 +86,10 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         // Handle Recipient navigation
         if(view == binding.quickBtnRecipient){
             intent = new  Intent(getApplicationContext(), RecipientActivity.class);
-            intent.putExtra("Role",Role);
             startActivity(intent);
         }
        else if (view == binding.moreHealthTipsButton){
             intent = new Intent(getApplicationContext(), HealthTipActivity.class);
-            intent.putExtra("Role",Role);
             startActivity(intent);
         }
     }

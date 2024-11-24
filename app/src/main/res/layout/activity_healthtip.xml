@@ -40,7 +40,7 @@ tools:context=".views.provider.HealthTipActivity">
             android:layout_marginBottom="20dp"
             android:clickable="true"
             android:focusable="true"
-            android:text="@string/btnAddRecipient"
+            android:text="@string/addHealthtipTitle"
             android:textAlignment="textEnd" />
 
         <include
