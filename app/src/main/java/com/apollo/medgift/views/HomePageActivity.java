@@ -82,12 +82,13 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         NotificationUtil.createNotificationChannel(this,getString(R.string.channel_name), getString(R.string.channel_description));
         binding.quickBtnRecipient.setOnClickListener(this);
         binding.btnTestNotification.setOnClickListener(this);
+        binding.quickBtnGift.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
 
-        Intent intent;
+        Intent intent,giftIntent;
         // Handle Recipient navigation
         if(view == binding.quickBtnRecipient){
             intent = new  Intent(getApplicationContext(), RecipientActivity.class);
@@ -99,14 +100,11 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
             intent = new Intent(getApplicationContext(), HealthTipActivity.class);
             startActivity(intent);
         }
-        binding.categoryCard3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to AddGiftActivity (GiftActivity)
-                Intent intent = new Intent(HomePageActivity.this, GiftActivity.class);
-                startActivity(intent);
-            }
-        });
+        if(view == binding.quickBtnGift){
+            giftIntent = new Intent(getApplicationContext(),GiftActivity.class);
+            startActivity(giftIntent);
+        }
+
 
     }
 

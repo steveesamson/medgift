@@ -5,17 +5,12 @@
     android:padding="8dp">
 
     <TextView
-        android:id="@+id/contributorName"
+        android:id="@+id/txtContributorEmail"
+        style="@style/Content"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Contributor Name"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/contributorEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Contributor Email"
-        android:textSize="14sp" />
+        android:text="Enter Contributor email"
+        android:textSize="16sp"
+        android:layout_marginEnd="20dp"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

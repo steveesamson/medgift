@@ -66,7 +66,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
         if(formIsValid){
             Util.startProgress(loginBinding.progress, "Signing in...");
-            Firebase.login(email, password, (task) ->{
+            Firebase.login(email, password, (task) -> {
 
                 if(task.isSuccessful()){
                     String ROLE = Firebase.currentUser().getUserRole();
