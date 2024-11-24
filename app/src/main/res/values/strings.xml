@@ -69,4 +69,7 @@
     <string name="lblCancelBtn">Cancel</string>
     <string name="hintFirstName">First name</string>
     <string name="hintLastName">Last name</string>
+
+    <string name="addHealthtipTitle">Add Health Tip</string>
+    <string name="editHealthtipTitle">Edit Health Tip</string>
 </resources>

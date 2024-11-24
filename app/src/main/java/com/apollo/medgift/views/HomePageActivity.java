@@ -3,6 +3,7 @@ package com.apollo.medgift.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityHomepageBinding;
 import com.apollo.medgift.models.HomeSlideImageItem;
 import com.apollo.medgift.views.gifter.RecipientActivity;
+import com.apollo.medgift.views.provider.HealthTipActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     String[] gift_description = {"Connect with a doctor remotely for a virtual check-up or to address health concerns from the comfort of your home.", "Connect with a doctor remotely for a virtual check-up or to address health concerns from the comfort of your home."};
     String[] gift_price = {"$ 423.00", "$ 565.00"};
     int[] images = {R.drawable.sample_image1, R.drawable.sample_image2};
+    String Role ="";
 
 
 
@@ -46,11 +49,14 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         Util.applyWindowInsetsListenerTo(this, binding.main);
         // Setup tool bar and title
         setupToolbar(binding.homeAppBar.getRoot(), "MedGift", false);
-
+        binding.moreHealthTipsButton.setOnClickListener(this);
         // Image Slider
         ViewPager2 viewPager2 = binding.imageSlider;
+        // getting role
+        Intent intent=getIntent();
+         Role = intent.getStringExtra("Role");
 
-        //https://www.youtube.com/watch?v=U7bqZkmVps8
+         //https://www.youtube.com/watch?v=U7bqZkmVps8
         List<HomeSlideImageItem> homeSliderItem = new ArrayList<>();
         homeSliderItem.add(new HomeSlideImageItem(R.drawable.banner_1));
         homeSliderItem.add(new HomeSlideImageItem(R.drawable.banner_2));
@@ -83,6 +89,12 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         // Handle Recipient navigation
         if(view == binding.quickBtnRecipient){
             intent = new  Intent(getApplicationContext(), RecipientActivity.class);
+            intent.putExtra("Role",Role);
+            startActivity(intent);
+        }
+       else if (view == binding.moreHealthTipsButton){
+            intent = new Intent(getApplicationContext(), HealthTipActivity.class);
+            intent.putExtra("Role",Role);
             startActivity(intent);
         }
     }

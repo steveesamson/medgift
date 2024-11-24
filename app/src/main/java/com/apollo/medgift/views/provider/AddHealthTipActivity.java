@@ -1,6 +1,7 @@
 package com.apollo.medgift.views.provider;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,17 +23,16 @@ import com.apollo.medgift.models.Recipient;
 import com.apollo.medgift.views.gifter.AddRecipientActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.core.Context;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddHealthTipActivity extends BaseActivity {
+public class AddHealthTipActivity extends BaseActivity implements View.OnClickListener {
     private ActivityAddhealthtipBinding addhealthtipBinding;
     private HealthTip healthTip;
-    private final List<HealthTip> healthTips = new ArrayList<>();
-    private HealthTipAdapter healthTipAdapter;
-    private DatabaseReference db;
-    private ValueEventListener healthTipListener;
+    SharedPreferences sharedPreferences;
+    String Role="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,50 +40,40 @@ public class AddHealthTipActivity extends BaseActivity {
         EdgeToEdge.enable(this);
         addhealthtipBinding = ActivityAddhealthtipBinding.inflate(getLayoutInflater());
         setContentView(addhealthtipBinding.getRoot());
+        applyWindowInsetsListenerTo(this, addhealthtipBinding.addHealthtipActivity);
 
-        Toolbar homeAppBar = addhealthtipBinding.homeAppBar.getRoot();
-        setSupportActionBar(homeAppBar);
 
-        // Set Appbar Title and enable back button
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Add Health Tips");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-        setupToolbar(addhealthtipBinding.homeAppBar.getRoot(), getString(R.string.recipientTitle), true); //new toolbar
-        ViewCompat.setOnApplyWindowInsetsListener(addhealthtipBinding.addHealthtipActivity, (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
         Intent intent = getIntent();
-        healthTip = (HealthTip) intent.getSerializableExtra(Recipient.STORE);
+        healthTip = (HealthTip) intent.getSerializableExtra(HealthTip.STORE);
 
         boolean exists = Util.exists(healthTip);
-        String title = getString(exists ? R.string.editRecipientTitle : R.string.addRecipientTitle);
+        String title = getString(exists ? R.string.editHealthtipTitle : R.string.addHealthtipTitle);
         setupToolbar(addhealthtipBinding.homeAppBar.getRoot(), title, true);
         if (!exists) {
             healthTip.setCreatedBy(Firebase.currentUser().getUid());
+            healthTip.setCreatedByName(Firebase.currentUser().getEmail());
         }
         setup();
         }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
     private void setup() {
         addhealthtipBinding.tipTitle.setText(healthTip.getTitle());
         addhealthtipBinding.tipDescription.setText(healthTip.getContent());
-        addhealthtipBinding.btnAddTip.setOnClickListener(this::onClick);
+        addhealthtipBinding.btnAddTip.setOnClickListener(this);
+        if ("GIFTER".equals(getUserRole())) {
+            // hide button for "Gifter"
+            addhealthtipBinding.btnAddTip.setVisibility(View.GONE);
+            addhealthtipBinding.tipTitle.setEnabled(false);
+            addhealthtipBinding.tipTitle.setFocusable(false);
+            addhealthtipBinding.tipDescription.setEnabled(false);
+            addhealthtipBinding.tipDescription.setFocusable(false);
+            setupToolbar(addhealthtipBinding.homeAppBar.getRoot(), "Health Tip", true);
+        } else {
+            // enable buttons for other roles
+            addhealthtipBinding.btnAddTip.setVisibility(View.VISIBLE);
+        }
     }
-    private void clearErrors() {
+
+        private void clearErrors() {
         addhealthtipBinding.lytTitle.setError("");
         addhealthtipBinding.lytDescription.setError("");
     }
@@ -110,7 +100,7 @@ public class AddHealthTipActivity extends BaseActivity {
             boolean exists = Util.exists(healthTip);
             Util.startProgress(addhealthtipBinding.progress, "Adding Health Tip...");
 
-            Firebase.save(healthTip, Recipient.STORE, (task) -> {
+            Firebase.save(healthTip, HealthTip.STORE, (task) -> {
                 Util.stopProgress(addhealthtipBinding.progress);
                 if (task.isSuccessful()) {
 
@@ -127,12 +117,17 @@ public class AddHealthTipActivity extends BaseActivity {
     }
 
     @Override
-    public void onClick(View view) {
-
-        if (view == addhealthtipBinding.btnAddTip) {
+    public void onClick(View v) {
+        if (v == addhealthtipBinding.btnAddTip) {
             // Handle save here
             saveHealthTip();
         }
-
     }
+    public String getUserRole(){
+        // getting shared preference data
+        sharedPreferences = getSharedPreferences("Role", MODE_PRIVATE);
+        Role = sharedPreferences.getString("UserRole", "Role");
+        return Role;
+    }
+
     }

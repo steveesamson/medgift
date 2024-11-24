@@ -75,9 +75,11 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
                     if(ROLE.equals(User.Role.GIFTER.name())){
                         intent = new Intent(LogInActivity.this, HomePageActivity.class);
+                        intent.putExtra("Role",ROLE);
                         startActivity(intent);
                     }else if(ROLE.equals(User.Role.PROVIDER.name())){
                         intent = new Intent(LogInActivity.this, ProviderHomePageActivity.class);
+                        intent.putExtra("Role",ROLE);
                         startActivity(intent);
                     }
 

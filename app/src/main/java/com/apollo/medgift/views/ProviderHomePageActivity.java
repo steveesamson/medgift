@@ -6,7 +6,9 @@ import android.view.View;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityProviderhomepageBinding;
+import com.apollo.medgift.views.provider.AddHealthTipActivity;
 import com.apollo.medgift.views.provider.CreateServiceActivity;
+import com.apollo.medgift.views.provider.HealthTipActivity;
 import com.apollo.medgift.views.provider.PublishHealthTipsActivity;
 
 public class ProviderHomePageActivity extends BaseActivity {
@@ -32,6 +34,14 @@ public class ProviderHomePageActivity extends BaseActivity {
         binding.categoryCard2.setOnClickListener(v -> {
             Intent intent = new Intent(ProviderHomePageActivity.this, PublishHealthTipsActivity.class);
             startActivity(intent);
+        });
+
+        binding.categoryCard4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProviderHomePageActivity.this, HealthTipActivity.class);
+                startActivity(intent);
+            }
         });
     }
 }

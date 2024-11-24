@@ -30,8 +30,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-    protected String ROLE="";
-    protected String DISPLAY="";
+
+    protected String ROLE = "";
+    protected String DISPLAY = "";
+
     // Set up toolbar with a dynamic title
     protected void setupToolbar(Toolbar toolbar, String title, boolean showBackButton) {
         setSupportActionBar(toolbar);
@@ -43,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void applyWindowInsetsListenerTo(ComponentActivity activity, ViewGroup view){
+    protected void applyWindowInsetsListenerTo(ComponentActivity activity, ViewGroup view) {
         EdgeToEdge.enable(activity);
         ViewCompat.setOnApplyWindowInsetsListener(view, (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -57,9 +59,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = Firebase.currentUser();
-        if(currentUser == null){
+        if (currentUser == null) {
             finish();
-        }else{
+        } else {
             String[] nameRole = currentUser.getDisplayName().split("\\|");
             DISPLAY = nameRole[0];
             ROLE = nameRole[1];
@@ -162,5 +164,4 @@ public abstract class BaseActivity extends AppCompatActivity {
         finish();
     }
 
-    public abstract void onClick(View view);
 }

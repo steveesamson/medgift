@@ -7,7 +7,7 @@ android:layout_height="match_parent"
 tools:context=".views.provider.HealthTipActivity">
 
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/recipientActivity"
+    android:id="@+id/healthTipActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -55,7 +55,7 @@ tools:context=".views.provider.HealthTipActivity">
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recipientsList"
+                android:id="@+id/healthTipList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
