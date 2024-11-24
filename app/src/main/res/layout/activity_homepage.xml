@@ -162,10 +162,34 @@
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
-
                         <Space
                             android:layout_width="20dp"
                             android:layout_height="wrap_content" />
+                        <LinearLayout
+                            android:id="@+id/btnTestNotification"
+                            android:layout_width="0dp"
+                            android:layout_height="100dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/border"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:paddingLeft="15dp">
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_marginBottom="5dp"
+                                app:srcCompat="@drawable/ic_notification" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Test notification"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
 
                         <LinearLayout
                             android:id="@+id/category_card_4"

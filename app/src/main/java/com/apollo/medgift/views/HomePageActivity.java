@@ -14,6 +14,7 @@ import com.apollo.medgift.adapters.ForYouRecyclerViewAdapter;
 import com.apollo.medgift.adapters.HealthTipsRecyclerViewAdapter;
 import com.apollo.medgift.adapters.HomeSlideImageAdapter;
 import com.apollo.medgift.common.BaseActivity;
+import com.apollo.medgift.common.NotificationUtil;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityHomepageBinding;
 import com.apollo.medgift.models.HomeSlideImageItem;
@@ -76,7 +77,9 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void registerListeners() {
+        NotificationUtil.createNotificationChannel(this,getString(R.string.channel_name), getString(R.string.channel_description));
         binding.quickBtnRecipient.setOnClickListener(this);
+        binding.btnTestNotification.setOnClickListener(this);
     }
 
     @Override
@@ -87,6 +90,8 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         if(view == binding.quickBtnRecipient){
             intent = new  Intent(getApplicationContext(), RecipientActivity.class);
             startActivity(intent);
+        } else if(view == binding.btnTestNotification){
+            NotificationUtil.sendNotification(getApplicationContext(), "Collaboration Invite", "Your are being invited to collaborate on a group gift.", AlertDetail.class);
         }
        else if (view == binding.moreHealthTipsButton){
             intent = new Intent(getApplicationContext(), HealthTipActivity.class);

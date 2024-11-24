@@ -73,4 +73,6 @@
     <string name="addHealthtipTitle">Add Health Tip</string>
     <string name="editHealthtipTitle">Edit Health Tip</string>
     <string name="btnSendGiftToRecipient">Send a gift</string>
+    <string name="channel_name">MedGift Channel</string>
+    <string name="channel_description">MedGift Notification Channel</string>
 </resources>
