@@ -3,6 +3,7 @@ package com.apollo.medgift.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityHomepageBinding;
 import com.apollo.medgift.models.HomeSlideImageItem;
 import com.apollo.medgift.views.gifter.RecipientActivity;
+import com.apollo.medgift.views.provider.HealthTipActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +48,12 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         Util.applyWindowInsetsListenerTo(this, binding.main);
         // Setup tool bar and title
         setupToolbar(binding.homeAppBar.getRoot(), "MedGift", false);
-
+        binding.moreHealthTipsButton.setOnClickListener(this);
         // Image Slider
         ViewPager2 viewPager2 = binding.imageSlider;
 
-        //https://www.youtube.com/watch?v=U7bqZkmVps8
+
+         //https://www.youtube.com/watch?v=U7bqZkmVps8
         List<HomeSlideImageItem> homeSliderItem = new ArrayList<>();
         homeSliderItem.add(new HomeSlideImageItem(R.drawable.banner_1));
         homeSliderItem.add(new HomeSlideImageItem(R.drawable.banner_2));
@@ -83,6 +86,10 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         // Handle Recipient navigation
         if(view == binding.quickBtnRecipient){
             intent = new  Intent(getApplicationContext(), RecipientActivity.class);
+            startActivity(intent);
+        }
+       else if (view == binding.moreHealthTipsButton){
+            intent = new Intent(getApplicationContext(), HealthTipActivity.class);
             startActivity(intent);
         }
     }

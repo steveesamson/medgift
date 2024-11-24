@@ -7,8 +7,25 @@ public class HealthTip extends BaseModel {
 
     private String title;
     private  String content;
-    private String creationDate;
 
+    public String getCreatedByName() {
+        return createdByName;
+    }
+
+    public void setCreatedByName(String createdByName) {
+        this.createdByName = createdByName;
+    }
+
+    private String createdByName;
+    private String createdBy;
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
     public String getTitle() {
         return title;
@@ -26,11 +43,4 @@ public class HealthTip extends BaseModel {
         this.content = content;
     }
 
-    public String getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
-    }
 }

@@ -25,13 +25,15 @@ import com.apollo.medgift.views.ProviderHomePageActivity;
 import com.apollo.medgift.R;
 import com.google.firebase.auth.FirebaseUser;
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-    protected String ROLE="";
-    protected String DISPLAY="";
+
+    protected String ROLE = "";
+    protected String DISPLAY = "";
+
     // Set up toolbar with a dynamic title
     protected void setupToolbar(Toolbar toolbar, String title, boolean showBackButton) {
         setSupportActionBar(toolbar);
@@ -43,7 +45,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void applyWindowInsetsListenerTo(ComponentActivity activity, ViewGroup view){
+    protected void applyWindowInsetsListenerTo(ComponentActivity activity, ViewGroup view) {
         EdgeToEdge.enable(activity);
         ViewCompat.setOnApplyWindowInsetsListener(view, (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -57,9 +59,9 @@ public class BaseActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = Firebase.currentUser();
-        if(currentUser == null){
+        if (currentUser == null) {
             finish();
-        }else{
+        } else {
             String[] nameRole = currentUser.getDisplayName().split("\\|");
             DISPLAY = nameRole[0];
             ROLE = nameRole[1];
@@ -161,4 +163,5 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 }
