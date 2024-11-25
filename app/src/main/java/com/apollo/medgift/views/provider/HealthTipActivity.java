@@ -1,35 +1,24 @@
 package com.apollo.medgift.views.provider;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.apollo.medgift.R;
-import com.apollo.medgift.adapters.gifters.RecipientAdapter;
 import com.apollo.medgift.adapters.provider.HealthTipAdapter;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.common.ValueEvents;
 import com.apollo.medgift.databinding.ActivityHealthtipBinding;
-import com.apollo.medgift.databinding.ActivityRecipientBinding;
 import com.apollo.medgift.models.HealthTip;
-import com.apollo.medgift.models.Recipient;
 import com.apollo.medgift.models.User;
-import com.apollo.medgift.views.gifter.AddRecipientActivity;
 import com.apollo.medgift.views.models.HealthtipVModel;
-import com.apollo.medgift.views.models.RecipientVModel;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
@@ -105,7 +94,7 @@ public class HealthTipActivity extends BaseActivity {
         }
     }
     private void checkUserRole() {
-        if (User.Role.GIFTER.name().equals(Firebase.getRole())) {
+        if (User.Role.GIFTER.name().equals(Firebase.currentUser().getUserRole())) {
             // hide button for "Gifter"
             healthtipBinding.btnAddHealthtip.setVisibility(View.GONE);
         } else {
