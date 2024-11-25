@@ -22,8 +22,8 @@ import com.apollo.medgift.views.provider.AddHealthTipActivity;
 import java.util.List;
 
 public class HealthTipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private Context context;
-    private List<HealthTip> healthtips;
+    private final Context context;
+    private final List<HealthTip> healthtips;
     public HealthTipAdapter(List<HealthTip> healthTips, Context context){
         this.healthtips = healthTips;
         this.context = context;
@@ -62,7 +62,7 @@ public class HealthTipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private void setupListeners() {
            itemBinding.btnDelete.setOnClickListener(this);
             itemBinding.txtTitle.setOnClickListener(this);
-            if (User.Role.GIFTER.name().equals(Firebase.getRole())) {
+            if (User.Role.GIFTER.name().equals(Firebase.currentUser().getUserRole())) {
                 // hide button for "Gifter"
                 itemBinding.btnDelete.setVisibility(View.GONE);
             } else {
