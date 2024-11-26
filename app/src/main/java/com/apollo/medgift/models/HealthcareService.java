@@ -1,10 +1,15 @@
 package com.apollo.medgift.models;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 
 public class HealthcareService implements Serializable {
+    // Not to be persisted
+    public transient Uri bannerUri = null;
     private String key;
     private String providerId;
+    private String serviceName;
     private String description;
     private String bannerUrl;
     private double cost;
@@ -56,5 +61,13 @@ public class HealthcareService implements Serializable {
 
     public void setRatings(int ratings) {
         this.ratings = ratings;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 }

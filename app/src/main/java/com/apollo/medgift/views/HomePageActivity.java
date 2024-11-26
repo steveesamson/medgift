@@ -20,6 +20,8 @@ import com.apollo.medgift.databinding.ActivityHomepageBinding;
 import com.apollo.medgift.models.HomeSlideImageItem;
 import com.apollo.medgift.views.gifter.RecipientActivity;
 import com.apollo.medgift.views.provider.HealthTipActivity;
+import com.apollo.medgift.views.gifter.AddGiftActivity;
+import com.apollo.medgift.views.gifter.GiftActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,12 +82,13 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         NotificationUtil.createNotificationChannel(this,getString(R.string.channel_name), getString(R.string.channel_description));
         binding.quickBtnRecipient.setOnClickListener(this);
         binding.btnTestNotification.setOnClickListener(this);
+        binding.quickBtnGift.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
 
-        Intent intent;
+        Intent intent,giftIntent;
         // Handle Recipient navigation
         if(view == binding.quickBtnRecipient){
             intent = new  Intent(getApplicationContext(), RecipientActivity.class);
@@ -97,5 +100,13 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
             intent = new Intent(getApplicationContext(), HealthTipActivity.class);
             startActivity(intent);
         }
+        if(view == binding.quickBtnGift){
+            giftIntent = new Intent(getApplicationContext(),GiftActivity.class);
+            startActivity(giftIntent);
+        }
+
+
     }
+
+
 }
