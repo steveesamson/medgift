@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.apollo.medgift.common.Firebase;
+import com.apollo.medgift.common.ReadHealthTipActivity;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.HealthtipItemBinding;
 import com.apollo.medgift.models.HealthTip;
@@ -63,6 +64,7 @@ public class HealthTipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private void setupListeners() {
             itemBinding.btnDelete.setOnClickListener(this);
             itemBinding.txtTitle.setOnClickListener(this);
+            itemBinding.btnReadMore.setOnClickListener(this);
             if (User.Role.GIFTER.name().equals(Firebase.currentUser().getUserRole())) {
                 // hide button for "Gifter"
                 itemBinding.btnDelete.setVisibility(View.GONE);
@@ -76,8 +78,8 @@ public class HealthTipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public void bindData(HealthTip healthTip) {
             this.healthtip = healthTip;
             itemBinding.txtTitle.setText(healthTip.getTitle());
-            itemBinding.txtDescription.setText(truncateString(healthTip.getContent()));
-            itemBinding.txtRole.setText(healthTip.getCreatedByName());
+
+//            itemBinding.txtRole.setText(healthTip.getCreatedByName());
         }
 
         @Override
@@ -98,11 +100,12 @@ public class HealthTipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 intent.putExtra(HealthTip.STORE, HealthTipHolder.this.healthtip);
                 context.startActivity(intent);
             }
+            else if(view == itemBinding.btnReadMore){ // Display health tip form for details
+                Intent intent = new Intent(context, ReadHealthTipActivity.class);
+                intent.putExtra(HealthTip.STORE, HealthTipHolder.this.healthtip);
+                context.startActivity(intent);
+            }
         }
-    }
-
-    public static String truncateString(String input) {
-        return input.length() > 9 ? input.substring(0, 9) + "..." : input;
     }
 
 }
