@@ -80,4 +80,5 @@
     <string name="btnAddGift">Add Gift +</string>
     <string name="editGiftTitle">Edit Gift</string>
     <string name="addGiftTitle">Add Gift</string>
+    <string name="hintGroup">This is a Group Gift</string>
 </resources>

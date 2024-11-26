@@ -1,5 +1,10 @@
 package com.apollo.medgift.common;
 
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.net.Uri;
+import android.webkit.MimeTypeMap;
+
 import androidx.annotation.NonNull;
 
 import com.apollo.medgift.models.SessionUser;
@@ -16,6 +21,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Utility to manage all google Firebase services
@@ -117,6 +126,31 @@ public class Firebase {
 
     public static void delete( BaseModel model, String storeName, OnCompleteListener<Void> onComplete){
         Firebase.database(storeName).child(model.getKey()).removeValue().addOnCompleteListener(onComplete);
+    }
+
+    // Extract file extension from Uri
+    private static String getFileExt(Uri contentUri, Activity activity) {
+        ContentResolver c = activity.getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(c.getType(contentUri));
+    }
+    private void uploadImageToFirebase(Uri contentUri, Activity activity, OnSuccessListener<Uri> onUpload, OnFailureListener onFail ) {
+        // Extract the Uri from room's transient field
+        // Get a timestamp
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        // Concoct a name
+        String name = "JPEG_" + timeStamp + "." + getFileExt(contentUri, activity);
+
+        // Get a storage ref
+        final StorageReference image = Firebase.store(name);
+        // Store image
+        image.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                image.getDownloadUrl().addOnSuccessListener(onUpload);
+            }
+        }).addOnFailureListener(onFail);
+
     }
 
 }
