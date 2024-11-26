@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.apollo.medgift.databinding.ForyourecyclerviewBinding;
 import com.apollo.medgift.databinding.ServicetypeItemBinding;
 import com.apollo.medgift.models.HealthTip;
+import com.apollo.medgift.models.HealthcareService;
 import com.apollo.medgift.models.Service;
 import com.apollo.medgift.views.provider.AddHealthTipActivity;
 import com.apollo.medgift.views.provider.CreateServiceActivity;
@@ -22,11 +23,11 @@ import java.util.List;
 
 public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final Context context;
-    private final List<Service> services;
+    private final List<HealthcareService> healthcareServices;
 
-    public ServiceAdapter(List<Service> services, Context context) {
+    public ServiceAdapter(List<HealthcareService> healthcareServices, Context context) {
         this.context = context;
-        this.services = services;
+        this.healthcareServices = healthcareServices;
     }
 
     @NonNull
@@ -40,31 +41,29 @@ public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ServiceHolder serviceHolder = (ServiceHolder) holder;
-        serviceHolder.bindData(services.get(position));
+        serviceHolder.bindData(healthcareServices.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return services.size();
+        return healthcareServices.size();
     }
 
     class ServiceHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final ForyourecyclerviewBinding itemBinding;
-        private Service service;
+        private HealthcareService healthcareService;
 
         public ServiceHolder(ForyourecyclerviewBinding itemBinding) {
             super(itemBinding.getRoot());
             this.itemBinding = itemBinding;
         }
 
-        public void bindData(Service service) {
-            this.service = service;
-            itemBinding.giftTitle.setText(service.getServiceName());
-            itemBinding.giftProvider.setText(service.getServiceAssignee());
-            itemBinding.giftLocation.setText(service.getHospital());
-            itemBinding.giftLocation.setText(service.getHospital());
-            itemBinding.giftDescription.setText(truncateString(service.getDescription()));
-            itemBinding.giftPrice.setText(String.valueOf(service.getPrice()));
+        public void bindData(HealthcareService healthcareService) {
+            this.healthcareService = healthcareService;
+            itemBinding.giftTitle.setText(healthcareService.getServiceName());
+            itemBinding.giftProvider.setText(healthcareService.getProviderId());
+            itemBinding.giftDescription.setText(truncateString(healthcareService.getDescription()));
+            itemBinding.giftPrice.setText(String.valueOf(healthcareService.getPrice()));
 //            itemBinding.giftImage.setImageBitmap();
 
         }
@@ -73,7 +72,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public void onClick(View view) {
             if (view == itemBinding.serviceItem) {
                 Intent intent = new Intent(context, CreateServiceActivity.class);
-                intent.putExtra(Service.STORE, ServiceHolder.this.service);
+                intent.putExtra(Service.STORE, ServiceHolder.this.healthcareService);
                 context.startActivity(intent);
             }
         }

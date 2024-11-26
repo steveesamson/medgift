@@ -4,24 +4,25 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.apollo.medgift.common.BaseViewModel;
+import com.apollo.medgift.models.HealthcareService;
 import com.apollo.medgift.models.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceVModel extends BaseViewModel<Service> {
-    private final MutableLiveData<List<Service>> services = new MutableLiveData<List<Service>>();
+public class ServiceVModel extends BaseViewModel<HealthcareService> {
+    private final MutableLiveData<List<HealthcareService>> healthcareServices = new MutableLiveData<List<HealthcareService>>();
 
     @Override
-    public void setModel(List<Service> rms) {
-        services.setValue(rms);
+    public void setModel(List<HealthcareService> rms) {
+        healthcareServices.setValue(rms);
     }
 
     @Override
-    public LiveData<List<Service>> getModel() {
-        if (services.getValue() == null) {
-            services.setValue(new ArrayList<>());
+    public LiveData<List<HealthcareService>> getModel() {
+        if (healthcareServices.getValue() == null) {
+            healthcareServices.setValue(new ArrayList<>());
         }
-        return services;
+        return healthcareServices;
     }
 }

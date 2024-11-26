@@ -134,7 +134,7 @@ public class Firebase {
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(c.getType(contentUri));
     }
-    private void uploadImageToFirebase(Uri contentUri, Activity activity, OnSuccessListener<Uri> onUpload, OnFailureListener onFail ) {
+    public static void uploadImageToFirebase(Uri contentUri, Activity activity, OnSuccessListener<Uri> onUpload, OnFailureListener onFail ) {
         // Extract the Uri from room's transient field
         // Get a timestamp
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());

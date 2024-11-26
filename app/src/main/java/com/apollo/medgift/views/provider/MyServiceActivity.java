@@ -16,6 +16,7 @@ import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.common.ValueEvents;
 import com.apollo.medgift.databinding.ActivityMyserviceBinding;
+import com.apollo.medgift.models.HealthcareService;
 import com.apollo.medgift.models.Service;
 import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.models.ServiceVModel;
@@ -28,7 +29,7 @@ import java.util.List;
 public class MyServiceActivity extends BaseActivity {
 
     private ActivityMyserviceBinding myserviceBinding;
-    private final List<Service> services = new ArrayList<>();
+    private final List<HealthcareService> healthcareServices = new ArrayList<>();
     private ServiceAdapter serviceAdapter;
     private DatabaseReference db;
 
@@ -49,11 +50,12 @@ public class MyServiceActivity extends BaseActivity {
     }
 
     private void setPageUp() {
+        Util.startProgress(myserviceBinding.progress, "Loading Services...");
         myserviceBinding.btnAddService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CreateServiceActivity.class);
-                intent.putExtra(Service.STORE, new Service());
+                intent.putExtra(HealthcareService.STORE, new HealthcareService());
                 startActivity(intent);
             }
         });
@@ -64,10 +66,11 @@ public class MyServiceActivity extends BaseActivity {
 
         RecyclerView recyclerView = myserviceBinding.serviceList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        serviceAdapter = new ServiceAdapter(services, this);
+        serviceAdapter = new ServiceAdapter(healthcareServices, this);
         recyclerView.setAdapter(serviceAdapter);
         fetchAndListenOnRecipients();
 
+        Util.stopProgress(myserviceBinding.progress);
     }
 
     private void unRegisterValueListener() {
@@ -85,9 +88,9 @@ public class MyServiceActivity extends BaseActivity {
     private void fetchAndListenOnRecipients() {
         if (db != null) {
             ServiceVModel serviceVModel = new ViewModelProvider(this).get(ServiceVModel.class);
-            ValueEvents<Service> valueEvents = new ValueEvents<>();
+            ValueEvents<HealthcareService> valueEvents = new ValueEvents<>();
             Util.startProgress(myserviceBinding.progress, "Fetching Services...");
-            serviceListener = valueEvents.registerListener(db, this, serviceAdapter, serviceVModel, services, Service.class, (list) -> {
+            serviceListener = valueEvents.registerListener(db, this, serviceAdapter, serviceVModel, healthcareServices, HealthcareService.class, (list) -> {
                 Util.stopProgress(myserviceBinding.progress);
                 myserviceBinding.emptyItem.txtEmpty.setText(list.isEmpty()? Util.getEmpty("services") : "");
                 myserviceBinding.emptyItem.getRoot().setVisibility(list.isEmpty()? View.VISIBLE : View.GONE);

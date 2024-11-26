@@ -1,9 +1,6 @@
 package com.apollo.medgift.views.provider;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,15 +19,14 @@ import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityCreateserviceBinding;
+import com.apollo.medgift.models.HealthcareService;
 import com.apollo.medgift.models.Service;
 import com.apollo.medgift.models.User;
-
-import java.io.ByteArrayOutputStream;
 
 public class CreateServiceActivity extends BaseActivity implements View.OnClickListener {
 
     ActivityCreateserviceBinding createserviceBinding;
-    private Service service;
+    private HealthcareService healthcareService;
     private ActivityResultLauncher<Intent> serviceImageLauncher;
 
     @Override
@@ -42,14 +38,14 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
         applyWindowInsetsListenerTo(this, createserviceBinding.main);
 
         Intent intent = getIntent();
-        service = (Service) intent.getSerializableExtra(Service.STORE);
+        healthcareService = (HealthcareService) intent.getSerializableExtra(HealthcareService.STORE);
 
-        boolean exists = Util.exists(service);
+        boolean exists = Util.exists(healthcareService);
         String title = getString(exists ? R.string.editServiceTitle : R.string.createServiceTitle);
         setupToolbar(createserviceBinding.homeAppBar.getRoot(), title, true);
         if (!exists) {
-            service.setCreatedBy(Firebase.currentUser().getUserId());
-            service.setCreatedByName(Firebase.currentUser().getEmail());
+            healthcareService.setCreatedBy(Firebase.currentUser().getUserId());
+            healthcareService.setCreatedByName(Firebase.currentUser().getEmail());
         }
         setup();
 
@@ -60,7 +56,7 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
         registerImageResult();
 
         createserviceBinding.addImageButton.setOnClickListener(v -> openGallery());
-        createserviceBinding.btnCreateServiceSave.setOnClickListener(v -> saveService());
+        createserviceBinding.btnCreateServiceSave.setOnClickListener(this);
     }
 
     // Register activity result and load image from gallery
@@ -70,8 +66,10 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
                 result -> {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                         Uri imageUri = result.getData().getData();
+
                         if (imageUri != null) {
-                            loadImage(imageUri);
+                            healthcareService.bannerUri = imageUri;
+                            displayImage(imageUri);
                         } else {
                             Toast.makeText(this, getString(R.string.no_image_selected), Toast.LENGTH_SHORT).show();
                         }
@@ -81,30 +79,10 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
     }
 
     // load the selected image
-    private void loadImage(Uri imageUri) {
-        try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-
-            // Reduce file size
-            int targetWidth = 800;
-            int targetHeight = (int) ((double) bitmap.getHeight() / bitmap.getWidth() * targetWidth);
-            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, true);
-
-            // Compress the bitmap
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 75, byteArrayOutputStream); // Compress with 75% quality
-
-            // Convert to smaller bitmap
-            byte[] byteArray = byteArrayOutputStream.toByteArray();
-            Bitmap compressedBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-
-            createserviceBinding.serviceImage.setImageBitmap(compressedBitmap);
-            createserviceBinding.serviceImage.setVisibility(View.VISIBLE); // Show the image
-            createserviceBinding.addImageButtonText.setText(getString(R.string.change_image));
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, getString(R.string.failed_to_load_image_error), Toast.LENGTH_SHORT).show();
-        }
+    private void displayImage(Uri imageUri) {
+        createserviceBinding.serviceImage.setImageURI(imageUri);
+        createserviceBinding.serviceImage.setVisibility(View.VISIBLE); // Show the image
+        createserviceBinding.addImageButtonText.setText(getString(R.string.change_image));
     }
 
     private void initializeDropdown() {
@@ -116,19 +94,15 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
         createserviceBinding.autoCompleteTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //IMPLEMENT FUNCTIONS HERE
-                String selectedItem = parent.getItemAtPosition(position).toString();
-                Toast.makeText(CreateServiceActivity.this, "Item: " + selectedItem, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void setup() {
-        createserviceBinding.edtServiceName.setText(service.getServiceName());
-        createserviceBinding.edtServiceAssignee.setText(service.getServiceAssignee());
-        createserviceBinding.edtHospital.setText(service.getHospital());
-        createserviceBinding.edtPrice.setText(String.valueOf(service.getPrice()));
-        createserviceBinding.edtDescription.setText(service.getDescription());
+        createserviceBinding.edtServiceName.setText(healthcareService.getServiceName());
+        createserviceBinding.edtServiceAssignee.setText(healthcareService.getProviderId());
+        createserviceBinding.edtPrice.setText(String.valueOf(healthcareService.getPrice()));
+        createserviceBinding.edtDescription.setText(healthcareService.getDescription());
         createserviceBinding.btnCreateServiceSave.setOnClickListener(this);
 
         // Restrict editing for "Gifter" role
@@ -136,7 +110,6 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
             createserviceBinding.btnCreateServiceSave.setVisibility(View.GONE);
             createserviceBinding.edtServiceName.setEnabled(false);
             createserviceBinding.edtServiceAssignee.setEnabled(false);
-            createserviceBinding.edtHospital.setEnabled(false);
             createserviceBinding.edtPrice.setEnabled(false);
             createserviceBinding.edtDescription.setEnabled(false);
         } else {
@@ -148,91 +121,99 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
     private void clearErrors() {
         createserviceBinding.lytServiceName.setError("");
         createserviceBinding.lytServiceAssignee.setError("");
-        createserviceBinding.lytHospital.setError("");
         createserviceBinding.lytPrice.setError("");
+        createserviceBinding.lytType.setError("");
         createserviceBinding.lytDescription.setError("");
     }
 
     private void saveService() {
-        clearErrors();
+        boolean exists = Util.exists(healthcareService);
+        Util.startProgress(createserviceBinding.progress, "Saving Service...");
 
-        boolean formIsValid = true;
-        String serviceName = Util.valueOf(createserviceBinding.edtServiceName);
-        String serviceAssignee = Util.valueOf(createserviceBinding.edtServiceAssignee);
-        String hospital = Util.valueOf(createserviceBinding.edtHospital);
-        String priceStr = Util.valueOf(createserviceBinding.edtPrice);
-        String description = Util.valueOf(createserviceBinding.edtDescription);
-        String serviceType = createserviceBinding.autoCompleteTxt.getText().toString();
+        // Save service data in Firebase Database
+        Firebase.save(healthcareService, Service.STORE, task -> {
+            Util.stopProgress(createserviceBinding.progress);
+            if (task.isSuccessful()) {
+                Util.notify(CreateServiceActivity.this, Util.success("Service", exists));
+                finish();
+            } else {
+                Util.notify(CreateServiceActivity.this, Util.fail("Service", exists));
+            }
+        });
 
-        if (serviceName.isEmpty()) {
-            createserviceBinding.lytServiceName.setError("Service name is required.");
-            formIsValid = false;
-        }
-        if (serviceAssignee.isEmpty()) {
-            createserviceBinding.lytServiceAssignee.setError("Service assignee is required.");
-            formIsValid = false;
-        }
-        if (hospital.isEmpty()) {
-            createserviceBinding.lytHospital.setError("Hospital is required.");
-            formIsValid = false;
-        }
-        if (priceStr.isEmpty()) {
-            createserviceBinding.lytPrice.setError("Price is required.");
-            formIsValid = false;
-        }
-        if (description.isEmpty()) {
-            createserviceBinding.lytDescription.setError("Description is required.");
-            formIsValid = false;
-        }
-        if (serviceType.isEmpty()) {
-            Toast.makeText(this, "Please select a service type.", Toast.LENGTH_SHORT).show();
-            formIsValid = false;
-        }
-
-        // Validate Service Image
-        Bitmap serviceImageBitmap = ((BitmapDrawable) createserviceBinding.serviceImage.getDrawable()).getBitmap();
-        if (serviceImageBitmap == null) {
-            Toast.makeText(this, "Please upload a service image.", Toast.LENGTH_SHORT).show();
-            formIsValid = false;
-        }
-
-        if (formIsValid) {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            serviceImageBitmap.compress(Bitmap.CompressFormat.JPEG, 75, byteArrayOutputStream);
-            byte[] imageBytes = byteArrayOutputStream.toByteArray();
-
-            double price = Double.parseDouble(priceStr);
-            Log.e("Check Data", "Data: "+serviceName+" : "+serviceAssignee+" : "+hospital+" : "+price+" : "+description+" : "+serviceType+" : "+imageBytes);
-            service.setServiceName(serviceName);
-            service.setServiceAssignee(serviceAssignee);
-            service.setHospital(hospital);
-            service.setPrice(price);
-            service.setDescription(description);
-            service.setServiceType(serviceType);
-            service.setImage(imageBytes);
-
-            boolean exists = Util.exists(service);
-            Util.startProgress(createserviceBinding.progress, "Saving Service...");
-
-            Firebase.save(service, Service.STORE, task -> {
-                Util.stopProgress(createserviceBinding.progress);
-                if (task.isSuccessful()) {
-                    Util.notify(CreateServiceActivity.this, Util.success("Service", exists));
-                    finish();
-                } else {
-                    Util.notify(CreateServiceActivity.this, Util.fail("Service", exists));
-                }
-            });
-        }
+        Util.stopProgress(createserviceBinding.progress);
     }
 
     @Override
     public void onClick(View v) {
+        if (v == createserviceBinding.btnCreateServiceSave) {
+            clearErrors();
 
+            boolean formIsValid = true;
+            String serviceName = Util.valueOf(createserviceBinding.edtServiceName);
+            String serviceAssignee = Util.valueOf(createserviceBinding.edtServiceAssignee);
+            String priceStr = Util.valueOf(createserviceBinding.edtPrice);
+            String description = Util.valueOf(createserviceBinding.edtDescription);
+            String serviceType = createserviceBinding.autoCompleteTxt.getText().toString();
+
+            if (serviceName.isEmpty()) {
+                createserviceBinding.lytServiceName.setError("Service name is required.");
+                formIsValid = false;
+            }
+            if (serviceAssignee.isEmpty()) {
+                createserviceBinding.lytServiceAssignee.setError("Service assignee is required.");
+                formIsValid = false;
+            }
+            if (priceStr.isEmpty()) {
+                createserviceBinding.lytPrice.setError("Price is required.");
+                formIsValid = false;
+            }
+            if (description.isEmpty()) {
+                createserviceBinding.lytDescription.setError("Description is required.");
+                formIsValid = false;
+            }
+            if (serviceType.isEmpty()) {
+                Toast.makeText(this, "Please select a service type.", Toast.LENGTH_SHORT).show();
+                formIsValid = false;
+            }
+
+            if (formIsValid) {
+                double price = Double.parseDouble(priceStr);
+                Log.e("Check Data", "Data: " + serviceName + " : " + serviceAssignee + " : " + price + " : " + description + " : " + serviceType + " : " + healthcareService.getBannerUrl());
+                healthcareService.setServiceName(serviceName);
+                healthcareService.setProviderId(serviceAssignee);
+                healthcareService.setPrice(price);
+                healthcareService.setDescription(description);
+                healthcareService.setServiceType(serviceType);
+
+                if (healthcareService.bannerUri != null) {
+                    Util.startProgress(createserviceBinding.progress, "Saving Service...");
+                    uploadImage();
+                } else {
+                    Util.startProgress(createserviceBinding.progress, "Saving Service...");
+                    saveService();
+                }
+
+            }
+        }
     }
 
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         serviceImageLauncher.launch(intent);
+    }
+
+    private void uploadImage() {
+        boolean exists = Util.exists(healthcareService);
+
+        Firebase.uploadImageToFirebase(healthcareService.bannerUri, this, (uri) -> {
+            healthcareService.setBannerUrl(uri.toString());
+            saveService();
+            Util.notify(CreateServiceActivity.this, Util.success("Health Tip", exists));
+        }, (error) -> {
+            Util.notify(CreateServiceActivity.this, Util.fail("Health Tip", exists));
+        });
+
+        Util.stopProgress(createserviceBinding.progress);
     }
 }
