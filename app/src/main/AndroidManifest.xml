@@ -15,11 +15,25 @@
         android:theme="@style/Theme.Medgift"
         tools:targetApi="31">
         <activity
-            android:name=".views.provider.AddHealthTipActivity" android:exported="false" />
+            android:name=".views.provider.ViewServiceActivity"
+            android:exported="false" />
         <activity
             android:name=".views.provider.HealthTipActivity" android:exported="false" />
         <activity android:name=".views.AlertDetail" android:exported="false"/>
         <activity android:name=".views.gifter.RecipientActivity"
+            android:name=".views.provider.MyServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.provider.AddHealthTipActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.provider.HealthTipActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.AlertDetail"
+            android:exported="false" />
+        <activity
+            android:name=".views.gifter.RecipientActivity"
             android:exported="false" />
         <activity
             android:name=".views.gifter.AddRecipientActivity" android:exported="false" />

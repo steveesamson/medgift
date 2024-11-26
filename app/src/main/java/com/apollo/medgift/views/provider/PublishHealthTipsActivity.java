@@ -12,9 +12,10 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.apollo.medgift.R;
 import com.apollo.medgift.databinding.ActivityPublishhealthtipsBinding;
+///////////DELETE THIS CLASS///////////////
 
 public class PublishHealthTipsActivity extends AppCompatActivity {
-
+    ///////////DELETE THIS CLASS///////////////
     ActivityPublishhealthtipsBinding binding;
 
     @Override
