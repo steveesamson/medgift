@@ -238,14 +238,6 @@
                     android:layout_height="380dp"
                     android:layout_marginBottom="30dp"
                     android:divider="@android:color/transparent" />
-
-                <!--                <LinearLayout-->
-                <!--                    android:id="@+id/forYouContainer"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="150dp"-->
-                <!--                    android:layout_marginBottom="30dp"-->
-                <!--                    android:background="@color/lightgray"-->
-                <!--                    android:orientation="horizontal"></LinearLayout>-->
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
