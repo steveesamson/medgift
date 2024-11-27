@@ -47,35 +47,35 @@
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lytServiceAssignee"
-                style="@style/TextLayout"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:hint="@string/service_assignee">
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                android:id="@+id/lytServiceAssignee"-->
+            <!--                style="@style/TextLayout"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="50dp"-->
+            <!--                android:hint="@string/service_assignee">-->
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtServiceAssignee"
-                    style="@style/TextEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:id="@+id/edtServiceAssignee"-->
+            <!--                    style="@style/TextEdit"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:inputType="text" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                android:id="@+id/lytHospital"-->
-<!--                style="@style/TextLayout"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:hint="@string/hospital">-->
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                android:id="@+id/lytHospital"-->
+            <!--                style="@style/TextLayout"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="50dp"-->
+            <!--                android:hint="@string/hospital">-->
 
-<!--                <com.google.android.material.textfield.TextInputEditText-->
-<!--                    android:id="@+id/edtHospital"-->
-<!--                    style="@style/TextEdit"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:inputType="text" />-->
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:id="@+id/edtHospital"-->
+            <!--                    style="@style/TextEdit"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:inputType="text" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lytPrice"
@@ -89,7 +89,7 @@
                     style="@style/TextEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -101,6 +101,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/autoCompleteTxt"
+                    style="@style/TextEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none" />
@@ -159,36 +160,45 @@
                     android:scrollbars="vertical" />
             </com.google.android.material.textfield.TextInputLayout>
 
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                android:id="@+id/lytAvailability"-->
-<!--                style="@style/TextLayout"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:hint="@string/availability">-->
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                android:id="@+id/lytAvailability"-->
+            <!--                style="@style/TextLayout"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:hint="@string/availability">-->
 
-<!--                <com.google.android.material.textfield.TextInputEditText-->
-<!--                    android:id="@+id/edtAvailability"-->
-<!--                    style="@style/TextEdit"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="150dp"-->
-<!--                    android:gravity="top|start"-->
-<!--                    android:inputType="textMultiLine"-->
-<!--                    android:minLines="5"-->
-<!--                    android:scrollbars="vertical" />-->
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:id="@+id/edtAvailability"-->
+            <!--                    style="@style/TextEdit"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="150dp"-->
+            <!--                    android:gravity="top|start"-->
+            <!--                    android:inputType="textMultiLine"-->
+            <!--                    android:minLines="5"-->
+            <!--                    android:scrollbars="vertical" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <Button
                 android:id="@+id/btnCreateServiceSave"
+                style="@style/PrimaryButton"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="30dp"
-                android:background="@drawable/rounded_button_blue"
-                android:text="@string/save"
+                android:text="@string/save" />
+
+            <Button
+                android:id="@+id/btnDeleteService"
+                style="@style/DestructiveButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="40dp"
-                android:textStyle="bold" />
+                android:text="@string/delete"
+                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>
+
     <include
         android:id="@+id/progress"
         layout="@layout/progress" />

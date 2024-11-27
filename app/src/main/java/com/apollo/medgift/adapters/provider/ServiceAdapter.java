@@ -1,7 +1,5 @@
 package com.apollo.medgift.adapters.provider;
 
-import static com.apollo.medgift.adapters.provider.HealthTipAdapter.truncateString;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -11,15 +9,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.apollo.medgift.R;
+import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ForyourecyclerviewBinding;
-import com.apollo.medgift.databinding.ServicetypeItemBinding;
-import com.apollo.medgift.models.HealthTip;
 import com.apollo.medgift.models.HealthcareService;
-import com.apollo.medgift.models.Service;
-import com.apollo.medgift.views.provider.AddHealthTipActivity;
 import com.apollo.medgift.views.provider.CreateServiceActivity;
 
 import java.util.List;
+import java.util.Random;
 
 public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final Context context;
@@ -56,30 +53,54 @@ public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public ServiceHolder(ForyourecyclerviewBinding itemBinding) {
             super(itemBinding.getRoot());
             this.itemBinding = itemBinding;
+            setupListeners();
+        }
+
+        private void setupListeners() {
+            itemBinding.serviceItem.setOnClickListener(this);
         }
 
         public void bindData(HealthcareService healthcareService) {
             this.healthcareService = healthcareService;
             itemBinding.giftTitle.setText(healthcareService.getServiceName());
-            itemBinding.giftProvider.setText(healthcareService.getProviderId());
-            itemBinding.giftDescription.setText(truncateString(healthcareService.getDescription()));
-            itemBinding.giftPrice.setText(String.valueOf(healthcareService.getPrice()));
-//            itemBinding.giftImage.setImageBitmap();
+//            itemBinding.giftProvider.setText(healthcareService.getCreatedBy());
+            itemBinding.giftDescription.setText(healthcareService.getDescription());
+//            itemBinding.giftDescription.setText(truncateString(healthcareService.getDescription()));
+            itemBinding.giftPrice.setText("$ " + healthcareService.getPrice());
+            if (healthcareService.getBannerUrl() != null && !healthcareService.getBannerUrl().isEmpty()) {
+                Util.loadImageUri(itemBinding.giftImage, healthcareService.getBannerUrl(), context);
+            } else {
+                itemBinding.giftImage.setImageResource(R.drawable.default_service_image);
+            }
 
+            itemBinding.ratingBar.setRating(getRandomNumber("star"));
+            itemBinding.ratingCount.setText(String.valueOf(getRandomNumber("count")));
+        }
+
+        public int getRandomNumber(String type) {
+            Random random = new Random();
+            if (type == "star") {
+                return random.nextInt(5) + 1;
+            }
+            if (type == "count") {
+                return random.nextInt(800) + 1;
+            }
+            return 0;
         }
 
         @Override
         public void onClick(View view) {
             if (view == itemBinding.serviceItem) {
                 Intent intent = new Intent(context, CreateServiceActivity.class);
-                intent.putExtra(Service.STORE, ServiceHolder.this.healthcareService);
+                intent.putExtra(HealthcareService.STORE, ServiceHolder.this.healthcareService);
                 context.startActivity(intent);
             }
         }
     }
 
-    public static String truncateString(String input) {
-        return input.length() > 20 ? input.substring(0, 20) + "..." : input;
-    }
+    //Use if needed
+//    public static String truncateString(String input) {
+//        return input.length() > 100 ? input.substring(0, 100) + "..." : input;
+//    }
 
 }

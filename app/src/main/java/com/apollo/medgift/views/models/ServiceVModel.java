@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.apollo.medgift.common.BaseViewModel;
 import com.apollo.medgift.models.HealthcareService;
-import com.apollo.medgift.models.Service;
 
 import java.util.ArrayList;
 import java.util.List;

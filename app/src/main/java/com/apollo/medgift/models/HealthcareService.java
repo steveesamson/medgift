@@ -5,27 +5,17 @@ import android.net.Uri;
 import com.apollo.medgift.common.BaseModel;
 
 public class HealthcareService extends BaseModel {
-    public static final String STORE = "Healthcare Service";
+    public static final String STORE = "HealthcareService";
 
     // Not to be persisted
     public transient Uri bannerUri = null;
-    private String providerId;
     private String serviceName;
     private String description;
     private String bannerUrl;
     private String createdBy;
-    private String createdByName;
     private String serviceType;
     private double price;
     private int ratings;
-
-    public String getCreatedByName() {
-        return createdByName;
-    }
-
-    public void setCreatedByName(String createdByName) {
-        this.createdByName = createdByName;
-    }
 
     public String getCreatedBy() {
         return createdBy;
@@ -41,14 +31,6 @@ public class HealthcareService extends BaseModel {
 
     public void setServiceType(String serviceType) {
         this.serviceType = serviceType;
-    }
-
-    public String getProviderId() {
-        return providerId;
-    }
-
-    public void setProviderId(String providerId) {
-        this.providerId = providerId;
     }
 
     public String getDescription() {

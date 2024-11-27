@@ -97,5 +97,7 @@
     <string name="myServicesTitle">My Services</string>
     <string name="availability">Availability</string>
     <string name="add_image">Add Image</string>
+    <string name="rating"><![CDATA[<rating>]]></string>
+    <string name="delete">Delete</string>
 
 </resources>

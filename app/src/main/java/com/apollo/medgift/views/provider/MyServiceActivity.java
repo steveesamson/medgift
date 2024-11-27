@@ -2,6 +2,7 @@ package com.apollo.medgift.views.provider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -17,10 +18,10 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.common.ValueEvents;
 import com.apollo.medgift.databinding.ActivityMyserviceBinding;
 import com.apollo.medgift.models.HealthcareService;
-import com.apollo.medgift.models.Service;
+import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.models.ServiceVModel;
-import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class MyServiceActivity extends BaseActivity {
     private ActivityMyserviceBinding myserviceBinding;
     private final List<HealthcareService> healthcareServices = new ArrayList<>();
     private ServiceAdapter serviceAdapter;
-    private DatabaseReference db;
+    private Query query;
 
     private ValueEventListener serviceListener;
 
@@ -50,7 +51,6 @@ public class MyServiceActivity extends BaseActivity {
     }
 
     private void setPageUp() {
-        Util.startProgress(myserviceBinding.progress, "Loading Services...");
         myserviceBinding.btnAddService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,22 +60,27 @@ public class MyServiceActivity extends BaseActivity {
             }
         });
 
-        this.db = Firebase.database(Service.STORE);
+        SessionUser sessionUser = Firebase.currentUser();
+        assert sessionUser != null;
 
-        checkUserRole();
+        if (sessionUser.getUserRole().equals(User.Role.GIFTER.name())) {
+            this.query = Firebase.database(HealthcareService.STORE);
+        } else {
+            this.query = Firebase.database(HealthcareService.STORE).orderByChild("createdBy").equalTo(sessionUser.getUserId());
+        }
+
+        myserviceBinding.btnAddService.setVisibility(sessionUser.getUserRole().equals(User.Role.GIFTER.name()) ? View.GONE : View.VISIBLE);
 
         RecyclerView recyclerView = myserviceBinding.serviceList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         serviceAdapter = new ServiceAdapter(healthcareServices, this);
         recyclerView.setAdapter(serviceAdapter);
         fetchAndListenOnRecipients();
-
-        Util.stopProgress(myserviceBinding.progress);
     }
 
     private void unRegisterValueListener() {
         if (serviceListener != null) {
-            db.removeEventListener(serviceListener);
+            query.removeEventListener(serviceListener);
         }
     }
 
@@ -86,25 +91,16 @@ public class MyServiceActivity extends BaseActivity {
     }
 
     private void fetchAndListenOnRecipients() {
-        if (db != null) {
+        if (query != null) {
             ServiceVModel serviceVModel = new ViewModelProvider(this).get(ServiceVModel.class);
             ValueEvents<HealthcareService> valueEvents = new ValueEvents<>();
             Util.startProgress(myserviceBinding.progress, "Fetching Services...");
-            serviceListener = valueEvents.registerListener(db, this, serviceAdapter, serviceVModel, healthcareServices, HealthcareService.class, (list) -> {
+            serviceListener = valueEvents.registerListener(query, this, serviceAdapter, serviceVModel, healthcareServices, HealthcareService.class, (list) -> {
                 Util.stopProgress(myserviceBinding.progress);
-                myserviceBinding.emptyItem.txtEmpty.setText(list.isEmpty()? Util.getEmpty("services") : "");
-                myserviceBinding.emptyItem.getRoot().setVisibility(list.isEmpty()? View.VISIBLE : View.GONE);
+                Log.i("TAG", String.valueOf(list.size()));
+                myserviceBinding.emptyItem.txtEmpty.setText(list.isEmpty() ? Util.getEmpty("services") : "");
+                myserviceBinding.emptyItem.getRoot().setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
             });
-        }
-    }
-
-    private void checkUserRole() {
-        if (User.Role.GIFTER.name().equals(Firebase.currentUser().getUserRole())) {
-            // hide button for "Gifter"
-            myserviceBinding.btnAddService.setVisibility(View.GONE);
-        } else {
-            // enable for other roles
-            myserviceBinding.btnAddService.setVisibility(View.VISIBLE);
         }
     }
 }
