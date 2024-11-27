@@ -2,9 +2,11 @@ package com.apollo.medgift.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -13,25 +15,33 @@ import com.apollo.medgift.R;
 import com.apollo.medgift.adapters.ForYouRecyclerViewAdapter;
 import com.apollo.medgift.adapters.HealthTipsRecyclerViewAdapter;
 import com.apollo.medgift.adapters.HomeSlideImageAdapter;
+import com.apollo.medgift.adapters.provider.HealthTipAdapter;
 import com.apollo.medgift.common.BaseActivity;
+import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.NotificationUtil;
 import com.apollo.medgift.common.Util;
+import com.apollo.medgift.common.ValueEvents;
 import com.apollo.medgift.databinding.ActivityHomepageBinding;
+import com.apollo.medgift.models.HealthTip;
 import com.apollo.medgift.models.HomeSlideImageItem;
+import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.gifter.RecipientActivity;
+import com.apollo.medgift.views.models.HealthtipVModel;
 import com.apollo.medgift.views.provider.HealthTipActivity;
 import com.apollo.medgift.views.gifter.AddGiftActivity;
 import com.apollo.medgift.views.gifter.GiftActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HomePageActivity extends BaseActivity implements View.OnClickListener{
 
     ActivityHomepageBinding binding;
 
-    String[] titleList = {"Stay Hydrated", "Stay Hydrated"};
-    String[] contentList = {"Drinking enough water is crucial for maintaining overall health. Aim for 8 glasses of water a day.", "Drinking enough water is crucial for maintaining overall health. Aim for 8 glasses of water a day."};
+
 
     String[] gift_title = {"Telemedicine Consultations", "Telemedicine Consultations"};
     String[] gift_provider = {"Provider - 1", "Provider - 2"};
@@ -40,7 +50,12 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     String[] gift_price = {"$ 423.00", "$ 565.00"};
     int[] images = {R.drawable.sample_image1, R.drawable.sample_image2};
 
-
+    private final List<HealthTip> healthTips = new ArrayList<>();
+    private List<HealthTip> healthTipsSubList = new ArrayList<>();
+    private HealthTipAdapter healthTipAdapter;
+    private DatabaseReference db;
+    private ValueEventListener healthTipListener;
+    int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +66,6 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         Util.applyWindowInsetsListenerTo(this, binding.main);
         // Setup tool bar and title
         setupToolbar(binding.homeAppBar.getRoot(), "MedGift", false);
-        binding.moreHealthTipsButton.setOnClickListener(this);
         // Image Slider
         ViewPager2 viewPager2 = binding.imageSlider;
 
@@ -64,11 +78,6 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
 
         viewPager2.setAdapter(new HomeSlideImageAdapter(homeSliderItem, viewPager2));
 
-        // Health Tips List
-        RecyclerView healthTipsRecyclerView = binding.healthTipsRecyclerView;
-        HealthTipsRecyclerViewAdapter healthTipsAdapter = new HealthTipsRecyclerViewAdapter(this, titleList, contentList);
-        healthTipsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        healthTipsRecyclerView.setAdapter(healthTipsAdapter);
 
         // For you list
         RecyclerView forYouRecyclerView = binding.forYouRecyclerView;
@@ -81,7 +90,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     private void registerListeners() {
         NotificationUtil.createNotificationChannel(this,getString(R.string.channel_name), getString(R.string.channel_description));
         binding.quickBtnRecipient.setOnClickListener(this);
-        binding.btnTestNotification.setOnClickListener(this);
+        binding.quickBtnHealthTips.setOnClickListener(this);
         binding.quickBtnGift.setOnClickListener(this);
     }
 
@@ -93,11 +102,8 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         if(view == binding.quickBtnRecipient){
             intent = new  Intent(getApplicationContext(), RecipientActivity.class);
             startActivity(intent);
-        } else if(view == binding.btnTestNotification){
-            NotificationUtil.sendNotification(getApplicationContext(), "Collaboration Invite", "Your are being invited to collaborate on a group gift.", AlertDetail.class);
-        }
-       else if (view == binding.moreHealthTipsButton){
-            intent = new Intent(getApplicationContext(), HealthTipActivity.class);
+        } else if(view == binding.quickBtnHealthTips){
+            intent = new  Intent(getApplicationContext(), HealthTipActivity.class);
             startActivity(intent);
         }
         if(view == binding.quickBtnGift){
@@ -108,5 +114,4 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
 
     }
 
-
-}
+    }

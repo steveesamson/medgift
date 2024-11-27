@@ -1,58 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
-    android:paddingVertical="10dp"
-    android:paddingHorizontal="20dp"
     android:background="@drawable/border"
-    android:layout_height="wrap_content">
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="10dp">
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:weightSum="2"
-        android:orientation="vertical">
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/txtTitle"
             style="@style/Content"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="Tip Title"
-            android:textSize="16sp"
-            android:layout_marginEnd="5dp"
-            android:layout_height="wrap_content"/>
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:weightSum="2"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="50dp"
-                android:layout_height="25dp"
-                android:id="@+id/txtDescription"
-                android:text="Tip Description"
-                android:layout_weight="1"
-                android:textSize="16sp"/>
-            <TextView
-                android:layout_width="38dp"
-                android:layout_height="22dp"
-                android:id="@+id/txtRole"
-                android:layout_weight="1"
-                android:text="Provider@medgift.com"
-                android:textSize="16sp"/>
-
-        </LinearLayout>
-    </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/btnDelete"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:padding="10dp"
+            android:layout_marginEnd="20dp"
+            android:text="Tip Title"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+        <ImageView
+            android:id="@+id/btnReadMore"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:contentDescription="@string/btnDeleteHint"
-            android:src="@drawable/bin"/>
+            android:paddingVertical="10dp"
+            android:paddingStart="20dp"
+            android:src="@drawable/arrow_right" />
+
     </LinearLayout>
+
+
+
+    <include layout="@layout/horizontal_border" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/createdBy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_marginRight="20dp"
+            android:focusable="true"
+            android:textAlignment="textStart" />
+
+        <TextView
+            android:id="@+id/btnEditTip"
+            style="@style/TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/btnEditTip"
+            android:textAlignment="textStart" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btnDelete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/btnDeleteHint"
+            android:paddingVertical="10dp"
+            android:paddingStart="20dp"
+            android:src="@drawable/bin" />
+    </LinearLayout>
+
+</LinearLayout>

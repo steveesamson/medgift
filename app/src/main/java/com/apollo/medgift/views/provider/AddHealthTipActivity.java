@@ -36,9 +36,11 @@ public class AddHealthTipActivity extends BaseActivity implements View.OnClickLi
         if (!exists) {
 
             healthTip.setCreatedBy(Firebase.currentUser().getUserId());
-            healthTip.setCreatedByName(Firebase.currentUser().getEmail());
+            healthTip.setCreatedByName(Firebase.currentUser().getUserName());
+
         }
         setup();
+
     }
 
     private void setup() {
