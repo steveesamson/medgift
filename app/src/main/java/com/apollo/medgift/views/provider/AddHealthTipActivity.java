@@ -101,7 +101,6 @@ public class AddHealthTipActivity extends BaseActivity implements View.OnClickLi
                 }
             });
         }
-
     }
 
     @Override

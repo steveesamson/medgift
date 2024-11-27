@@ -2,33 +2,35 @@ package com.apollo.medgift.models;
 
 import android.net.Uri;
 
-import java.io.Serializable;
+import com.apollo.medgift.common.BaseModel;
 
-public class HealthcareService implements Serializable {
+public class HealthcareService extends BaseModel {
+    public static final String STORE = "HealthcareService";
+
     // Not to be persisted
     public transient Uri bannerUri = null;
-    private String key;
-    private String providerId;
     private String serviceName;
     private String description;
     private String bannerUrl;
-    private double cost;
+    private String createdBy;
+    private String serviceType;
+    private double price;
     private int ratings;
 
-    public String getKey() {
-        return key;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public String getProviderId() {
-        return providerId;
+    public String getServiceType() {
+        return serviceType;
     }
 
-    public void setProviderId(String providerId) {
-        this.providerId = providerId;
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
     }
 
     public String getDescription() {
@@ -47,12 +49,12 @@ public class HealthcareService implements Serializable {
         this.bannerUrl = bannerUrl;
     }
 
-    public double getCost() {
-        return cost;
+    public double getPrice() {
+        return price;
     }
 
-    public void setCost(double cost) {
-        this.cost = cost;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public int getRatings() {

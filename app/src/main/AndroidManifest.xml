@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -23,7 +25,7 @@
             android:exported="false" />
         <activity
             android:name=".views.gifter.AddRecipientActivity" android:exported="false" />
-          <activity  android:name=".views.gifter.AddGiftActivity"
+        <activity  android:name=".views.gifter.AddGiftActivity"
             android:exported="false" />
         <activity android:name=".views.gifter.GiftActivity"
             android:exported="false" />
@@ -32,6 +34,9 @@
             android:exported="false" />
         <activity
             android:name=".views.provider.CreateServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.provider.MyServiceActivity"
             android:exported="false" />
         <activity
             android:name=".views.ProviderHomePageActivity"

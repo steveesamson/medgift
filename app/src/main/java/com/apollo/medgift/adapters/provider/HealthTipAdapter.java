@@ -24,7 +24,8 @@ import java.util.List;
 public class HealthTipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final Context context;
     private final List<HealthTip> healthtips;
-    public HealthTipAdapter(List<HealthTip> healthTips, Context context){
+
+    public HealthTipAdapter(List<HealthTip> healthTips, Context context) {
         this.healthtips = healthTips;
         this.context = context;
     }
@@ -60,7 +61,7 @@ public class HealthTipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         private void setupListeners() {
-           itemBinding.btnDelete.setOnClickListener(this);
+            itemBinding.btnDelete.setOnClickListener(this);
             itemBinding.txtTitle.setOnClickListener(this);
             if (User.Role.GIFTER.name().equals(Firebase.currentUser().getUserRole())) {
                 // hide button for "Gifter"
@@ -85,20 +86,21 @@ public class HealthTipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 // Delete here
                 Util.showConfirm(context, "Delete", "Do your really want to delete this health tip?", (dialog, which) -> {
                     // Implement delete
-                    Firebase.delete(healthtip, HealthTip.STORE,(task) -> {
-                        if(task.isSuccessful()){
+                    Firebase.delete(healthtip, HealthTip.STORE, (task) -> {
+                        if (task.isSuccessful()) {
                             Util.notify(context, "Health Tip deleted!");
                         }
                     });
                     dialog.dismiss();
                 });
-            } else if(view == itemBinding.txtTitle){ // Display health tip form for details
+            } else if (view == itemBinding.txtTitle) { // Display health tip form for details
                 Intent intent = new Intent(context, AddHealthTipActivity.class);
                 intent.putExtra(HealthTip.STORE, HealthTipHolder.this.healthtip);
                 context.startActivity(intent);
             }
         }
     }
+
     public static String truncateString(String input) {
         return input.length() > 9 ? input.substring(0, 9) + "..." : input;
     }

@@ -44,7 +44,6 @@ public class ForYouRecyclerViewAdapter extends RecyclerView.Adapter<ForYouRecycl
         holder.giftImage.setImageResource(images[position]);
         holder.giftTitle.setText(titles[position]);
         holder.giftProvider.setText(providers[position]);
-        holder.giftLocation.setText(locations[position]);
         holder.giftDescription.setText(descriptions[position]);
         holder.giftPrice.setText(prices[position]);
     }
@@ -63,7 +62,6 @@ public class ForYouRecyclerViewAdapter extends RecyclerView.Adapter<ForYouRecycl
             giftImage = itemView.findViewById(R.id.giftImage);
             giftTitle = itemView.findViewById(R.id.giftTitle);
             giftProvider = itemView.findViewById(R.id.giftProvider);
-            giftLocation = itemView.findViewById(R.id.giftLocation);
             giftDescription = itemView.findViewById(R.id.giftDescription);
             giftPrice = itemView.findViewById(R.id.giftPrice);
         }

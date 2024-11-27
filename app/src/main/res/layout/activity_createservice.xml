@@ -28,7 +28,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="30dp">
 
@@ -47,35 +47,35 @@
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lytServiceAssignee"
-                style="@style/TextLayout"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:hint="@string/service_assignee">
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                android:id="@+id/lytServiceAssignee"-->
+            <!--                style="@style/TextLayout"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="50dp"-->
+            <!--                android:hint="@string/service_assignee">-->
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtServiceAssignee"
-                    style="@style/TextEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:id="@+id/edtServiceAssignee"-->
+            <!--                    style="@style/TextEdit"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:inputType="text" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lytHospital"
-                style="@style/TextLayout"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:hint="@string/hospital">
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                android:id="@+id/lytHospital"-->
+            <!--                style="@style/TextLayout"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="50dp"-->
+            <!--                android:hint="@string/hospital">-->
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtHospital"
-                    style="@style/TextEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:id="@+id/edtHospital"-->
+            <!--                    style="@style/TextEdit"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:inputType="text" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lytPrice"
@@ -89,18 +89,58 @@
                     style="@style/TextEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Spinner
-                android:id="@+id/spinnerCategory"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lytType"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/service_type">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTxt"
+                    style="@style/TextEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/serviceImage"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <LinearLayout
+                android:id="@+id/addImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/spinner_background"
-                android:padding="10dp"
-                android:spinnerMode="dropdown"
-                android:textColor="#9C9C9C" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/addImageButtonText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_image"
+                    android:textColor="@color/text_hint_color"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_upload" />
+            </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lytDescription"
@@ -120,15 +160,46 @@
                     android:scrollbars="vertical" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                android:id="@+id/lytAvailability"-->
+            <!--                style="@style/TextLayout"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:hint="@string/availability">-->
+
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:id="@+id/edtAvailability"-->
+            <!--                    style="@style/TextEdit"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="150dp"-->
+            <!--                    android:gravity="top|start"-->
+            <!--                    android:inputType="textMultiLine"-->
+            <!--                    android:minLines="5"-->
+            <!--                    android:scrollbars="vertical" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
+
             <Button
                 android:id="@+id/btnCreateServiceSave"
+                style="@style/PrimaryButton"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="60dp"
-                android:background="@drawable/rounded_button_blue"
-                android:text="@string/save"
-                android:textStyle="bold" />
+                android:layout_height="60dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/save" />
+
+            <Button
+                android:id="@+id/btnDeleteService"
+                style="@style/DestructiveButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="40dp"
+                android:text="@string/delete"
+                android:visibility="gone" />
+
         </LinearLayout>
     </ScrollView>
 
+    <include
+        android:id="@+id/progress"
+        layout="@layout/progress" />
 </androidx.constraintlayout.widget.ConstraintLayout>
