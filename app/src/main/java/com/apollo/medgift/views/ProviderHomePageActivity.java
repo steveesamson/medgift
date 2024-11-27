@@ -7,6 +7,7 @@ import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityProviderhomepageBinding;
 import com.apollo.medgift.views.provider.AddHealthTipActivity;
+import com.apollo.medgift.views.provider.AvailabilityActivity;
 import com.apollo.medgift.views.provider.CreateServiceActivity;
 import com.apollo.medgift.views.provider.HealthTipActivity;
 import com.apollo.medgift.views.provider.PublishHealthTipsActivity;
@@ -27,7 +28,7 @@ public class ProviderHomePageActivity extends BaseActivity {
 
         // Set click listener for category_card_1 to open CreateServiceActivity
         binding.categoryCard1.setOnClickListener(v -> {
-            Intent intent = new Intent(ProviderHomePageActivity.this, CreateServiceActivity.class);
+            Intent intent = new Intent(ProviderHomePageActivity.this, AvailabilityActivity.class);
             startActivity(intent);
         });
 

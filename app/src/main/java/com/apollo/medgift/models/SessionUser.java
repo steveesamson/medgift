@@ -3,10 +3,10 @@ package com.apollo.medgift.models;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SessionUser {
-    private String userId;
-    private String email;
-    private String userRole;
-    private String userName;
+    private final String userId;
+    private final String email;
+    private final String userRole;
+    private final String userName;
 
     public  SessionUser(FirebaseUser user){
         String[] nameRole = user.getDisplayName().split("\\|");

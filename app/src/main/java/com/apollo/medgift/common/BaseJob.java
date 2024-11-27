@@ -16,7 +16,7 @@ import com.apollo.medgift.R;
 
 public class BaseJob extends Worker {
 
-    private static int notificationId = 1;
+    private static final int notificationId = 1;
 
     public BaseJob(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);

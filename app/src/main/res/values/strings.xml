@@ -81,4 +81,9 @@
     <string name="editGiftTitle">Edit Gift</string>
     <string name="addGiftTitle">Add Gift</string>
     <string name="hintGroup">This is a Group Gift</string>
+    <string name="availability_title">My Availability</string>
+    <string name="addAvailability_title">Add Availability</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="btnAddAvailability">Add Availability</string>
 </resources>
