@@ -17,9 +17,10 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.common.ValueEvents;
 import com.apollo.medgift.databinding.ActivityHealthtipBinding;
 import com.apollo.medgift.models.HealthTip;
+import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.models.HealthtipVModel;
-import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class HealthTipActivity extends BaseActivity {
     private ActivityHealthtipBinding healthtipBinding;
     private final List<HealthTip> healthTips = new ArrayList<>();
     private HealthTipAdapter healthTipAdapter;
-    private DatabaseReference db;
+    private Query query;
 
     private ValueEventListener healthTipListener;
     @Override
@@ -57,20 +58,25 @@ public class HealthTipActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-        this.db = Firebase.database(HealthTip.STORE);
-
+        SessionUser sessionUser = Firebase.currentUser();
+        assert sessionUser != null;
+        if(sessionUser.getUserRole().equals(User.Role.PROVIDER.name())) {
+            this.query = Firebase.database(HealthTip.STORE).orderByChild("createdBy").equalTo(sessionUser.getUserId());
+        } else {
+            this.query = Firebase.database(HealthTip.STORE);
+        }
         // checking role of user
-        checkUserRole();
+        checkUserRole(sessionUser);
 
         RecyclerView recyclerView = healthtipBinding.healthTipList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         healthTipAdapter = new HealthTipAdapter(healthTips, this);
         recyclerView.setAdapter(healthTipAdapter);
-        fetchAndListenOnRecipients();
+        fetchAndListenOnHealthTip();
     }
     private void unRegisterValueListener() {
         if (healthTipListener != null) {
-            db.removeEventListener(healthTipListener);
+            query.removeEventListener(healthTipListener);
         }
     }
 
@@ -80,12 +86,12 @@ public class HealthTipActivity extends BaseActivity {
         unRegisterValueListener();
     }
 
-    private void fetchAndListenOnRecipients() {
-        if (db != null) {
+    private void fetchAndListenOnHealthTip() {
+        if (query != null) {
             HealthtipVModel healthtipVModel = new ViewModelProvider(this).get(HealthtipVModel.class);
             ValueEvents<HealthTip> valueEvents = new ValueEvents<HealthTip>();
             Util.startProgress(healthtipBinding.progress, "Fetching Health Tips...");
-            healthTipListener = valueEvents.registerListener(db, this, healthTipAdapter, healthtipVModel, healthTips, HealthTip.class, (list) -> {
+            healthTipListener = valueEvents.registerListener(query, this, healthTipAdapter, healthtipVModel, healthTips, HealthTip.class, (list) -> {
                 Util.stopProgress(healthtipBinding.progress);
                 healthtipBinding.emptyItem.txtEmpty.setText(list.isEmpty()? Util.getEmpty("health tips") : "");
                 healthtipBinding.emptyItem.getRoot().setVisibility(list.isEmpty()? View.VISIBLE : View.GONE);
@@ -93,8 +99,8 @@ public class HealthTipActivity extends BaseActivity {
 
         }
     }
-    private void checkUserRole() {
-        if (User.Role.GIFTER.name().equals(Firebase.currentUser().getUserRole())) {
+    private void checkUserRole(SessionUser user) {
+        if (User.Role.GIFTER.name().equals(user.getUserRole())) {
             // hide button for "Gifter"
             healthtipBinding.btnAddHealthtip.setVisibility(View.GONE);
         } else {

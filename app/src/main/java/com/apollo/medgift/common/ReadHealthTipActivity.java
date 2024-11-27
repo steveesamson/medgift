@@ -18,7 +18,6 @@ import com.google.firebase.database.DatabaseReference;
 public class ReadHealthTipActivity extends BaseActivity {
 
     private ActivityReadhealthtipBinding binding ;
-    private DatabaseReference db;
     private HealthTip healthTip;
 
     @Override
@@ -37,12 +36,13 @@ public class ReadHealthTipActivity extends BaseActivity {
 
         boolean exists = Util.exists(healthTip);
 
-        if (!exists) {
+        if (exists) {
+            healthTip.setCreatedByName(Firebase.currentUser().getUserName());
+            healthTip.setCreatedBy(Firebase.currentUser().getEmail());
+            setup();
 
-            healthTip.setCreatedBy(Firebase.currentUser().getUserId());
-            healthTip.setCreatedByName(Firebase.currentUser().getEmail());
         }
-        setup();
+
     }
     private  void setup(){
         binding.titleTip.setText(healthTip.getTitle());

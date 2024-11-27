@@ -47,6 +47,7 @@
                 android:textColor="@color/gray"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
         </LinearLayout>
     <ScrollView
         android:id="@+id/scrollView"

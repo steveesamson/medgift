@@ -18,12 +18,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.apollo.medgift.models.HealthTip;
 import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.HomePageActivity;
 import com.apollo.medgift.views.LogInActivity;
 import com.apollo.medgift.views.ProviderHomePageActivity;
 import com.apollo.medgift.R;
+import com.apollo.medgift.views.provider.HealthTipActivity;
 import com.google.firebase.auth.FirebaseUser;
 
 public class BaseActivity extends AppCompatActivity {
@@ -119,7 +121,7 @@ public class BaseActivity extends AppCompatActivity {
         } else if (itemId == R.id.categories) {
             return true;
         } else if (itemId == R.id.healthTips) {
-            //
+            navigateTo(HealthTipActivity.class);
             return true;
         } else if (itemId == R.id.aboutUs) {
             //

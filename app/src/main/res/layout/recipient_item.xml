@@ -36,10 +36,10 @@
             android:text="@string/btnSendGiftToRecipient"
             android:textAlignment="textStart" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btnDelete"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:contentDescription="@string/btnDeleteHint"
             android:paddingVertical="10dp"
             android:paddingStart="20dp"
