@@ -65,7 +65,7 @@
     <string name="lblAddress">Address</string>
     <string name="lblSaveBtn">Save</string>
     <string name="recipientTitle">Recipients</string>
-    <string name="healthTipTitle">Health Tip</string>
+    <string name="healthTipTitle">Health Tips</string>
     <string name="giftTitle">Gifts</string>
     <string name="btnDeleteHint">Delete button</string>
     <string name="lblCancelBtn">Cancel</string>
@@ -101,5 +101,7 @@
     <string name="add_image">Add Image</string>
     <string name="rating"><![CDATA[<rating>]]></string>
     <string name="delete">Delete</string>
+    <string name="checkout">Checkout</string>
+    <string name="add_to_gift">Add to Gift</string>
 
 </resources>

@@ -44,7 +44,9 @@ public class MyServiceActivity extends BaseActivity {
         myserviceBinding = ActivityMyserviceBinding.inflate(getLayoutInflater());
         setContentView(myserviceBinding.getRoot());
 
-        setupToolbar(myserviceBinding.homeAppBar.getRoot(), getString(R.string.myServicesTitle), true);
+        String toolbarTitle = Firebase.currentUser().getUserRole().equals(User.Role.GIFTER.name()) ? getString(R.string.available_services) : getString(R.string.myServicesTitle);
+        setupToolbar(myserviceBinding.homeAppBar.getRoot(), toolbarTitle, true);
+
         applyWindowInsetsListenerTo(this, myserviceBinding.serviceActivity);
 
         setPageUp();
@@ -97,7 +99,6 @@ public class MyServiceActivity extends BaseActivity {
             Util.startProgress(myserviceBinding.progress, "Fetching Services...");
             serviceListener = valueEvents.registerListener(query, this, serviceAdapter, serviceVModel, healthcareServices, HealthcareService.class, (list) -> {
                 Util.stopProgress(myserviceBinding.progress);
-                Log.i("TAG", String.valueOf(list.size()));
                 myserviceBinding.emptyItem.txtEmpty.setText(list.isEmpty() ? Util.getEmpty("services") : "");
                 myserviceBinding.emptyItem.getRoot().setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
             });

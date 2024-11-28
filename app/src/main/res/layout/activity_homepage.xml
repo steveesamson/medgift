@@ -68,7 +68,7 @@
                         android:weightSum="2">
 
                         <LinearLayout
-                            android:id="@+id/category_card_1"
+                            android:id="@+id/quickBtnAvailableServices"
                             android:layout_width="0dp"
                             android:layout_height="100dp"
                             android:layout_weight="1"
