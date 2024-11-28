@@ -1,5 +1,6 @@
 package com.apollo.medgift.views.gifter;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,10 +47,11 @@ public class ViewServiceActivity extends BaseActivity implements View.OnClickLis
         viewserviceBinding.btnCheckoutService.setOnClickListener(this);
     }
 
+    @SuppressLint("SetTextI18n")
     private void setup() {
         viewserviceBinding.serviceTitle.setText(healthcareService.getServiceName());
-        viewserviceBinding.provider.setText(healthcareService.getCreatedBy());
-        viewserviceBinding.serviceType.setText(healthcareService.getServiceType());
+        viewserviceBinding.provider.setText(" " + healthcareService.getCreatedBy());
+        viewserviceBinding.serviceType.setText(" " + healthcareService.getServiceType());
         viewserviceBinding.price.setText("$ " + healthcareService.getPrice());
         viewserviceBinding.description.setText(healthcareService.getDescription());
 

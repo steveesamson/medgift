@@ -37,7 +37,6 @@
                 android:id="@+id/serviceTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Service Title"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -58,14 +57,13 @@
                     android:id="@+id/field1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Provider: "
+                    android:text="@string/provider"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/provider"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="sample" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
@@ -78,14 +76,13 @@
                     android:id="@+id/field4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Type: "
+                    android:text="@string/type"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/serviceType"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="sample" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <TextView
@@ -93,7 +90,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="$ 500.00"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -102,28 +98,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="About Service: "
+                android:text="@string/about_service"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="sample" />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/field6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Availability"
+                android:text="@string/availability"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/Availability"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="sample" />
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/btnAddToGift"

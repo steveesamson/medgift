@@ -103,6 +103,17 @@
     <string name="delete">Delete</string>
     <string name="checkout">Checkout</string>
     <string name="add_to_gift">Add to Gift</string>
+    <string name="type">Type:</string>
+    <string name="provider">Provider:</string>
+    <string name="about_service">About Service:</string>
+    <string name="send_this_gift_to">Send this gift to: </string>
+    <string name="enter_recipient_s_email_address">Enter Recipient’s Email Address</string>
+    <string name="your_message">Your Message</string>
+    <string name="total_before_tax">Total before tax:</string>
+    <string name="estimated_gst_hst">Estimated GST/HST:</string>
+    <string name="order_total">Order Total</string>
+    <string name="confirm_now">Confirm Now</string>
+    <string name="service_type2">Service Type:</string>
 
     <string name="user_with_email_not_found">User with the provided email not found!</string>
     <string name="user_successfull_added">User was successfully added.</string>
