@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ValueEvents<T extends BaseModel> {
 
-    public  ValueEventListener registerListener(Query db, Context context, RecyclerView.Adapter<RecyclerView.ViewHolder> adapter, BaseViewModel<T> viewModel, List<T> modelList, Class<T> modelClass, OnCallBack<T> onComplete){
+    public  ValueEventListener registerListener(Query db, Context context, RecyclerView.Adapter<RecyclerView.ViewHolder> adapter, BaseViewModel<T> viewModel, List<T> modelList, Class<T> modelClass, OnModelCallback<T> onComplete){
 
         viewModel.getModel().observe((LifecycleOwner) context, list -> {
             // Update the selected filters UI.

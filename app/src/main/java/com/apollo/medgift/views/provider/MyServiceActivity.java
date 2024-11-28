@@ -18,6 +18,7 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.common.ValueEvents;
 import com.apollo.medgift.databinding.ActivityMyserviceBinding;
 import com.apollo.medgift.models.HealthcareService;
+import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.models.ServiceVModel;
@@ -65,13 +66,13 @@ public class MyServiceActivity extends BaseActivity {
         SessionUser sessionUser = Firebase.currentUser();
         assert sessionUser != null;
 
-        if (sessionUser.getUserRole().equals(User.Role.GIFTER.name())) {
+        if (sessionUser.getUserRole().equals(Role.GIFTER)) {
             this.query = Firebase.database(HealthcareService.STORE);
         } else {
             this.query = Firebase.database(HealthcareService.STORE).orderByChild("createdBy").equalTo(sessionUser.getUserId());
         }
 
-        myserviceBinding.btnAddService.setVisibility(sessionUser.getUserRole().equals(User.Role.GIFTER.name()) ? View.GONE : View.VISIBLE);
+        myserviceBinding.btnAddService.setVisibility(sessionUser.getUserRole().equals(Role.GIFTER) ? View.GONE : View.VISIBLE);
 
         RecyclerView recyclerView = myserviceBinding.serviceList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

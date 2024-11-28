@@ -17,13 +17,7 @@ public class HealthcareService extends BaseModel {
     private double price;
     private int ratings;
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
 
     public String getServiceType() {
         return serviceType;
@@ -71,5 +65,14 @@ public class HealthcareService extends BaseModel {
 
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
+    }
+
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 }

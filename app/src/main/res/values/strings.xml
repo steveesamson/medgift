@@ -54,7 +54,7 @@
 
     <string name="lblLoading">Just a second...</string>
     <string name="addRecipientTitle">Create Recipient</string>
-    <string name="btnAddRecipient">Add Recipient</string>
+    <string name="btnAddRecipient">+ Add Recipient</string>
     <string name="editRecipientTitle">Edit Recipient</string>
     <string name="lblFirstName">First name</string>
     <string name="lblLastName">Last name</string>
@@ -73,13 +73,13 @@
     <string name="hintLastName">Last name</string>
     <string name="addHealthtipTitle">Add Health Tip</string>
     <string name="editHealthtipTitle">Edit Health Tip</string>
-    <string name="btnSendGiftToRecipient">Send a gift</string>
+    <string name="btnSendGiftToRecipient">Send Gift</string>
     <string name="btnReadTip">Read</string>
     <string name="btnEditTip">Edit</string>
     <string name="channel_name">MedGift Channel</string>
     <string name="channel_description">MedGift Notification Channel</string>
 
-    <string name="btnAddGift">Add Gift +</string>
+    <string name="btnAddGift">+ Add Gift</string>
     <string name="editGiftTitle">Edit Gift</string>
     <string name="addGiftTitle">Add Gift</string>
     <string name="hintGroup">This is a Group Gift</string>
@@ -95,7 +95,7 @@
     <string name="no_image_selected">No image selected</string>
     <string name="change_image">Change Image</string>
     <string name="failed_to_load_image_error">Failed to load image. Please try again.</string>
-    <string name="add_service">Add Service +</string>
+    <string name="add_service">+ Add Service</string>
     <string name="myServicesTitle">My Services</string>
     <string name="availability">Availability</string>
     <string name="add_image">Add Image</string>
@@ -104,4 +104,14 @@
     <string name="checkout">Checkout</string>
     <string name="add_to_gift">Add to Gift</string>
 
+    <string name="user_with_email_not_found">User with the provided email not found!</string>
+    <string name="user_successfull_added">User was successfully added.</string>
+    <string name="inviteesLbl">Invitees:</string>
+    <string name="contributorsLbl">Contributors</string>
+    <string name="invite_contributorsLbl">Invite Contributors</string>
+    <string name="recipient">Recipient</string>
+    <string name="btnAddHealthtip">+ Add Health Tip</string>
+    <string name="provide_a_valid_email">Please provide a valid email that is not yours.</string>
+    <string name="btn_manage_gift">Manage Gift</string>
+    <string name="btn_add_services">+ Add Services</string>
 </resources>

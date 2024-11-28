@@ -3,6 +3,7 @@ package com.apollo.medgift.common;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.net.Uri;
+import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import androidx.annotation.NonNull;
@@ -17,20 +18,27 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Utility to manage all google Firebase services
  */
 public class Firebase {
 
+    private static final String TAG = Firebase.class.getSimpleName();
     // Get a reference to Firebase DatabaseReference
     public static DatabaseReference database(String root){
         return FirebaseDatabase.getInstance().getReference().child(root);
@@ -47,7 +55,65 @@ public class Firebase {
         return FirebaseAuth.getInstance();
     }
 
+    public  static <T extends BaseModel> void  getModelBy(String storeName, String key, String value, Class<T> modelClass, OnModel<T> onComplete){
+//        Query query = Firebase.database(storeName).orderByChild(key).equalTo(value);
+//        ValueEventListener postListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // Get Post object and use the values to update the UI
+//                T model = dataSnapshot.getValue(modelClass);
+//                onComplete.onComplete(model);
+//                // ..
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                // Getting Post failed, log a message
+//                Log.w("getModelBy", ":onCancelled", databaseError.toException());
+//                onComplete.onComplete(null);
+//            }
+//        };
+//        query.addValueEventListener(postListener);
+        Firebase.getModelsBy(storeName, key, value, modelClass, (list) -> {
+            Log.i(TAG, String.valueOf(list.size()));
+            if(list.isEmpty()){
+                onComplete.onComplete(null);
+            }else{
+                onComplete.onComplete(list.get(0));
+            }
+        });
+    }
 
+
+    public  static <T extends BaseModel> void  getModelsBy(String storeName, String key, String value, Class<T> modelClass, OnModel<List<T>> onComplete){
+
+
+        Query query = Firebase.database(storeName).orderByChild(key).equalTo(value);
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshots) {
+
+                List<T> list = new ArrayList<>();
+                for (DataSnapshot snapshot : snapshots.getChildren()) {
+                    T r = snapshot.getValue(modelClass);
+                    if (r != null) {
+                        r.setKey(snapshot.getKey());
+                        list.add(r);
+                    }
+                }
+                // Get Post object and use the values to update the UI
+                onComplete.onComplete(list);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("getModelsBy", ":onCancelled", databaseError.toException());
+                onComplete.onComplete(null);
+            }
+        };
+        query.addValueEventListener(postListener);
+    }
     // Get current user
     public static SessionUser currentUser(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -102,8 +168,9 @@ public class Firebase {
 //    public static String getRole(){
 //        return currentUser().getDisplayName().split("\\|")[1];
 //    }
+//    public static void save(BaseModel model, String storeName, OnCompleteListener<Void> onComplete) {
+    public static void save(BaseModel model, String storeName, StoreCompleteListener onComplete) {
 
-    public static void save(BaseModel model, String storeName, OnCompleteListener<Void> onComplete) {
         String key = model.getKey();
 
         DatabaseReference db = Firebase.database(storeName);
@@ -115,7 +182,10 @@ public class Firebase {
         }
         if(key != null){
             // Save to Firebase
-            db.child(key).setValue(model).addOnCompleteListener(onComplete);
+            String finalKey = key;
+            db.child(key).setValue(model).addOnCompleteListener((task) -> {
+                onComplete.onComplete(task, finalKey);
+            });
         }
     }
 

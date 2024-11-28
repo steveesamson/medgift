@@ -26,7 +26,7 @@ tools:context=".views.provider.HealthTipActivity">
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:paddingBottom="20dp"
+        android:paddingVertical="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/homeAppBar"
@@ -40,7 +40,7 @@ tools:context=".views.provider.HealthTipActivity">
             android:layout_marginBottom="20dp"
             android:clickable="true"
             android:focusable="true"
-            android:text="@string/addHealthtipTitle"
+            android:text="@string/btnAddHealthtip"
             android:textAlignment="textEnd" />
 
         <include

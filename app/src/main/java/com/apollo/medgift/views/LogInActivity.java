@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityLoginBinding;
+import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.User;
 
 
@@ -73,10 +74,10 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                     Log.i("ROLE:", ROLE);
                     Intent intent = null;
 
-                    if(ROLE.equals(User.Role.GIFTER.name())){
+                    if(ROLE.equals(Role.GIFTER)){
                         intent = new Intent(LogInActivity.this, HomePageActivity.class);
                         startActivity(intent);
-                    }else if(ROLE.equals(User.Role.PROVIDER.name())){
+                    }else if(ROLE.equals(Role.PROVIDER)){
                         intent = new Intent(LogInActivity.this, ProviderHomePageActivity.class);
                         startActivity(intent);
                     }

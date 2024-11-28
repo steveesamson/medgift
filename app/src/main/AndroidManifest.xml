@@ -22,6 +22,7 @@
         <activity
             android:name=".common.ReadHealthTipActivity"
             android:exported="false" />
+<<<<<<< HEAD
         <activity
             android:name=".views.gifter.AddRecipientActivity"
             android:exported="false" />
@@ -30,6 +31,10 @@
             android:exported="false" />
         <activity
             android:name=".views.provider.AddHealthTipActivity"
+=======
+
+        <activity  android:name=".views.provider.AddHealthTipActivity"
+>>>>>>> 7d02979 (add support for group gift, invitee and contributor)
             android:exported="false" />
         <activity
             android:name=".views.provider.HealthTipActivity"

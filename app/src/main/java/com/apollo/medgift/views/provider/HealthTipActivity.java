@@ -17,6 +17,7 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.common.ValueEvents;
 import com.apollo.medgift.databinding.ActivityHealthtipBinding;
 import com.apollo.medgift.models.HealthTip;
+import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.models.HealthtipVModel;
@@ -60,7 +61,7 @@ public class HealthTipActivity extends BaseActivity {
         });
         SessionUser sessionUser = Firebase.currentUser();
         assert sessionUser != null;
-        if(sessionUser.getUserRole().equals(User.Role.PROVIDER.name())) {
+        if(sessionUser.getUserRole().equals(Role.PROVIDER)) {
             this.query = Firebase.database(HealthTip.STORE).orderByChild("createdBy").equalTo(sessionUser.getUserId());
         } else {
             this.query = Firebase.database(HealthTip.STORE);
@@ -100,7 +101,7 @@ public class HealthTipActivity extends BaseActivity {
         }
     }
     private void checkUserRole(SessionUser user) {
-        if (User.Role.GIFTER.name().equals(user.getUserRole())) {
+        if (Role.GIFTER.equals(user.getUserRole())) {
             // hide button for "Gifter"
             healthtipBinding.btnAddHealthtip.setVisibility(View.GONE);
         } else {

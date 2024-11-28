@@ -20,4 +20,25 @@
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/txtError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10dp"
+        android:text="User with email not found!"
+        android:textColor="@color/alert"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/txtSuccess"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10dp"
+        android:text="User added!"
+        android:textColor="@color/success"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
 </LinearLayout>

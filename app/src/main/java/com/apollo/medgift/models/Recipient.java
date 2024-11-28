@@ -1,5 +1,7 @@
 package com.apollo.medgift.models;
 
+import androidx.annotation.NonNull;
+
 import com.apollo.medgift.common.BaseModel;
 
 import java.io.Serializable;
@@ -85,5 +87,11 @@ public class Recipient extends BaseModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @NonNull
+    @Override
+    public String toString(){
+        return String.format("%s %s <%s>", firstName, lastName, email);
     }
 }

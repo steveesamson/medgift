@@ -1,13 +1,15 @@
 package com.apollo.medgift.models;
 
+import androidx.annotation.NonNull;
+
 import com.apollo.medgift.common.BaseModel;
 
 public class GiftInvite extends BaseModel {
     public static final String STORE ="GiftInvite";
 
     private String giftId;
-    private String inviteeId;
-    private String message;
+    private String email;
+    private String name;
     private String creationDate;
 
     public String getGiftId() {
@@ -18,21 +20,6 @@ public class GiftInvite extends BaseModel {
         this.giftId = giftId;
     }
 
-    public String getInviteeId() {
-        return inviteeId;
-    }
-
-    public void setInviteeId(String inviteeId) {
-        this.inviteeId = inviteeId;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public String getCreationDate() {
         return creationDate;
@@ -40,5 +27,28 @@ public class GiftInvite extends BaseModel {
 
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @NonNull
+    @Override
+    public String toString(){
+        return name;
+//        return String.format("%s", name, email);
     }
 }

@@ -14,6 +14,7 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.GiftItemBinding;
 import com.apollo.medgift.models.Gift;
 import com.apollo.medgift.views.gifter.AddGiftActivity;
+import com.apollo.medgift.views.provider.MyServiceActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +61,8 @@ public class GiftAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         private void setupListeners() {
-            itemBinding.manageGiftView.setOnClickListener(this);
-            itemBinding.addServiceView.setOnClickListener(this);
+            itemBinding.btnAddService.setOnClickListener(this);
+            itemBinding.btnManageGift.setOnClickListener(this);
             itemBinding.btnDelete.setOnClickListener(this);
 
         }
@@ -87,9 +88,12 @@ public class GiftAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     });
                     dialog.dismiss();
                 });
-            }
-            if(view == itemBinding.manageGiftView.getRootView()) { // Display gift form for details
+            }else if(view == itemBinding.btnManageGift) { // Display gift form for details
                 Intent intent = new Intent(context, AddGiftActivity.class);
+                intent.putExtra(Gift.STORE, GiftHolder.this.gift);
+                context.startActivity(intent);
+            } else if(view == itemBinding.btnAddService){
+                Intent intent = new Intent(context, MyServiceActivity.class);
                 intent.putExtra(Gift.STORE, GiftHolder.this.gift);
                 context.startActivity(intent);
             }

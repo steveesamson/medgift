@@ -1,12 +1,15 @@
 package com.apollo.medgift.common;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.activity.ComponentActivity;
@@ -19,6 +22,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.apollo.medgift.models.HealthTip;
+import com.apollo.medgift.databinding.ContributorDialogBinding;
+import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.HomePageActivity;
@@ -76,9 +81,9 @@ public class BaseActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
 
         // Check for user type and inflate menu
-        if (userType.equals(User.Role.GIFTER.name())) {
+        if (userType.equals(Role.GIFTER)) {
             inflater.inflate(R.menu.homemenu, menu);
-        } else if (userType.equals(User.Role.PROVIDER.name())) {
+        } else if (userType.equals(Role.PROVIDER)) {
             inflater.inflate(R.menu.providermenu, menu);
         }
         return true;
@@ -105,9 +110,9 @@ public class BaseActivity extends AppCompatActivity {
         String userType = getUserType();
 
         // Handle user types
-        if (userType.equals(User.Role.GIFTER.name())) {
+        if (userType.equals(Role.GIFTER)) {
             return handleGifterMenuSelection(id);
-        } else if (userType.equals(User.Role.PROVIDER.name())) {
+        } else if (userType.equals(Role.PROVIDER)) {
             return handleProviderMenuSelection(id);
         }
         return super.onOptionsItemSelected(item);
@@ -160,5 +165,17 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    protected void showIDialogFor(View view, String title, String positiveLabel, DialogInterface.OnClickListener onPositive ) {
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle(title)
+                .setView(view)
+                .setPositiveButton(positiveLabel, onPositive)
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
+    }
+
 
 }
