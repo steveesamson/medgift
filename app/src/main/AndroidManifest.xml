@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -22,19 +21,14 @@
         <activity
             android:name=".common.ReadHealthTipActivity"
             android:exported="false" />
-<<<<<<< HEAD
         <activity
             android:name=".views.gifter.AddRecipientActivity"
             android:exported="false" />
         <activity
             android:name=".views.gifter.AddGiftActivity"
             android:exported="false" />
-        <activity
-            android:name=".views.provider.AddHealthTipActivity"
-=======
 
         <activity  android:name=".views.provider.AddHealthTipActivity"
->>>>>>> 7d02979 (add support for group gift, invitee and contributor)
             android:exported="false" />
         <activity
             android:name=".views.provider.HealthTipActivity"

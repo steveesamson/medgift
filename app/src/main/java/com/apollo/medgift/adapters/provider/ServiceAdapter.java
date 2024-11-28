@@ -15,6 +15,7 @@ import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ForyourecyclerviewBinding;
 import com.apollo.medgift.models.HealthcareService;
+import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.gifter.ViewServiceActivity;
 import com.apollo.medgift.views.provider.CreateServiceActivity;
@@ -93,12 +94,12 @@ public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @Override
         public void onClick(View view) {
             if (view == itemBinding.serviceItem) {
-                if (Firebase.currentUser().getUserRole().equals(User.Role.GIFTER.name())) {
+                if (Firebase.currentUser().getUserRole().equals(Role.GIFTER)) {
                     Intent intent = new Intent(context, ViewServiceActivity.class);
                     intent.putExtra(HealthcareService.STORE, ServiceHolder.this.healthcareService);
                     context.startActivity(intent);
                 }
-                if (Firebase.currentUser().getUserRole().equals(User.Role.PROVIDER.name())) {
+                if (Firebase.currentUser().getUserRole().equals(Role.PROVIDER)) {
                     Intent intent = new Intent(context, CreateServiceActivity.class);
                     intent.putExtra(HealthcareService.STORE, ServiceHolder.this.healthcareService);
                     context.startActivity(intent);
