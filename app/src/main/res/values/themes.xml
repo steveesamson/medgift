@@ -8,15 +8,18 @@
     </style>
 
     <style name="Theme.Medgift" parent="Base.Theme.Medgift" />
+
     <style name="ProgressStyle">
         <item name="colorAccent">@color/gray</item>
     </style>
+
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">28sp</item>
         <item name="android:textColor">@color/primary</item>
         <item name="android:textStyle">bold</item>
         <item name="android:background">@drawable/toolbar</item>
     </style>
+
     <style name="TextEdit">
         <item name='android:layout_marginTop'>5dp</item>
         <item name='android:paddingHorizontal'>20dp</item>
@@ -28,17 +31,18 @@
         <item name="android:drawablePadding">10dp</item>
         <item name="android:background">@drawable/border</item>
     </style>
+
     <style name="Progress">
         <item name="colorAccent">@color/gray</item>
     </style>
 
-    <style name="ErrorTextAppearance" >
+    <style name="ErrorTextAppearance">
         <item name="android:textColor">@color/secondary</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold|italic</item>
     </style>
 
-    <style name="HintTextAppearance" >
+    <style name="HintTextAppearance">
         <item name="android:textColorHint">@color/gray</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
@@ -56,6 +60,7 @@
         <item name="android:textColorHint">@color/gray</item>
         <item name="errorTextAppearance">@style/ErrorTextAppearance</item>
     </style>
+
     <style name="PrimaryButton">
         <item name="android:gravity">center</item>
         <item name="android:backgroundTint">@color/primary</item>
@@ -77,6 +82,7 @@
         <item name="android:textStyle">bold</item>
         <item name="cornerRadius">10dp</item>
     </style>
+
     <style name="SecondaryButton">
         <item name="android:gravity">center</item>
         <item name="android:backgroundTint">@color/lightgray</item>
@@ -88,24 +94,23 @@
     </style>
 
     <style name="InvertedButton">
-        <item name="android:layout_marginHorizontal">0dp</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:paddingVertical">15dp</item>
-        <item name="android:paddingHorizontal">20dp</item>
-        <item name="android:textColor">@color/blue</item>
+        <item name="android:gravity">center</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textColor">@color/primary</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="cornerRadius">10dp</item>
-        <item name="android:background">@drawable/border</item>
+        <item name="android:background">@drawable/inverted_button_background_blue</item>
     </style>
 
-<!--    <style name="TextButton">-->
-<!--        <item name="android:layout_marginHorizontal">0dp</item>-->
-<!--        <item name="android:paddingHorizontal">0dp</item>-->
-<!--        <item name="android:textColor">@color/blue</item>-->
-<!--        <item name="android:textSize">16sp</item>-->
-<!--        <item name="android:textStyle">bold</item>-->
-<!--    </style>-->
+    <!--    <style name="TextButton">-->
+    <!--        <item name="android:layout_marginHorizontal">0dp</item>-->
+    <!--        <item name="android:paddingHorizontal">0dp</item>-->
+    <!--        <item name="android:textColor">@color/blue</item>-->
+    <!--        <item name="android:textSize">16sp</item>-->
+    <!--        <item name="android:textStyle">bold</item>-->
+    <!--    </style>-->
 
     <style name="Title">
         <item name="android:layout_marginVertical">15dp</item>
@@ -114,6 +119,7 @@
         <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="Content">
         <item name="android:layout_marginVertical">15dp</item>
         <item name="android:textAlignment">textStart</item>
@@ -121,12 +127,14 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">normal</item>
     </style>
+
     <style name="TextButton">
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/primary</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="ContentButton">
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/primary</item>
@@ -135,6 +143,7 @@
         <item name="android:textStyle">normal</item>
         <item name="android:background">@drawable/border</item>
     </style>
+
     <style name="Pane">
         <item name="android:paddingHorizontal">30dp</item>
     </style>

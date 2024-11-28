@@ -2,6 +2,7 @@ package com.apollo.medgift.adapters.provider;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.apollo.medgift.R;
+import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ForyourecyclerviewBinding;
 import com.apollo.medgift.models.HealthcareService;
+import com.apollo.medgift.models.User;
+import com.apollo.medgift.views.gifter.ViewServiceActivity;
 import com.apollo.medgift.views.provider.CreateServiceActivity;
 
 import java.util.List;
@@ -63,9 +67,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public void bindData(HealthcareService healthcareService) {
             this.healthcareService = healthcareService;
             itemBinding.giftTitle.setText(healthcareService.getServiceName());
-//            itemBinding.giftProvider.setText(healthcareService.getCreatedBy());
             itemBinding.giftDescription.setText(healthcareService.getDescription());
-//            itemBinding.giftDescription.setText(truncateString(healthcareService.getDescription()));
             itemBinding.giftPrice.setText("$ " + healthcareService.getPrice());
             if (healthcareService.getBannerUrl() != null && !healthcareService.getBannerUrl().isEmpty()) {
                 Util.loadImageUri(itemBinding.giftImage, healthcareService.getBannerUrl(), context);
@@ -91,16 +93,18 @@ public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @Override
         public void onClick(View view) {
             if (view == itemBinding.serviceItem) {
-                Intent intent = new Intent(context, CreateServiceActivity.class);
-                intent.putExtra(HealthcareService.STORE, ServiceHolder.this.healthcareService);
-                context.startActivity(intent);
+                if (Firebase.currentUser().getUserRole().equals(User.Role.GIFTER.name())) {
+                    Intent intent = new Intent(context, ViewServiceActivity.class);
+                    intent.putExtra(HealthcareService.STORE, ServiceHolder.this.healthcareService);
+                    context.startActivity(intent);
+                }
+                if (Firebase.currentUser().getUserRole().equals(User.Role.PROVIDER.name())) {
+                    Intent intent = new Intent(context, CreateServiceActivity.class);
+                    intent.putExtra(HealthcareService.STORE, ServiceHolder.this.healthcareService);
+                    context.startActivity(intent);
+                }
             }
         }
     }
-
-    //Use if needed
-//    public static String truncateString(String input) {
-//        return input.length() > 100 ? input.substring(0, 100) + "..." : input;
-//    }
 
 }

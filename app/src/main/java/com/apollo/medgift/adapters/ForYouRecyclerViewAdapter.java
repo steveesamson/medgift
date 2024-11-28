@@ -61,7 +61,6 @@ public class ForYouRecyclerViewAdapter extends RecyclerView.Adapter<ForYouRecycl
             super(itemView);
             giftImage = itemView.findViewById(R.id.giftImage);
             giftTitle = itemView.findViewById(R.id.giftTitle);
-            giftProvider = itemView.findViewById(R.id.giftProvider);
             giftDescription = itemView.findViewById(R.id.giftDescription);
             giftPrice = itemView.findViewById(R.id.giftPrice);
         }
