@@ -13,4 +13,8 @@ public class BaseViewModel<T> extends ViewModel {
     public  LiveData<List<T>> getModel() {
         return null;
     }
+
+    public void addModel(T model){
+
+    }
 }

@@ -38,6 +38,7 @@ import java.util.List;
  */
 public class Firebase {
 
+    private static final String TAG = Firebase.class.getSimpleName();
     // Get a reference to Firebase DatabaseReference
     public static DatabaseReference database(String root){
         return FirebaseDatabase.getInstance().getReference().child(root);
@@ -53,54 +54,44 @@ public class Firebase {
     public static FirebaseAuth auth(){
         return FirebaseAuth.getInstance();
     }
-//    public static void getUserByEmail(String email, OnUser<User> onComplete){
-//        Query query = Firebase.database(User.STORE).orderByChild("email").equalTo(email);
+
+    public  static <T extends BaseModel> void  getModelBy(String storeName, String key, String value, Class<T> modelClass, OnModel<T> onComplete){
+//        Query query = Firebase.database(storeName).orderByChild(key).equalTo(value);
 //        ValueEventListener postListener = new ValueEventListener() {
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {
 //                // Get Post object and use the values to update the UI
-//                User user = dataSnapshot.getValue(User.class);
-//                onComplete.onComplete(user);
+//                T model = dataSnapshot.getValue(modelClass);
+//                onComplete.onComplete(model);
 //                // ..
 //            }
 //
 //            @Override
 //            public void onCancelled(DatabaseError databaseError) {
 //                // Getting Post failed, log a message
-//                Log.w("getUserByEmail", "loadUser:onCancelled", databaseError.toException());
+//                Log.w("getModelBy", ":onCancelled", databaseError.toException());
 //                onComplete.onComplete(null);
 //            }
 //        };
 //        query.addValueEventListener(postListener);
-//    }
-
-    public  static <T extends BaseModel> void  getModelBy(String key, String value, Class<T> modelClass, OnUser<T> onComplete){
-        Query query = Firebase.database(T.STORE).orderByChild(key).equalTo(value);
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                T model = dataSnapshot.getValue(modelClass);
-                onComplete.onComplete(model);
-                // ..
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w("getUserByEmail", "loadUser:onCancelled", databaseError.toException());
+        Firebase.getModelsBy(storeName, key, value, modelClass, (list) -> {
+            Log.i(TAG, String.valueOf(list.size()));
+            if(list.isEmpty()){
                 onComplete.onComplete(null);
+            }else{
+                onComplete.onComplete(list.get(0));
             }
-        };
-        query.addValueEventListener(postListener);
+        });
     }
 
 
-    public  static <T extends BaseModel> void  getModelsBy(String key, String value, Class<T> modelClass, OnUser<List<T>> onComplete){
-        Query query = Firebase.database(T.STORE).orderByChild(key).equalTo(value);
+    public  static <T extends BaseModel> void  getModelsBy(String storeName, String key, String value, Class<T> modelClass, OnModel<List<T>> onComplete){
+
+
+        Query query = Firebase.database(storeName).orderByChild(key).equalTo(value);
         ValueEventListener postListener = new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshots) {
+            public void onDataChange(@NonNull DataSnapshot snapshots) {
 
                 List<T> list = new ArrayList<>();
                 for (DataSnapshot snapshot : snapshots.getChildren()) {
@@ -177,8 +168,9 @@ public class Firebase {
 //    public static String getRole(){
 //        return currentUser().getDisplayName().split("\\|")[1];
 //    }
+//    public static void save(BaseModel model, String storeName, OnCompleteListener<Void> onComplete) {
+    public static void save(BaseModel model, String storeName, StoreCompleteListener onComplete) {
 
-    public static void save(BaseModel model, String storeName, OnCompleteListener<Void> onComplete) {
         String key = model.getKey();
 
         DatabaseReference db = Firebase.database(storeName);
@@ -190,7 +182,10 @@ public class Firebase {
         }
         if(key != null){
             // Save to Firebase
-            db.child(key).setValue(model).addOnCompleteListener(onComplete);
+            String finalKey = key;
+            db.child(key).setValue(model).addOnCompleteListener((task) -> {
+                onComplete.onComplete(task, finalKey);
+            });
         }
     }
 

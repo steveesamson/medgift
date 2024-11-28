@@ -12,6 +12,7 @@ import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityAddhealthtipBinding;
 import com.apollo.medgift.models.HealthTip;
+import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.User;
 
 public class AddHealthTipActivity extends BaseActivity implements View.OnClickListener {
@@ -47,7 +48,7 @@ public class AddHealthTipActivity extends BaseActivity implements View.OnClickLi
         addhealthtipBinding.tipTitle.setText(healthTip.getTitle());
         addhealthtipBinding.tipDescription.setText(healthTip.getContent());
         addhealthtipBinding.btnAddTip.setOnClickListener(this);
-        if (User.Role.GIFTER.name().equals(Firebase.currentUser().getUserRole())) {
+        if (Role.GIFTER.equals(Firebase.currentUser().getUserRole())) {
             // hide button for "Gifter"
             // disable the edit texts
             addhealthtipBinding.btnAddTip.setVisibility(View.GONE);
@@ -90,7 +91,7 @@ public class AddHealthTipActivity extends BaseActivity implements View.OnClickLi
             boolean exists = Util.exists(healthTip);
             Util.startProgress(addhealthtipBinding.progress, "Adding Health Tip...");
 
-            Firebase.save(healthTip, HealthTip.STORE, (task) -> {
+            Firebase.save(healthTip, HealthTip.STORE, (task, key) -> {
                 Util.stopProgress(addhealthtipBinding.progress);
                 if (task.isSuccessful()) {
 

@@ -1,12 +1,14 @@
 package com.apollo.medgift.models;
 
 
+import androidx.annotation.NonNull;
+
 import com.apollo.medgift.common.BaseModel;
 
 public class User extends BaseModel {
     public static final String STORE ="User";
 
-    public enum Role {
+    public enum Type {
         PROVIDER,
         GIFTER
     }
@@ -15,7 +17,10 @@ public class User extends BaseModel {
     private String lastName;
     private String email;
 
-    public User(Role role){
+    public User(){
+        this.role = Type.GIFTER.name();
+    }
+    public User(Type role){
         this.role = role.name();
     }
 
@@ -49,10 +54,15 @@ public class User extends BaseModel {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(Type role) {
         this.role = role.name();
     }
 
+    @NonNull
+    @Override
+    public String toString(){
+        return String.format("%s %s <%s>", firstName, lastName, email);
+    }
 
 
 }

@@ -17,6 +17,7 @@ import com.apollo.medgift.common.ReadHealthTipActivity;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.HealthtipItemBinding;
 import com.apollo.medgift.models.HealthTip;
+import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.provider.AddHealthTipActivity;
 
@@ -65,7 +66,7 @@ public class HealthTipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
            itemBinding.btnDelete.setOnClickListener(this);
             itemBinding.btnEditTip.setOnClickListener(this);
             itemBinding.btnReadMore.setOnClickListener(this);
-            if (User.Role.GIFTER.name().equals(Firebase.currentUser().getUserRole())) {
+            if (Role.GIFTER.equals(Firebase.currentUser().getUserRole())) {
                 // hide button for "Gifter"
                 itemBinding.btnDelete.setVisibility(View.GONE);
                 itemBinding.btnEditTip.setVisibility(View.GONE);

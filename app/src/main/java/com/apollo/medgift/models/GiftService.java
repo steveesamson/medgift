@@ -1,6 +1,8 @@
 package com.apollo.medgift.models;
 
 
+import androidx.annotation.NonNull;
+
 import com.apollo.medgift.common.BaseModel;
 
 public class GiftService extends BaseModel {
@@ -8,8 +10,13 @@ public class GiftService extends BaseModel {
     public static final String STORE ="GiftService";
 
     private String giftId;
-    private String gifterEmail;
     private String serviceId;
+    private String gifterEmail;
+    private String gifterName;
+    private String serviceName;
+    private String serviceDescription;
+    private double servicePrice;
+
     private String status = ServiceStatus.SCHEDULED;
     private String contributionDate;
     private String deliveryDate;
@@ -69,6 +76,45 @@ public class GiftService extends BaseModel {
 
     public void setConfirmationDate(String confirmationDate) {
         this.confirmationDate = confirmationDate;
+    }
+
+    public String getGifterName() {
+        return gifterName;
+    }
+
+    public void setGifterName(String gifterName) {
+        this.gifterName = gifterName;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public String getServiceDescription() {
+        return serviceDescription;
+    }
+
+    public void setServiceDescription(String serviceDescription) {
+        this.serviceDescription = serviceDescription;
+    }
+
+    public double getServicePrice() {
+        return servicePrice;
+    }
+
+    public void setServicePrice(double servicePrice) {
+        this.servicePrice = servicePrice;
+    }
+
+    @NonNull
+    @Override
+    public String toString(){
+        return gifterName;
+//        return String.format("%s <%s>", gifterName, gifterEmail);
     }
 }
 

@@ -5,17 +5,14 @@
     android:layout_marginBottom="5dp"
     android:background="@drawable/border"
     android:orientation="vertical"
-    android:paddingHorizontal="20dp"
-    android:paddingVertical="10dp">
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/txtName"
-        style="@style/Content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:text="details"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:text="Details" />
 
     <include layout="@layout/horizontal_border" />
 
@@ -27,22 +24,20 @@
 
         <TextView
             android:id="@+id/btnSendGift"
-            style="@style/TextButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="@string/btnSendGiftToRecipient"
-            android:textAlignment="textStart" />
+            android:textColor="@color/primary"
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/btnDelete"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
             android:contentDescription="@string/btnDeleteHint"
-            android:paddingVertical="10dp"
-            android:paddingStart="20dp"
             android:src="@drawable/bin" />
     </LinearLayout>
 

@@ -124,7 +124,7 @@ public class AddRecipientActivity extends BaseActivity implements View.OnClickLi
             boolean exists = Util.exists(recipient);
             Util.startProgress(addRecipientBinding.progress, "Adding recipient...");
 
-            Firebase.save(recipient, Recipient.STORE, (task) -> {
+            Firebase.save(recipient, Recipient.STORE, (task, key) -> {
                 Util.stopProgress(addRecipientBinding.progress);
                 if (task.isSuccessful()) {
 

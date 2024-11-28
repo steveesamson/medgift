@@ -16,7 +16,9 @@ import com.apollo.medgift.R;
 import com.apollo.medgift.adapters.gifters.ContributorAdapter;
 import com.apollo.medgift.adapters.gifters.InviteeAdapter;
 import com.apollo.medgift.common.BaseActivity;
+import com.apollo.medgift.common.BaseModel;
 import com.apollo.medgift.common.Firebase;
+import com.apollo.medgift.common.OnModelDeleteCallback;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.common.ValueEvents;
 import com.apollo.medgift.databinding.ActivityAddgiftBinding;
@@ -36,7 +38,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AddGiftActivity extends BaseActivity implements View.OnClickListener {
+public class AddGiftActivity extends BaseActivity implements View.OnClickListener, OnModelDeleteCallback {
+    private static final  String TAG = AddGiftActivity.class.getSimpleName();
 
     private ActivityAddgiftBinding addGiftBinding;
     private ContributorAdapter contributorAdapter;
@@ -46,7 +49,9 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
     private Query inviteeQuery;
     private Query contributorQuery;
 
+
     private Gift gift;
+    private final List<GiftInvite> dirtyInvitees = new ArrayList<>();
     private final List<GiftInvite> invitees = new ArrayList<>();
     private final List<GiftService> contributors = new ArrayList<>();
 
@@ -98,6 +103,8 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
         inviteeAdapter = new InviteeAdapter(this, invitees);
         addGiftBinding.inviteesRecyclerView.setAdapter(inviteeAdapter);
         inviteeQuery = Firebase.database(GiftInvite.STORE).orderByChild("giftId").equalTo(gift.getKey());
+        addGiftBinding.contributorsLyt.setVisibility(this.gift.getIsGroup()? View.VISIBLE : View.GONE);
+        addGiftBinding.isGroupGift.setChecked(this.gift.getIsGroup());
         setUpRecipientsDropdown();
         updateRecyclers();
     }
@@ -105,7 +112,7 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
     private void setUpRecipientsDropdown() {
         SessionUser sessionUser = Firebase.currentUser();
         assert sessionUser != null;
-        Firebase.getModelsBy("createdBy", sessionUser.getUserId(), Recipient.class, (_recipients) -> {
+        Firebase.getModelsBy(Recipient.STORE,"createdBy", sessionUser.getUserId(), Recipient.class, (_recipients) -> {
             if (_recipients != null) {
                 Recipient[] recipients = _recipients.toArray(new Recipient[]{});
                 ArrayAdapter<Recipient> recipientAdapter = new ArrayAdapter<Recipient>(AddGiftActivity.this, R.layout.recipient_acitem, recipients);
@@ -115,7 +122,7 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Recipient r = (Recipient) parent.getItemAtPosition(position);
                         gift.setRecipientId(r.getKey());
-                        addGiftBinding.acRecipient.setText(String.format("%s %s <%s>", r.getFirstName(), r.getLastName(), r.getEmail()));
+                        addGiftBinding.acRecipient.setText(String.format("%s %s", r.getFirstName(), r.getLastName()), false);
                     }
                 });
                 Optional<Recipient> result = _recipients
@@ -124,7 +131,7 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
                         .filter(next -> next.getKey().equals(gift.getRecipientId())).findAny();
                 if(result.isPresent()){
                     Recipient r = result.get();
-                    addGiftBinding.acRecipient.setText(String.format("%s %s <%s>", r.getFirstName(), r.getLastName(), r.getEmail()));
+                    addGiftBinding.acRecipient.setText(String.format("%s %s", r.getFirstName(), r.getLastName(), r.getEmail()));
                 }
             }
         });
@@ -140,16 +147,15 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
         clearErrors();
 
         String giftName = Util.valueOf(addGiftBinding.edtGiftName);
-//        String recipientId = Util.valueOf(addGiftBinding.acRecipient);
         String giftDescription = Util.valueOf(addGiftBinding.edtGiftDescription);
 
         boolean formIsValid = true;
 
-        if (TextUtils.isEmpty(giftName)) {
+        if (Util.isNullOrEmpty(giftName)) {
             addGiftBinding.lytGiftName.setError("Gift name is required.");
             formIsValid = false;
         }
-        if (TextUtils.isEmpty(giftDescription)) {
+        if (Util.isNullOrEmpty(giftDescription)) {
             addGiftBinding.lytGiftDescription.setError("Gift description is required.");
             formIsValid = false;
         }
@@ -159,7 +165,7 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
             formIsValid = false;
         }
 
-        if (gift.getRecipientId() == null || gift.getRecipientId().isEmpty()) {
+        if (Util.isNullOrEmpty(gift.getRecipientId())) {
             addGiftBinding.lytRecipient.setError("Recipient is required.");
             formIsValid = false;
         }
@@ -172,11 +178,15 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
 
             Util.startProgress(addGiftBinding.progress, "Adding Gift...");
 
-            Firebase.save(gift, Gift.STORE, (task) -> {
+            Firebase.save(gift, Gift.STORE, (task, key) -> {
                 Util.stopProgress(addGiftBinding.progress);
                 if (task.isSuccessful()) {
-
                     gift = null;
+                    for(GiftInvite gi: dirtyInvitees){
+                        gi.setGiftId(key);
+                        gi.setCreationDate(Util.today());
+                        Firebase.save(gi, GiftInvite.STORE, (tk, id) ->{});
+                    }
                     Util.notify(AddGiftActivity.this, Util.success("Gift", exists));
                     finish();
 
@@ -203,8 +213,10 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
         ContributorDialogBinding dialogBinding = ContributorDialogBinding.inflate(getLayoutInflater());
         showIDialogFor(dialogBinding.getRoot(), "Invite Contributor", "Invite", (dialog, which) -> {
             String email = Util.valueOf(dialogBinding.edtContributorEmail);
-            if (!email.isEmpty() && Util.isEmail(email)) {
-                Firebase.getModelBy("email", email, User.class, (user) -> {
+            SessionUser sessionUser = Firebase.currentUser();
+            assert sessionUser != null;
+            if (!email.isEmpty() && Util.isEmail(email) && !email.equals(sessionUser.getEmail())) {
+                Firebase.getModelBy(User.STORE, "email", email, User.class, (user) -> {
                     dialogBinding.txtSuccess.setVisibility(View.GONE);
                     dialogBinding.txtError.setVisibility(View.GONE);
                     if (user == null) {
@@ -213,12 +225,12 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
                     } else {
                         GiftInvite invite = new GiftInvite();
                         invite.setGiftId(gift.getKey());
-                        invite.setInviteeEmail(email);
-                        invite.setInviteeId(user.getKey());
+                        invite.setEmail(email);
+                        invite.setName(String.format("%s %s", user.getFirstName(), user.getLastName()));
                         invitees.add(invite);
-                        Log.d("AddGiftActivity", "Contributor added: " + email);
-//                            contributorAdapter.notifyDataSetChanged();
-//                            updateRecyclers();
+                        dirtyInvitees.add(invite);
+                        inviteeAdapter.notifyDataSetChanged();
+                        addGiftBinding.emptyItemInvitees.getRoot().setVisibility(View.GONE);
                         dialogBinding.txtSuccess.setText(R.string.user_successfull_added);
                         dialogBinding.edtContributorEmail.setText("");
                         Util.notify(this, "Invitee " + email + ", added.");
@@ -227,7 +239,7 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
                 });
 
             } else {
-                Util.notify(this, "Please provide a valid email.");
+                Util.notify(this, getString(R.string.provide_a_valid_email));
             }
         });
 
@@ -236,28 +248,30 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
     private void updateRecyclers() {
 
         if (contributorQuery != null && inviteeQuery != null) {
-            Util.startProgress(addGiftBinding.progress, "Fetching invitees and contributors...");
+            Util.startProgress(addGiftBinding.progress, "Fetching contributors and invitees...");
             GiftServiceVModel contributorVModel = new ViewModelProvider(this).get(GiftServiceVModel.class);
             ValueEvents<GiftService> valueEvents = new ValueEvents<GiftService>();
 
             contributionsListener = valueEvents.registerListener(contributorQuery, this, contributorAdapter, contributorVModel, contributors, GiftService.class, (list) -> {
-                Util.stopProgress(addGiftBinding.progress);
-                addGiftBinding.emptyItemContributors.txtEmpty.setText(list.isEmpty() ? Util.getEmpty("contributors") : "");
+//                Util.stopProgress(addGiftBinding.progress);
+                addGiftBinding.emptyItemContributors.txtEmpty.setText(list.isEmpty() ? "No contributors" : "");
                 addGiftBinding.emptyItemContributors.getRoot().setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
             });
 
-            GiftInviteVModel inviteVModel = new ViewModelProvider(this).get(GiftInviteVModel.class);
+
+             GiftInviteVModel inviteVModel = new ViewModelProvider(this).get(GiftInviteVModel.class);
             ValueEvents<GiftInvite> ivalueEvents = new ValueEvents<GiftInvite>();
 
             inviteesListener = ivalueEvents.registerListener(inviteeQuery, this, inviteeAdapter, inviteVModel, invitees, GiftInvite.class, (list) -> {
                 Util.stopProgress(addGiftBinding.progress);
-                addGiftBinding.emptyItemInvitees.txtEmpty.setText(list.isEmpty() ? Util.getEmpty("invitees") : "");
+                addGiftBinding.emptyItemInvitees.txtEmpty.setText(list.isEmpty() ? "No invitees" : "");
                 addGiftBinding.emptyItemInvitees.getRoot().setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
             });
-
         }
 
     }
+
+
 
     // Unregister listeners on db
     private void unRegisterValueListener() {
@@ -273,5 +287,14 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
     public void onDestroy() {
         super.onDestroy();
         unRegisterValueListener();
+    }
+
+
+    @Override
+    public void onDeleting(BaseModel model) {
+        GiftInvite gi = (GiftInvite) model;
+        dirtyInvitees.remove(gi);
+        invitees.remove(gi);
+        inviteeAdapter.notifyDataSetChanged();
     }
 }

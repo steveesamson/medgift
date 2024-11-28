@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityRegisterBinding;
+import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.User;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
@@ -34,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void bindEvents() {
-        user = new User(User.Role.GIFTER);
+        user = new User(User.Type.GIFTER);
         registerBinding.rdGifter.setChecked(true);
         registerBinding.rdProvider.setChecked(false);
         registerBinding.btnLogin.setOnClickListener(this);
@@ -111,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             Util.stopProgress(registerBinding.progress);
                         });
                         // Keep a copy of user
-                        Firebase.save(user, User.STORE, (tsk) -> {});
+                        Firebase.save(user, User.STORE, (tsk, key) -> {});
 
                     } else {
                         Util.stopProgress(registerBinding.progress);
@@ -126,11 +127,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
         if (checkedId == registerBinding.rdGifter.getId()) {
-            user.setRole(User.Role.GIFTER);
+            user.setRole(User.Type.GIFTER);
         } else if (checkedId == registerBinding.rdProvider.getId()) {
-            {
-                user.setRole(User.Role.PROVIDER);
-            }
+
+                user.setRole(User.Type.PROVIDER);
+
         }
     }
 }

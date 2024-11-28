@@ -52,7 +52,7 @@ public class ContributorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         public void bindData(GiftService giftService){
-
+            contributorItemBinding.txtName.setText(giftService.toString());
         }
     }
 }

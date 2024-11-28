@@ -25,7 +25,11 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Util, alass to house all shared operations
@@ -184,6 +188,35 @@ public class Util {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    public static boolean isNullOrEmpty(String field) {
+            return field == null || field.isEmpty();
+    }
+
+    // Date formater method
+    public static String formatedDueTime(Date date){
+//        String DATE_PATTERN = "HH:mm. MMM dd, yyyy";
+        String DATE_PATTERN = "dd-MM-yyyy HH:mm";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.CANADA);
+        return simpleDateFormat.format(date);
+    }
+
+    public static Date parseTime(String date)  {
+        try {
+//        String DATE_PATTERN = "HH:mm. MMM dd, yyyy";
+            String DATE_PATTERN = "dd-MM-yyyy HH:mm";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.CANADA);
+            return simpleDateFormat.parse(date);
+        }catch (ParseException e){
+            return null;
+        }
+    }
+
+
+    public static String today() {
+        Calendar c = Calendar.getInstance();
+        return formatedDueTime(c.getTime());
     }
 }
 

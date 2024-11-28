@@ -25,4 +25,12 @@ public class GiftVModel extends BaseViewModel<Gift> {
         }
         return gifts;
     }
+
+    @Override
+    public void addModel(Gift model) {
+        if (gifts.getValue() == null) {
+            gifts.setValue(new ArrayList<>());
+        }
+        gifts.getValue().add(model);
+    }
 }

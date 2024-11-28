@@ -19,6 +19,7 @@ import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityCreateserviceBinding;
 import com.apollo.medgift.models.HealthcareService;
+import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.User;
 
 public class CreateServiceActivity extends BaseActivity implements View.OnClickListener {
@@ -119,7 +120,7 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
         createserviceBinding.btnDeleteService.setVisibility(View.VISIBLE);
 
         // Restrict editing for "Gifter" role
-        if (User.Role.GIFTER.name().equals(Firebase.currentUser().getUserRole())) {
+        if (Role.GIFTER.equals(Firebase.currentUser().getUserRole())) {
             createserviceBinding.btnCreateServiceSave.setVisibility(View.GONE);
             createserviceBinding.edtServiceName.setEnabled(false);
             createserviceBinding.edtPrice.setEnabled(false);
@@ -145,7 +146,7 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
         Util.startProgress(createserviceBinding.progress, "Saving Service...");
 
         // Save service data in Firebase Database
-        Firebase.save(healthcareService, HealthcareService.STORE, task -> {
+        Firebase.save(healthcareService, HealthcareService.STORE, (task, key) -> {
             Util.stopProgress(createserviceBinding.progress);
             if (task.isSuccessful()) {
                 Util.notify(CreateServiceActivity.this, Util.success("Service", exists));
