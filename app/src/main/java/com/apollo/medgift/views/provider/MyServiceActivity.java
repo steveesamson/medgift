@@ -45,7 +45,7 @@ public class MyServiceActivity extends BaseActivity {
         myserviceBinding = ActivityMyserviceBinding.inflate(getLayoutInflater());
         setContentView(myserviceBinding.getRoot());
 
-        String toolbarTitle = Firebase.currentUser().getUserRole().equals(User.Role.GIFTER.name()) ? getString(R.string.available_services) : getString(R.string.myServicesTitle);
+        String toolbarTitle = Firebase.currentUser().getUserRole().equals(Role.GIFTER) ? getString(R.string.available_services) : getString(R.string.myServicesTitle);
         setupToolbar(myserviceBinding.homeAppBar.getRoot(), toolbarTitle, true);
 
         applyWindowInsetsListenerTo(this, myserviceBinding.serviceActivity);
