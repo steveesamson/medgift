@@ -17,6 +17,8 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityHomepageBinding;
 import com.apollo.medgift.models.HealthTip;
 import com.apollo.medgift.models.HomeSlideImageItem;
+import com.apollo.medgift.models.User;
+import com.apollo.medgift.views.gifter.PaymentInformationActivity;
 import com.apollo.medgift.views.gifter.RecipientActivity;
 import com.apollo.medgift.views.provider.HealthTipActivity;
 import com.apollo.medgift.views.gifter.GiftActivity;
