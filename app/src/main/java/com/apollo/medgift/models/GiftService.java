@@ -8,7 +8,7 @@ public class GiftService extends BaseModel {
     public static final String STORE ="GiftService";
 
     private String giftId;
-    private String gifterId;
+    private String gifterEmail;
     private String serviceId;
     private String status = ServiceStatus.SCHEDULED;
     private String contributionDate;
@@ -23,12 +23,12 @@ public class GiftService extends BaseModel {
         this.giftId = giftId;
     }
 
-    public String getGifterId() {
-        return gifterId;
+    public String getGifterEmail() {
+        return gifterEmail;
     }
 
-    public void setGifterId(String gifterId) {
-        this.gifterId = gifterId;
+    public void setGifterEmail(String gifterEmail) {
+        this.gifterEmail = gifterEmail;
     }
 
     public String getServiceId() {

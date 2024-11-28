@@ -5,6 +5,7 @@ import com.apollo.medgift.common.BaseModel;
 
 public class User extends BaseModel {
     public static final String STORE ="User";
+
     public enum Role {
         PROVIDER,
         GIFTER

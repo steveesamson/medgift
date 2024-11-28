@@ -11,7 +11,6 @@ public class Gift extends BaseModel {
     private String description;
     private int isGroup = 0; // 0 = false, 1 = true
     private String createdBy;
-    private List<User> contributors;
 
     public Gift(){}
     public Gift(String name, String recipientId, String description){
@@ -50,13 +49,6 @@ public class Gift extends BaseModel {
 
     public void setIsGroup(boolean isGroup) {
         this.isGroup = isGroup ? 1 : 0;
-    }
-    public List<User> getContributors() {
-        return contributors;
-    }
-
-    public void setContributors(List<User> contributors) {
-        this.contributors = contributors;
     }
 
     public String getCreatedBy() {

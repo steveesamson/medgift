@@ -3,6 +3,7 @@ package com.apollo.medgift.common;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.net.Uri;
+import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import androidx.annotation.NonNull;
@@ -17,14 +18,20 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Utility to manage all google Firebase services
@@ -46,8 +53,76 @@ public class Firebase {
     public static FirebaseAuth auth(){
         return FirebaseAuth.getInstance();
     }
+//    public static void getUserByEmail(String email, OnUser<User> onComplete){
+//        Query query = Firebase.database(User.STORE).orderByChild("email").equalTo(email);
+//        ValueEventListener postListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // Get Post object and use the values to update the UI
+//                User user = dataSnapshot.getValue(User.class);
+//                onComplete.onComplete(user);
+//                // ..
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                // Getting Post failed, log a message
+//                Log.w("getUserByEmail", "loadUser:onCancelled", databaseError.toException());
+//                onComplete.onComplete(null);
+//            }
+//        };
+//        query.addValueEventListener(postListener);
+//    }
+
+    public  static <T extends BaseModel> void  getModelBy(String key, String value, Class<T> modelClass, OnUser<T> onComplete){
+        Query query = Firebase.database(T.STORE).orderByChild(key).equalTo(value);
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                T model = dataSnapshot.getValue(modelClass);
+                onComplete.onComplete(model);
+                // ..
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("getUserByEmail", "loadUser:onCancelled", databaseError.toException());
+                onComplete.onComplete(null);
+            }
+        };
+        query.addValueEventListener(postListener);
+    }
 
 
+    public  static <T extends BaseModel> void  getModelsBy(String key, String value, Class<T> modelClass, OnUser<List<T>> onComplete){
+        Query query = Firebase.database(T.STORE).orderByChild(key).equalTo(value);
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshots) {
+
+                List<T> list = new ArrayList<>();
+                for (DataSnapshot snapshot : snapshots.getChildren()) {
+                    T r = snapshot.getValue(modelClass);
+                    if (r != null) {
+                        r.setKey(snapshot.getKey());
+                        list.add(r);
+                    }
+                }
+                // Get Post object and use the values to update the UI
+                onComplete.onComplete(list);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("getModelsBy", ":onCancelled", databaseError.toException());
+                onComplete.onComplete(null);
+            }
+        };
+        query.addValueEventListener(postListener);
+    }
     // Get current user
     public static SessionUser currentUser(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

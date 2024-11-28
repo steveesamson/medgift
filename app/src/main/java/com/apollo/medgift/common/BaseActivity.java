@@ -1,12 +1,15 @@
 package com.apollo.medgift.common;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.activity.ComponentActivity;
@@ -19,6 +22,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.apollo.medgift.models.HealthTip;
+import com.apollo.medgift.databinding.ContributorDialogBinding;
 import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.HomePageActivity;
@@ -160,5 +164,18 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    protected void showIDialogFor(View view, String title, String positiveLabel, DialogInterface.OnClickListener onPositive ) {
+        ContributorDialogBinding dialogBinding = ContributorDialogBinding.inflate(getLayoutInflater());
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle(title)
+                .setView(view)
+                .setPositiveButton(positiveLabel, onPositive)
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
+    }
+
 
 }

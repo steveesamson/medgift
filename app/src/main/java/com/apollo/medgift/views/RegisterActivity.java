@@ -110,6 +110,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             }
                             Util.stopProgress(registerBinding.progress);
                         });
+                        // Keep a copy of user
+                        Firebase.save(user, User.STORE, (tsk) -> {});
 
                     } else {
                         Util.stopProgress(registerBinding.progress);

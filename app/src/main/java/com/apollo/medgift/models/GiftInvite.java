@@ -7,6 +7,7 @@ public class GiftInvite extends BaseModel {
 
     private String giftId;
     private String inviteeId;
+    private String inviteeEmail;
     private String message;
     private String creationDate;
 
@@ -40,5 +41,13 @@ public class GiftInvite extends BaseModel {
 
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public String getInviteeEmail() {
+        return inviteeEmail;
+    }
+
+    public void setInviteeEmail(String inviteeEmail) {
+        this.inviteeEmail = inviteeEmail;
     }
 }

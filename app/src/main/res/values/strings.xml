@@ -104,4 +104,10 @@
     <string name="checkout">Checkout</string>
     <string name="add_to_gift">Add to Gift</string>
 
+    <string name="user_with_email_not_found">User with the provided email not found!</string>
+    <string name="user_successfull_added">User was successfully added.</string>
+    <string name="inviteesLbl">Invitees:</string>
+    <string name="contributorsLbl">Contributors</string>
+    <string name="invite_contributorsLbl">Invite Contributors +</string>
+    <string name="recipient">Recipient</string>
 </resources>

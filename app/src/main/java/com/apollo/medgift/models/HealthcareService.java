@@ -72,4 +72,20 @@ public class HealthcareService extends BaseModel {
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
     }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 }
