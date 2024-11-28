@@ -86,4 +86,20 @@
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="btnAddAvailability">Add Availability</string>
+    <string name="hyphen">-</string>
+    <string name="sat">SAT</string>
+    <string name="fri">FRI</string>
+    <string name="thu">THU</string>
+    <string name="wed">WED</string>
+    <string name="tue">TUE</string>
+    <string name="mon">MON</string>
+    <string name="sun">SUN</string>
+    <string name="invalid_end_time">Invalid End Time</string>
+    <string name="invalid_start_time">Invalid Start Time</string>
+    <string name="start_time_not_set">Please set the start time</string>
+    <string name="start_time_required">Start time required</string>
+    <string name="end_time_required">End time required</string>
+    <string name="end_time_after_start_time">Invalid end time must be after start time</string>
+    <string name="day">Day</string>
+
 </resources>

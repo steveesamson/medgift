@@ -2,12 +2,16 @@ package com.apollo.medgift.models;
 
 import androidx.annotation.NonNull;
 
-public class Availability
+import com.apollo.medgift.common.BaseModel;
+
+public class Availability extends BaseModel
 {
 
+    public static final String STORE = "Availability";
     private String day;
     private String start;
     private String end;
+
    public Availability(String day) {
        this.day = day;
    }
