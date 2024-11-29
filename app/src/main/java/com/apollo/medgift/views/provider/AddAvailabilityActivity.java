@@ -13,11 +13,15 @@ import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityAddavailabilityBinding;
 import com.apollo.medgift.models.Availability;
+import com.apollo.medgift.models.HealthTip;
 import com.apollo.medgift.views.gifter.DAYS;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
+
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddAvailabilityActivity extends BaseActivity {
     private ActivityAddavailabilityBinding addAvailabilityBinding;
@@ -222,22 +226,19 @@ public class AddAvailabilityActivity extends BaseActivity {
         addAvailabilityBinding.edtSundayEndTime.setError(null);
     }
 
-    private void saveAvailability()
-    {
-        boolean exists = Util.exists(availability);
-        Util.startProgress(addAvailabilityBinding.progress, "Adding Availability...");
+    private void saveAvailability() {
 
-        Firebase.save(availability, Availability.STORE, (task) -> {
-            Util.stopProgress(addAvailabilityBinding.progress);
-            if (task.isSuccessful()) {
+    }
 
-                availability = null;
-                Util.notify(AddAvailabilityActivity.this, Util.success("Availability", exists));
-                finish();
-
-            } else {
-                Util.notify(AddAvailabilityActivity.this, Util.fail("Availability", exists));
-            }
-        });
+    private Map<String, Availability> getWeeklyAvailability() {
+        Map<String, Availability> weeklyAvailability = new HashMap<>();
+        weeklyAvailability.put(DAYS.MON.name(), monday);
+        weeklyAvailability.put(DAYS.TUE.name(), tuesday);
+        weeklyAvailability.put(DAYS.WED.name(), wednesday);
+        weeklyAvailability.put(DAYS.THU.name(), thursday);
+        weeklyAvailability.put(DAYS.FRI.name(), friday);
+        weeklyAvailability.put(DAYS.SAT.name(), saturday);
+        weeklyAvailability.put(DAYS.SUN.name(), sunday);
+        return weeklyAvailability;
     }
 }

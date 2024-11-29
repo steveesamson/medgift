@@ -101,5 +101,7 @@
     <string name="end_time_required">End time required</string>
     <string name="end_time_after_start_time">Invalid end time must be after start time</string>
     <string name="day">Day</string>
+    <string name="availability_save_failed">Add availability failed\n</string>
+    <string name="availability_saved_success">Adding availabilty saved</string>
 
 </resources>
