@@ -17,8 +17,11 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityHomepageBinding;
 import com.apollo.medgift.models.HealthTip;
 import com.apollo.medgift.models.HomeSlideImageItem;
+import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.gifter.RecipientActivity;
 import com.apollo.medgift.views.provider.HealthTipActivity;
+import com.apollo.medgift.views.gifter.PaymentInformationActivity;
+import com.apollo.medgift.views.gifter.RecipientActivity;
 import com.apollo.medgift.views.gifter.GiftActivity;
 import com.apollo.medgift.views.provider.MyServiceActivity;
 import com.google.firebase.database.DatabaseReference;
@@ -30,13 +33,6 @@ import java.util.List;
 public class HomePageActivity extends BaseActivity implements View.OnClickListener {
 
     ActivityHomepageBinding binding;
-
-//    String[] gift_title = {"Telemedicine Consultations", "Telemedicine Consultations"};
-//    String[] gift_provider = {"Provider - 1", "Provider - 2"};
-//    String[] gift_location = {"Canada", "Canada"};
-//    String[] gift_description = {"Connect with a doctor remotely for a virtual check-up or to address health concerns from the comfort of your home.", "Connect with a doctor remotely for a virtual check-up or to address health concerns from the comfort of your home."};
-//    String[] gift_price = {"$ 423.00", "$ 565.00"};
-//    int[] images = {R.drawable.sample_image1, R.drawable.sample_image2};
 
     private final List<HealthTip> healthTips = new ArrayList<>();
     private List<HealthTip> healthTipsSubList = new ArrayList<>();
@@ -89,22 +85,29 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         // Handle Recipient navigation
         if (view == binding.quickBtnAvailableServices) {
             intent = new Intent(getApplicationContext(), MyServiceActivity.class);
-            startActivity(intent);
-        }
-        if (view == binding.quickBtnRecipient) {
-            intent = new Intent(getApplicationContext(), RecipientActivity.class);
-            startActivity(intent);
-        }
-        if (view == binding.quickBtnHealthTips) {
-            intent = new Intent(getApplicationContext(), HealthTipActivity.class);
-            startActivity(intent);
-        }
-        if (view == binding.quickBtnGift) {
-            giftIntent = new Intent(getApplicationContext(), GiftActivity.class);
-            startActivity(giftIntent);
-        }
+            if (view == binding.quickBtnRecipient) {
+                intent = new Intent(getApplicationContext(), RecipientActivity.class);
+                startActivity(intent);
+            }
+//            else if (view == binding.quickBtnHealthTips) {
+//                intent = new Intent(getApplicationContext(), PaymentInformationActivity.class);
+//                startActivity(intent);
+//            }
+            if (view == binding.quickBtnRecipient) {
+                intent = new Intent(getApplicationContext(), RecipientActivity.class);
+                startActivity(intent);
+            }
+            if (view == binding.quickBtnHealthTips) {
+                intent = new Intent(getApplicationContext(), HealthTipActivity.class);
+                startActivity(intent);
+            }
+            if (view == binding.quickBtnGift) {
+                giftIntent = new Intent(getApplicationContext(), GiftActivity.class);
+                startActivity(giftIntent);
+            }
 
+
+        }
 
     }
-
 }

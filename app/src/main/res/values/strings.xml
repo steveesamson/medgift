@@ -125,4 +125,22 @@
     <string name="provide_a_valid_email">Please provide a valid email that is not yours.</string>
     <string name="btn_manage_gift">Manage Gift</string>
     <string name="btn_add_services">+ Add Services</string>
+    <string name="itemtxt">Item</string>
+    <string name="recieverEmailTytl">Receivers Email</string>
+    <string name="totalbeforeTaxTitle">Total Before Tax:</string>
+    <string name="estimatedTax">Estimated GST/HST:</string>
+    <string name="dollar">$ </string>
+    <string name="orderTotalTitle">Order Total</string>
+    <string name="PaymentMethodTitle">Payment Method</string>
+    <string name="CardHolderName">Cardholder Name</string>
+    <string name="CardNumber">Card Number</string>
+    <string name="ExpireDate">Expire Date</string>
+    <string name="CVV">CVV</string>
+    <string name="payNow">Pay Now</string>
+    <string name="goTohome">Go to Home</string>
+    <string name="ThankYou">Thank You!</string>
+    <string name="payment">Your payment has been successfully processed.</string>
+    <string name="confirmation">A confirmation email has been sent to your email address.</string>
+
+
 </resources>

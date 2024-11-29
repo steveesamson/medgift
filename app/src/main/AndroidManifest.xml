@@ -19,6 +19,9 @@
             android:name=".views.gifter.CheckoutActivity"
             android:exported="false" />
         <activity
+            android:name=".views.gifter.PaymentInformationActivity"
+            android:exported="false" />
+        <activity
             android:name=".common.ReadHealthTipActivity"
             android:exported="false" />
         <activity
