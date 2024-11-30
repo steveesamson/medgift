@@ -29,7 +29,7 @@
             android:name=".views.gifter.PaymentInformationActivity"
             android:exported="false" />
         <activity
-            android:name=".common.ReadHealthTipActivity"
+            android:name=".views.gifter.HealthTipDetailActivity"
             android:exported="false" />
         <activity
             android:name=".views.gifter.AddRecipientActivity"
@@ -53,16 +53,16 @@
             android:name=".views.gifter.GiftActivity"
             android:exported="false" />
         <activity
-            android:name=".views.gifter.ViewServiceActivity"
+            android:name=".views.gifter.ServiceDetailActivity"
             android:exported="false" />
         <activity
             android:name=".views.provider.PublishHealthTipsActivity"
             android:exported="false" />
         <activity
-            android:name=".views.provider.CreateServiceActivity"
+            android:name=".views.provider.AddServiceActivity"
             android:exported="false" />
         <activity
-            android:name=".views.provider.MyServiceActivity"
+            android:name=".views.provider.ServiceActivity"
             android:exported="false" />
         <activity
             android:name=".views.ProviderHomePageActivity"

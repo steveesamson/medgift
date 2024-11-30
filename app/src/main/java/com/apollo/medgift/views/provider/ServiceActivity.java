@@ -2,7 +2,6 @@ package com.apollo.medgift.views.provider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -16,11 +15,10 @@ import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.common.ValueEvents;
-import com.apollo.medgift.databinding.ActivityMyserviceBinding;
+import com.apollo.medgift.databinding.ActivityServiceBinding;
 import com.apollo.medgift.models.HealthcareService;
 import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.SessionUser;
-import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.models.ServiceVModel;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -28,9 +26,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyServiceActivity extends BaseActivity {
+public class ServiceActivity extends BaseActivity {
 
-    private ActivityMyserviceBinding myserviceBinding;
+    private ActivityServiceBinding serviceBinding;
     private final List<HealthcareService> healthcareServices = new ArrayList<>();
     private ServiceAdapter serviceAdapter;
     private Query query;
@@ -42,22 +40,22 @@ public class MyServiceActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
 
-        myserviceBinding = ActivityMyserviceBinding.inflate(getLayoutInflater());
-        setContentView(myserviceBinding.getRoot());
+        serviceBinding = ActivityServiceBinding.inflate(getLayoutInflater());
+        setContentView(serviceBinding.getRoot());
 
         String toolbarTitle = Firebase.currentUser().getUserRole().equals(Role.GIFTER) ? getString(R.string.available_services) : getString(R.string.myServicesTitle);
-        setupToolbar(myserviceBinding.homeAppBar.getRoot(), toolbarTitle, true);
+        setupToolbar(serviceBinding.homeAppBar.getRoot(), toolbarTitle, true);
 
-        applyWindowInsetsListenerTo(this, myserviceBinding.serviceActivity);
+        applyWindowInsetsListenerTo(this, serviceBinding.serviceActivity);
 
         setPageUp();
     }
 
     private void setPageUp() {
-        myserviceBinding.btnAddService.setOnClickListener(new View.OnClickListener() {
+        serviceBinding.btnAddService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CreateServiceActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AddServiceActivity.class);
                 intent.putExtra(HealthcareService.STORE, new HealthcareService());
                 startActivity(intent);
             }
@@ -72,9 +70,9 @@ public class MyServiceActivity extends BaseActivity {
             this.query = Firebase.database(HealthcareService.STORE).orderByChild("createdBy").equalTo(sessionUser.getUserId());
         }
 
-        myserviceBinding.btnAddService.setVisibility(sessionUser.getUserRole().equals(Role.GIFTER) ? View.GONE : View.VISIBLE);
+        serviceBinding.btnAddService.setVisibility(sessionUser.getUserRole().equals(Role.GIFTER) ? View.GONE : View.VISIBLE);
 
-        RecyclerView recyclerView = myserviceBinding.serviceList;
+        RecyclerView recyclerView = serviceBinding.serviceList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         serviceAdapter = new ServiceAdapter(healthcareServices, this);
         recyclerView.setAdapter(serviceAdapter);
@@ -97,11 +95,11 @@ public class MyServiceActivity extends BaseActivity {
         if (query != null) {
             ServiceVModel serviceVModel = new ViewModelProvider(this).get(ServiceVModel.class);
             ValueEvents<HealthcareService> valueEvents = new ValueEvents<>();
-            Util.startProgress(myserviceBinding.progress, "Fetching Services...");
+            Util.startProgress(serviceBinding.progress, "Fetching Services...");
             serviceListener = valueEvents.registerListener(query, this, serviceAdapter, serviceVModel, healthcareServices, HealthcareService.class, (list) -> {
-                Util.stopProgress(myserviceBinding.progress);
-                myserviceBinding.emptyItem.txtEmpty.setText(list.isEmpty() ? Util.getEmpty("services") : "");
-                myserviceBinding.emptyItem.getRoot().setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
+                Util.stopProgress(serviceBinding.progress);
+                serviceBinding.emptyItem.txtEmpty.setText(list.isEmpty() ? Util.getEmpty("services") : "");
+                serviceBinding.emptyItem.getRoot().setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
             });
         }
     }

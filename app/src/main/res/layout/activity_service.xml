@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="0dp"
     style="@style/Page"
-    tools:context=".views.provider.MyServiceActivity">
+    tools:context=".views.provider.ServiceActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/serviceActivity"

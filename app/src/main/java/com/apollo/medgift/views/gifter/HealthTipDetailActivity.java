@@ -1,23 +1,20 @@
-package com.apollo.medgift.common;
+package com.apollo.medgift.views.gifter;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.apollo.medgift.R;
-import com.apollo.medgift.databinding.ActivityHealthtipBinding;
-import com.apollo.medgift.databinding.ActivityReadhealthtipBinding;
+import com.apollo.medgift.common.BaseActivity;
+import com.apollo.medgift.common.Firebase;
+import com.apollo.medgift.common.Util;
+import com.apollo.medgift.databinding.ActivityHealthtipdetailBinding;
 import com.apollo.medgift.models.HealthTip;
-import com.google.firebase.database.DatabaseReference;
 
-public class ReadHealthTipActivity extends BaseActivity {
+public class HealthTipDetailActivity extends BaseActivity {
 
-    private ActivityReadhealthtipBinding binding ;
+    private ActivityHealthtipdetailBinding binding ;
     private HealthTip healthTip;
 
     @Override
@@ -25,7 +22,7 @@ public class ReadHealthTipActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
 
-        binding = ActivityReadhealthtipBinding.inflate(getLayoutInflater());
+        binding = ActivityHealthtipdetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setupToolbar(binding.homeAppBar.getRoot(), getString(R.string.healthTipTitle), true);

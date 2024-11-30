@@ -18,14 +18,16 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/giftImage"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
                 android:layout_width="200dp"
                 android:layout_height="75dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/default_service_image" />
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/default_service_image"
+                app:shapeAppearanceOverlay="@style/Rounded" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,28 +42,17 @@
                     android:text="@string/sample_title"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/giftDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sample_description"
+                    android:maxLines="3"/>
 
-<!--                <TextView-->
-<!--                    android:id="@+id/giftProvider"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="5dp"-->
-<!--                    android:text="@string/sample_provider" />-->
-
-                <!--                <TextView-->
-                <!--                    android:id="@+id/giftLocation"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:text="@string/sample_location" />-->
             </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/giftDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sample_description"
-            android:maxLines="3"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
