@@ -92,6 +92,15 @@
         <item>In Person</item>
         <item>Remote</item>
     </string-array>
+    <string-array name="availability_days">
+        <item>MON</item>
+        <item>TUE</item>
+        <item>WED</item>
+        <item>THU</item>
+        <item>FRI</item>
+        <item>SAT</item>
+        <item>SUN</item>
+    </string-array>
     <string name="no_image_selected">No image selected</string>
     <string name="change_image">Change Image</string>
     <string name="failed_to_load_image_error">Failed to load image. Please try again.</string>
@@ -141,6 +150,14 @@
     <string name="ThankYou">Thank You!</string>
     <string name="payment">Your payment has been successfully processed.</string>
     <string name="confirmation">A confirmation email has been sent to your email address.</string>
+    <string name="hint_day">Day</string>
+    <string name="hint_start_time">Start Time</string>
+    <string name="hint_end_time">End Time</string>
+    <string name="availabilityTitle">Availability</string>
+    <string name="btnAddAvailability">Add Availability</string>
+    <string name="btnEditHint">Edit button</string>
+    <string name="addDayTimeTitle">Add Availability</string>
+    <string name="editDayTimeTitle">Edit Availability</string>
 
 
 </resources>

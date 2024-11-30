@@ -16,18 +16,22 @@ import java.util.List;
 
 public class ValueEvents<T extends BaseModel> {
 
-    public  ValueEventListener registerListener(Query db, Context context, RecyclerView.Adapter<RecyclerView.ViewHolder> adapter, BaseViewModel<T> viewModel, List<T> modelList, Class<T> modelClass, OnModelCallback<T> onComplete){
 
-        viewModel.getModel().observe((LifecycleOwner) context, list -> {
-            // Update the selected filters UI.
-            modelList.clear();
-            modelList.addAll(list);
-            onComplete.onComplete(list);
-            adapter.notifyDataSetChanged();
-        });
+    public ValueEventListener registerListener(Query db, Context context, RecyclerView.Adapter<RecyclerView.ViewHolder> adapter, BaseViewModel<T> viewModel, List<T> modelList, Class<T> modelClass, OnModelCallback<T> onComplete) {
 
+        if (viewModel != null) {
+            viewModel.getModel().observe((LifecycleOwner) context, list -> {
+                // Update the selected filters UI.
+                modelList.clear();
+                modelList.addAll(list);
+                onComplete.onComplete(list);
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        }
 
-        ValueEventListener listener =  new ValueEventListener() {
+        ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshots) {
                 List<T> list = new ArrayList<>();
@@ -38,6 +42,8 @@ public class ValueEvents<T extends BaseModel> {
                         list.add(r);
                     }
                 }
+
+                assert viewModel != null;
                 viewModel.setModel(list);
 
             }

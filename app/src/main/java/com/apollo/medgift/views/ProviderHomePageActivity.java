@@ -7,6 +7,7 @@ import android.view.View;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityProviderhomepageBinding;
+import com.apollo.medgift.views.provider.AvailabilityActivity;
 import com.apollo.medgift.views.provider.HealthTipActivity;
 import com.apollo.medgift.views.provider.MyServiceActivity;
 
@@ -47,5 +48,13 @@ public class ProviderHomePageActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+        binding.availabilityCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProviderHomePageActivity.this, AvailabilityActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

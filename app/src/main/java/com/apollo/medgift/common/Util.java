@@ -1,6 +1,8 @@
 package com.apollo.medgift.common;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.activity.ComponentActivity;
@@ -19,7 +22,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.apollo.medgift.R;
 import com.apollo.medgift.databinding.ProgressBinding;
+import com.apollo.medgift.models.DateTimeValue;
 import com.apollo.medgift.views.LogInActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -148,11 +153,36 @@ public class Util {
         return String.valueOf(input.getText());
     }
 
+    public static void showTimePickerFor(Context context, Calendar start, OnModel<DateTimeValue> onComplete){
+        // Get Current Time
+        Calendar cal = start == null? Calendar.getInstance() : start;
+        int mHour = cal.get(Calendar.HOUR_OF_DAY);
+        int mMinute = cal.get(Calendar.MINUTE);
+
+        // Launch Time Picker Dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                context,
+                AlertDialog.THEME_HOLO_LIGHT,
+//                com.google.android.material.R.style.Theme_Material3_Light_Dialog_Alert,
+                new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        view.setIs24HourView(true);
+                        DateTimeValue dateTimeValue = new DateTimeValue();
+                        dateTimeValue.hourOfDay = hourOfDay;
+                        dateTimeValue.minute = minute;
+                        onComplete.onComplete(dateTimeValue);
+                    }
+                }, mHour, mMinute, false);
+
+        timePickerDialog.show();
+    }
     // Display date picker for date fields
-    public static void showDatePickerFor(TextInputEditText edtDate, Context context) {
+    public static void showDatePickerFor(Context context, Calendar start, Calendar end,  OnModel<DateTimeValue> onComplete) {
         // This is the date field
         // Retrieve a Calendar instance
-        Calendar cal = Calendar.getInstance();
+        Calendar cal = start == null ? Calendar.getInstance() : start;
         // Get the current Day of Month
         int dayOfSale = cal.get(Calendar.DAY_OF_MONTH);
         // Get the current Month
@@ -160,26 +190,41 @@ public class Util {
         // Get the current year
         int yearOfSale = cal.get(Calendar.YEAR);
 
+
+
+
         // Create and instance of DatePickerDialog
         // with the extracted information
         // and registering the onDateSet listener
-        DatePickerDialog datePicker = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePicker = new DatePickerDialog(
+                context,
+                AlertDialog.THEME_HOLO_LIGHT,
+//                com.google.android.material.R.style.Theme_Material3_Light_Dialog_Alert,
+                new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 // Clear previous error if any
-                edtDate.setError(null);
+//                edtDate.setError(null);
                 // Update edtDate view
-                edtDate.setText(String.format("%s/%s/%s", dayOfMonth, (month + 1), year));
+//                edtDate.setText(String.format("%s/%s/%s", dayOfMonth, (month + 1), year));
+                DateTimeValue dateTimeValue = new DateTimeValue();
+                dateTimeValue.year = year;
+                dateTimeValue.month = month;
+                dateTimeValue.dayOfMonth = dayOfMonth;
+                onComplete.onComplete(dateTimeValue);
             }
         }, yearOfSale, monthOfSale, dayOfSale);
 
         // Restrict min date to current date.
 
         datePicker.getDatePicker().setMinDate(cal.getTimeInMillis());
-
+        if(end != null){
+            datePicker.getDatePicker().setMaxDate(end.getTimeInMillis());
+        }
         // Display the date picker dialog
         datePicker.show();
     }
+
 
     public static void applyWindowInsetsListenerTo(ComponentActivity activity, ViewGroup view) {
         EdgeToEdge.enable(activity);

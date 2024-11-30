@@ -13,6 +13,8 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityAddrecipientBinding;
 import com.apollo.medgift.models.Recipient;
 
+import java.util.Calendar;
+
 public class AddRecipientActivity extends BaseActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private ActivityAddrecipientBinding addRecipientBinding;
@@ -147,7 +149,15 @@ public class AddRecipientActivity extends BaseActivity implements View.OnClickLi
             // Handle save here
             saveRecipient();
         } else if (view == addRecipientBinding.edtDOB) {
-            Util.showDatePickerFor(addRecipientBinding.edtDOB, this);
+            Calendar min = Calendar.getInstance();
+            min.add(Calendar.YEAR, -18);
+            Calendar max = Calendar.getInstance();
+            max.set(Calendar.YEAR, 100);
+            Util.showDatePickerFor(this,min,max, ( dtv ) ->{
+                String dob = String.format("%s-%s-%s", dtv.dayOfMonth, dtv.month, dtv.year);
+                recipient.setDateOfBirth(dob);
+                addRecipientBinding.edtDOB.setText(dob);
+            });
         }
 
     }
