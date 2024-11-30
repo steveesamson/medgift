@@ -1,9 +1,6 @@
 package com.apollo.medgift.adapters.provider;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.ReadHealthTipActivity;
-import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.HealthtipItemBinding;
 import com.apollo.medgift.models.HealthTip;
 import com.apollo.medgift.models.Role;
-import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.provider.AddHealthTipActivity;
 
 import java.util.List;
@@ -52,7 +47,7 @@ public class HealthTipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return healthtips.size();
     }
 
-    class HealthTipHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class HealthTipHolder extends RecyclerView.ViewHolder {
         private final HealthtipItemBinding itemBinding;
         private HealthTip healthtip;
 
@@ -63,20 +58,20 @@ public class HealthTipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         private void setupListeners() {
-           itemBinding.btnDelete.setOnClickListener(this);
-            itemBinding.btnEditTip.setOnClickListener(this);
-            itemBinding.btnReadMore.setOnClickListener(this);
-            if (Role.GIFTER.equals(Firebase.currentUser().getUserRole())) {
-                // hide button for "Gifter"
-                itemBinding.btnDelete.setVisibility(View.GONE);
-                itemBinding.btnEditTip.setVisibility(View.GONE);
-            } else {
-                // enable buttons for other roles
-                itemBinding.btnDelete.setVisibility(View.VISIBLE);
-                itemBinding.btnEditTip.setVisibility(View.VISIBLE);
-                itemBinding.createdBy.setVisibility(View.GONE);
-            }
-
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (Role.GIFTER.equals(Firebase.currentUser().getUserRole())) {
+                        Intent intent = new Intent(context, ReadHealthTipActivity.class);
+                        intent.putExtra(HealthTip.STORE, HealthTipHolder.this.healthtip);
+                        context.startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(context, AddHealthTipActivity.class);
+                         intent.putExtra(HealthTip.STORE, HealthTipHolder.this.healthtip);
+                        context.startActivity(intent);
+                    }
+                }
+            });
         }
 
         public void bindData(HealthTip healthTip) {
@@ -85,30 +80,6 @@ public class HealthTipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             itemBinding.createdBy.setText(healthTip.getCreatedByName());
         }
 
-        @Override
-        public void onClick(View view) {
-            if (view == itemBinding.btnDelete) {
-                // Delete here
-                Util.showConfirm(context, "Delete", "Do your really want to delete this health tip?", (dialog, which) -> {
-                    // Implement delete
-                    Firebase.delete(healthtip, HealthTip.STORE, (task) -> {
-                        if (task.isSuccessful()) {
-                            Util.notify(context, "Health Tip deleted!");
-                        }
-                    });
-                    dialog.dismiss();
-                });
-            } else if(view == itemBinding.btnEditTip){ // Display health tip form for details
-                Intent intent = new Intent(context, AddHealthTipActivity.class);
-                intent.putExtra(HealthTip.STORE, HealthTipHolder.this.healthtip);
-                context.startActivity(intent);
-            }
-            else if(view == itemBinding.btnReadMore){ // Display health tip form for details
-                Intent intent = new Intent(context, ReadHealthTipActivity.class);
-                intent.putExtra(HealthTip.STORE, HealthTipHolder.this.healthtip);
-                context.startActivity(intent);
-            }
-        }
     }
 
 }

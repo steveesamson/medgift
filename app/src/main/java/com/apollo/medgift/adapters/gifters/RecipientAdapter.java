@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.apollo.medgift.common.Firebase;
-import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.RecipientItemBinding;
 import com.apollo.medgift.models.Recipient;
 import com.apollo.medgift.views.gifter.AddRecipientActivity;
@@ -49,7 +47,7 @@ public class RecipientAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return recipients.size();
     }
 
-    class RecipientHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
+    class RecipientHolder extends RecyclerView.ViewHolder {
         private final RecipientItemBinding itemBinding;
         private Recipient recipient;
 
@@ -60,9 +58,14 @@ public class RecipientAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         private void setupListeners() {
-            itemBinding.btnDelete.setOnClickListener(this);
-            itemView.setOnClickListener(this);
-            itemBinding.btnSendGift.setOnClickListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, AddRecipientActivity.class);
+                    intent.putExtra(Recipient.STORE, RecipientHolder.this.recipient);
+                    context.startActivity(intent);
+                }
+            });
 
         }
 
@@ -71,27 +74,5 @@ public class RecipientAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             itemBinding.txtName.setText(String.format("%s %s", recipient.getFirstName(), recipient.getLastName()));
         }
 
-        @Override
-        public void onClick(View view) {
-            if (view == itemBinding.btnDelete) {
-                // Delete here
-                Util.showConfirm(context, "Delete", "Do your really want to delete this recipient?", (dialog, which) -> {
-                    // Implement delete
-                    Firebase.delete(recipient, Recipient.STORE,(task) -> {
-                        if(task.isSuccessful()){
-                            Util.notify(context, "Recipient deleted!");
-                        }
-                    });
-                    dialog.dismiss();
-                });
-            } else if(view == itemBinding.btnSendGift){
-                // Send a gift to this recipient
-                // Send  a gift here
-            } else { // Display recipient form for details
-                Intent intent = new Intent(context, AddRecipientActivity.class);
-                intent.putExtra(Recipient.STORE, RecipientHolder.this.recipient);
-                context.startActivity(intent);
-            }
-        }
     }
 }

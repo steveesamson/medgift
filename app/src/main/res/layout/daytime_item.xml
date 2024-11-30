@@ -3,11 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="5dp"
-    android:background="@drawable/border"
     android:orientation="vertical"
-    app:layout_goneMarginBottom="3dp"
-    android:padding="10dp">
+    style="@style/Row"
+    app:layout_goneMarginBottom="3dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,12 +46,11 @@
             android:textSize="18sp"/>
 
         <ImageView
-            android:id="@+id/btnDelete"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
-            android:contentDescription="@string/btnDeleteHint"
-            android:src="@drawable/bin" />
+            android:contentDescription="Details"
+            android:src="@drawable/arrow_right" />
     </LinearLayout>
 
 </LinearLayout>

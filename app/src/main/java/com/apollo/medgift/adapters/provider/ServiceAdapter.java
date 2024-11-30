@@ -2,7 +2,6 @@ package com.apollo.medgift.adapters.provider;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ForyourecyclerviewBinding;
 import com.apollo.medgift.models.HealthcareService;
 import com.apollo.medgift.models.Role;
-import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.gifter.ViewServiceActivity;
 import com.apollo.medgift.views.provider.CreateServiceActivity;
 

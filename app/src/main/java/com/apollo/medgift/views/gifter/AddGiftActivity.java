@@ -31,6 +31,7 @@ import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.models.GiftInviteVModel;
 import com.apollo.medgift.views.models.GiftServiceVModel;
+import com.apollo.medgift.views.provider.MyServiceActivity;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -93,6 +94,12 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
 
         addGiftBinding.inviteContributors.setOnClickListener(this);
         addGiftBinding.btnSave.setOnClickListener(this);
+        if(!Util.isNullOrEmpty(this.gift.getKey())){
+            addGiftBinding.btnDeleteGift.setOnClickListener(this);
+            addGiftBinding.btnDeleteGift.setVisibility(View.VISIBLE);
+            addGiftBinding.btnAddService.setOnClickListener(this);
+            addGiftBinding.btnAddService.setVisibility(View.VISIBLE);
+        }
 
         addGiftBinding.contributorsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         contributorAdapter = new ContributorAdapter(this, contributors);
@@ -105,6 +112,7 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
         inviteeQuery = Firebase.database(GiftInvite.STORE).orderByChild("giftId").equalTo(gift.getKey());
         addGiftBinding.contributorsLyt.setVisibility(this.gift.getIsGroup()? View.VISIBLE : View.GONE);
         addGiftBinding.isGroupGift.setChecked(this.gift.getIsGroup());
+
         setUpRecipientsDropdown();
         updateRecyclers();
     }
@@ -205,6 +213,23 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
             saveGift();
         } else if (view == addGiftBinding.inviteContributors) {
             showInviteContributorsDialog();
+        }
+        else if(view == addGiftBinding.btnDeleteGift){
+            // Delete here
+                Util.showConfirm(this, "Delete", "Do your really want to delete this Gift?", (dialog, which) -> {
+                    // Implement delete
+                    Firebase.delete(gift, Gift.STORE,(task) -> {
+                        if(task.isSuccessful()){
+                            Util.notify(AddGiftActivity.this, "Gift deleted!");
+                            finish();
+                        }
+                    });
+                    dialog.dismiss();
+                });
+        } else if(view == addGiftBinding.btnAddService){
+            Intent intent = new Intent(this, MyServiceActivity.class);
+            intent.putExtra(Gift.STORE, this.gift);
+            startActivity(intent);
         }
     }
 

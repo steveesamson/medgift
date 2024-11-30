@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/Page"
     tools:context=".views.gifter.AddGiftActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/addGift"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp">
+        android:layout_height="match_parent">
 
         <include
             android:id="@+id/homeAppBar"
@@ -25,7 +25,6 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -36,10 +35,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginHorizontal="30dp"
-                android:orientation="vertical"
-                android:paddingBottom="30dp">
-
+                style="@style/Content"
+                android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/lytGiftName"
@@ -96,6 +93,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="@string/hintGroup" />
+
+                <Button
+                    android:id="@+id/btnAddService"
+                    style="@style/InvertedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="50dp"
+                    android:visibility="gone"
+                    android:text="@string/add_service" />
 
                 <LinearLayout
                     android:id="@+id/contributorsLyt"
@@ -164,6 +170,15 @@
                     android:background="@drawable/rounded_button_blue"
                     android:text="@string/save"
                     android:textStyle="bold" />
+                <Button
+                    android:id="@+id/btnDeleteGift"
+                    style="@style/DestructiveButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="40dp"
+                    android:text="@string/delete"
+                    android:visibility="gone" />
             </LinearLayout>
         </ScrollView>
 

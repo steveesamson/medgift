@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.gifter.AddRecipientActivity">
@@ -24,7 +25,6 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,9 +34,8 @@
             android:id="@+id/mainLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="30dp"
             android:orientation="vertical"
-            android:paddingBottom="30dp"
+            style="@style/Content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/homeAppBar">
@@ -150,19 +149,27 @@
         <LinearLayout
             android:id="@+id/headerPane"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_marginVertical="20dp"
-            android:layout_gravity="center_vertical"
             android:layout_height="wrap_content">
             <Button
                 android:id="@+id/btnSave"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 style="@style/PrimaryButton"
                 android:text="@string/lblSaveBtn"
                 android:textStyle="bold" />
+            <Button
+                android:id="@+id/btnDeleteRecipient"
+                style="@style/DestructiveButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="40dp"
+                android:text="@string/delete"
+                android:visibility="gone" />
         </LinearLayout>
 
         </LinearLayout>

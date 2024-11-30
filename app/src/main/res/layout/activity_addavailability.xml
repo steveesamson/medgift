@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightgray"
+    style="@style/Page"
     tools:context=".views.provider.AddAvailabilityActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/addAvailability"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp">
+        android:layout_height="match_parent">
 
         <include
             android:id="@+id/homeAppBar"
@@ -26,7 +25,6 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -38,9 +36,8 @@
                 android:id="@+id/contentLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border_tertiary"
-                android:orientation="vertical"
-                android:padding="20dp">
+                style="@style/Content"
+                android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/lytDay"
@@ -101,6 +98,17 @@
                     android:background="@drawable/rounded_button_blue"
                     android:text="@string/btnAddAvailability"
                     android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnDeleteAvailability"
+                    style="@style/DestructiveButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="40dp"
+                    android:text="@string/delete"
+                    android:visibility="gone" />
+
             </LinearLayout>
 
         </ScrollView>

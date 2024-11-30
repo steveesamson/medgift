@@ -9,12 +9,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.apollo.medgift.common.Firebase;
-import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.GiftItemBinding;
 import com.apollo.medgift.models.Gift;
 import com.apollo.medgift.views.gifter.AddGiftActivity;
-import com.apollo.medgift.views.provider.MyServiceActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +47,7 @@ public class GiftAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return gifts.size();
     }
 
-    class GiftHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
+    class GiftHolder extends RecyclerView.ViewHolder  {
         private final GiftItemBinding itemBinding;
         private Gift gift;
 
@@ -61,9 +58,14 @@ public class GiftAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         private void setupListeners() {
-            itemBinding.btnAddService.setOnClickListener(this);
-            itemBinding.btnManageGift.setOnClickListener(this);
-            itemBinding.btnDelete.setOnClickListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, AddGiftActivity.class);
+                    intent.putExtra(Gift.STORE, GiftHolder.this.gift);
+                    context.startActivity(intent);
+                }
+            });
 
         }
 
@@ -73,30 +75,5 @@ public class GiftAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             itemBinding.giftDescription.setText(String.format("%s", gift.getDescription()));
         }
 
-        @Override
-        public void onClick(View view)
-        {
-            if (view == itemBinding.btnDelete)
-            {
-                // Delete here
-                Util.showConfirm(context, "Delete", "Do your really want to delete this Gift?", (dialog, which) -> {
-                    // Implement delete
-                    Firebase.delete(gift, Gift.STORE,(task) -> {
-                        if(task.isSuccessful()){
-                            Util.notify(context, "Gift deleted!");
-                        }
-                    });
-                    dialog.dismiss();
-                });
-            }else if(view == itemBinding.btnManageGift) { // Display gift form for details
-                Intent intent = new Intent(context, AddGiftActivity.class);
-                intent.putExtra(Gift.STORE, GiftHolder.this.gift);
-                context.startActivity(intent);
-            } else if(view == itemBinding.btnAddService){
-                Intent intent = new Intent(context, MyServiceActivity.class);
-                intent.putExtra(Gift.STORE, GiftHolder.this.gift);
-                context.startActivity(intent);
-            }
-        }
     }
 }

@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
+    style="@style/Page"
     tools:context=".views.gifter.GiftActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/giftActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
             <include
                 android:id="@+id/homeAppBar"
                 layout="@layout/homeappbar"
@@ -28,7 +27,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="vertical"
-                android:paddingVertical="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/homeAppBar"

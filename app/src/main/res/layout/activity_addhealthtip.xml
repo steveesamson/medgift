@@ -5,6 +5,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
+    style="@style/Page"
 tools:context=".views.provider.AddHealthTipActivity">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/addHealthtipActivity"
@@ -24,7 +25,6 @@ tools:context=".views.provider.AddHealthTipActivity">
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,8 +34,8 @@ tools:context=".views.provider.AddHealthTipActivity">
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:id="@+id/layoutmain"
-            android:paddingHorizontal="30dp">
+            style="@style/Content"
+            android:id="@+id/layoutmain">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lytTitle"
@@ -78,6 +78,15 @@ tools:context=".views.provider.AddHealthTipActivity">
                 android:background="@drawable/rounded_button_blue"
                 android:text="@string/publish_now"
                 android:textStyle="bold" />
+            <Button
+                android:id="@+id/btnDeleteHealthTip"
+                style="@style/DestructiveButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="40dp"
+                android:text="@string/delete"
+                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>
