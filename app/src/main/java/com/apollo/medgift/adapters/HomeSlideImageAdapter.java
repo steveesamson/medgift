@@ -1,17 +1,14 @@
 package com.apollo.medgift.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.apollo.medgift.R;
 import com.apollo.medgift.databinding.SlideimagecontainerBinding;
 import com.apollo.medgift.models.HomeSlideImageItem;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
 

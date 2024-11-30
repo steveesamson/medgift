@@ -1,7 +1,6 @@
 package com.apollo.medgift.adapters.provider;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.OnModelManageCallback;
-import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.DaytimeItemBinding;
-import com.apollo.medgift.databinding.RecipientItemBinding;
 import com.apollo.medgift.models.DateTimeValue;
 import com.apollo.medgift.models.DayTime;
-import com.apollo.medgift.models.Recipient;
-import com.apollo.medgift.views.gifter.AddRecipientActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +47,7 @@ public class DayTimeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return times.size();
     }
 
-    class DayTimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
+    class DayTimeHolder extends RecyclerView.ViewHolder{
         private final DaytimeItemBinding itemBinding;
         private DayTime dayTime;
 
@@ -64,8 +58,12 @@ public class DayTimeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         private void setupListeners() {
-            itemBinding.btnDelete.setOnClickListener(this);
-            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((OnModelManageCallback)context).onEdit(DayTimeHolder.this.dayTime);
+                }
+            });
 
         }
 
@@ -76,19 +74,5 @@ public class DayTimeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             itemBinding.txtEnd.setText(new DateTimeValue(dayTime.getEndTime()).toAMPM());
         }
 
-        @Override
-        public void onClick(View view) {
-            if (view == itemBinding.btnDelete) {
-                // Delete here
-                Util.showConfirm(context, "Delete", "Do your really want to delete this availability?", (dialog, which) -> {
-                    // Implement delete
-                    ((OnModelManageCallback)context).onDeleting(this.dayTime);
-                    dialog.dismiss();
-                });
-            }
-            else{
-                ((OnModelManageCallback)context).onEdit(this.dayTime);
-            }
-        }
     }
 }

@@ -4,11 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ellipsize="end"
-    android:maxLines="1"
-    android:textColor="@color/black"
-    android:textStyle="bold"
-    android:layout_marginBottom="5dp"
-    android:background="@color/white"
-    android:padding="16dp">
+    style="@style/Row"
+    android:maxLines="1">
 
 </TextView>

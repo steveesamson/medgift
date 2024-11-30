@@ -9,6 +9,7 @@ import androidx.activity.EdgeToEdge;
 import com.apollo.medgift.R;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Firebase;
+import com.apollo.medgift.common.OnModelManageCallback;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityAddhealthtipBinding;
 import com.apollo.medgift.models.HealthTip;
@@ -47,7 +48,7 @@ public class AddHealthTipActivity extends BaseActivity implements View.OnClickLi
     private void setup() {
         addhealthtipBinding.tipTitle.setText(healthTip.getTitle());
         addhealthtipBinding.tipDescription.setText(healthTip.getContent());
-        addhealthtipBinding.btnAddTip.setOnClickListener(this);
+
         if (Role.GIFTER.equals(Firebase.currentUser().getUserRole())) {
             // hide button for "Gifter"
             // disable the edit texts
@@ -58,6 +59,11 @@ public class AddHealthTipActivity extends BaseActivity implements View.OnClickLi
             addhealthtipBinding.tipDescription.setFocusable(false);
             setupToolbar(addhealthtipBinding.homeAppBar.getRoot(), "Health Tip", true);
         } else {
+            addhealthtipBinding.btnAddTip.setOnClickListener(this);
+            if(!Util.isNullOrEmpty(this.healthTip.getKey())){
+                addhealthtipBinding.btnDeleteHealthTip.setOnClickListener(this);
+                addhealthtipBinding.btnDeleteHealthTip.setVisibility(View.VISIBLE);
+            }
             // enable buttons for other roles
             addhealthtipBinding.btnAddTip.setVisibility(View.VISIBLE);
         }
@@ -111,6 +117,19 @@ public class AddHealthTipActivity extends BaseActivity implements View.OnClickLi
         if (v == addhealthtipBinding.btnAddTip) {
             // Handle save here
             saveHealthTip();
+        }
+        if(v == addhealthtipBinding.btnDeleteHealthTip){
+            // Delete here
+                Util.showConfirm(this, "Delete", "Do your really want to delete this tip?", (dialog, which) -> {
+                    // Implement delete
+                    Firebase.delete(AddHealthTipActivity.this.healthTip, HealthTip.STORE, (task) -> {
+                        if(task.isSuccessful()){
+                            Util.notify(AddHealthTipActivity.this, "Health tip deleted!");
+                        }
+                        finish();
+                    });
+                    dialog.dismiss();
+                });
         }
     }
 

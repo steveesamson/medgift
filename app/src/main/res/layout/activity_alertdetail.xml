@@ -9,16 +9,13 @@
     android:orientation="vertical"
     android:gravity="center"
     android:layout_centerInParent="true"
-    android:background="@color/lightgray"
+    style="@style/Page"
     tools:context=".views.AlertDetail">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="20dp"
-        android:background="@drawable/border_tertiary"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="30dp"
         android:layout_height="wrap_content"
+        style="@style/Content"
         android:orientation="vertical">
         <TextView
             android:id="@+id/alertTitle"
@@ -29,7 +26,6 @@
             android:text="Collaboration Invitation" />
         <TextView
             android:id="@+id/alertContent"
-            style="@style/Content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Dear Steve, we love that you collaborate with us on the following gift: Gifting a block of class room to the new secondary school in Ikate. block of class room to the new secondary school in Ikate" />

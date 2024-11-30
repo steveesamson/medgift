@@ -85,29 +85,20 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         // Handle Recipient navigation
         if (view == binding.quickBtnAvailableServices) {
             intent = new Intent(getApplicationContext(), MyServiceActivity.class);
-            if (view == binding.quickBtnRecipient) {
-                intent = new Intent(getApplicationContext(), RecipientActivity.class);
-                startActivity(intent);
-            }
-//            else if (view == binding.quickBtnHealthTips) {
-//                intent = new Intent(getApplicationContext(), PaymentInformationActivity.class);
-//                startActivity(intent);
-//            }
-            if (view == binding.quickBtnRecipient) {
-                intent = new Intent(getApplicationContext(), RecipientActivity.class);
-                startActivity(intent);
-            }
-            if (view == binding.quickBtnHealthTips) {
-                intent = new Intent(getApplicationContext(), HealthTipActivity.class);
-                startActivity(intent);
-            }
-            if (view == binding.quickBtnGift) {
-                giftIntent = new Intent(getApplicationContext(), GiftActivity.class);
-                startActivity(giftIntent);
-            }
-
-
+            startActivity(intent);
+        }else if (view == binding.quickBtnRecipient) {
+            intent = new Intent(getApplicationContext(), RecipientActivity.class);
+            startActivity(intent);
+        } else if (view == binding.quickBtnHealthTips) {
+            intent = new Intent(getApplicationContext(), HealthTipActivity.class);
+            startActivity(intent);
+        }else if (view == binding.quickBtnGift) {
+            intent = new Intent(getApplicationContext(), GiftActivity.class);
+            startActivity(intent);
         }
 
+
     }
+
 }
+

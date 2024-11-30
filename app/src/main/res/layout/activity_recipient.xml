@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/Page"
     tools:context=".views.gifter.RecipientActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:paddingVertical="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/homeAppBar"
@@ -54,7 +54,6 @@
                     android:text="@string/btnAddRecipient"
                     android:textAlignment="textEnd" />
             </LinearLayout>
-
 
             <include
                 android:id="@+id/emptyItem"

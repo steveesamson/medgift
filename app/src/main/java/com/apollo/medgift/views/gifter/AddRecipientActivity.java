@@ -60,6 +60,10 @@ public class AddRecipientActivity extends BaseActivity implements View.OnClickLi
                 addRecipientBinding.rdFemale.setChecked(true);
             }
         }
+        if(!Util.isNullOrEmpty(this.recipient.getKey())){
+            addRecipientBinding.btnDeleteRecipient.setOnClickListener(this);
+            addRecipientBinding.btnDeleteRecipient.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -158,6 +162,18 @@ public class AddRecipientActivity extends BaseActivity implements View.OnClickLi
                 recipient.setDateOfBirth(dob);
                 addRecipientBinding.edtDOB.setText(dob);
             });
+        } else if(view == addRecipientBinding.btnDeleteRecipient){
+            // Delete here
+                Util.showConfirm(this, "Delete", "Do your really want to delete this recipient?", (dialog, which) -> {
+                    // Implement delete
+                    Firebase.delete(recipient, Recipient.STORE,(task) -> {
+                        if(task.isSuccessful()){
+                            Util.notify(AddRecipientActivity.this, "Recipient deleted!");
+                            finish();
+                        }
+                    });
+                    dialog.dismiss();
+                });
         }
 
     }

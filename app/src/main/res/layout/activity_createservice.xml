@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:autofillHints="select"
+    style="@style/Page"
     tools:context=".views.provider.CreateServiceActivity">
 
     <include
@@ -21,7 +22,6 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,8 +30,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="30dp">
+            style="@style/Content"
+            android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lytServiceName"
@@ -47,36 +47,6 @@
                     android:layout_height="wrap_content"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <!--            <com.google.android.material.textfield.TextInputLayout-->
-            <!--                android:id="@+id/lytServiceAssignee"-->
-            <!--                style="@style/TextLayout"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="50dp"-->
-            <!--                android:hint="@string/service_assignee">-->
-
-            <!--                <com.google.android.material.textfield.TextInputEditText-->
-            <!--                    android:id="@+id/edtServiceAssignee"-->
-            <!--                    style="@style/TextEdit"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:inputType="text" />-->
-            <!--            </com.google.android.material.textfield.TextInputLayout>-->
-
-            <!--            <com.google.android.material.textfield.TextInputLayout-->
-            <!--                android:id="@+id/lytHospital"-->
-            <!--                style="@style/TextLayout"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="50dp"-->
-            <!--                android:hint="@string/hospital">-->
-
-            <!--                <com.google.android.material.textfield.TextInputEditText-->
-            <!--                    android:id="@+id/edtHospital"-->
-            <!--                    style="@style/TextEdit"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:inputType="text" />-->
-            <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lytPrice"
@@ -161,24 +131,6 @@
                     android:minLines="5"
                     android:scrollbars="vertical" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <!--            <com.google.android.material.textfield.TextInputLayout-->
-            <!--                android:id="@+id/lytAvailability"-->
-            <!--                style="@style/TextLayout"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:hint="@string/availability">-->
-
-            <!--                <com.google.android.material.textfield.TextInputEditText-->
-            <!--                    android:id="@+id/edtAvailability"-->
-            <!--                    style="@style/TextEdit"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="150dp"-->
-            <!--                    android:gravity="top|start"-->
-            <!--                    android:inputType="textMultiLine"-->
-            <!--                    android:minLines="5"-->
-            <!--                    android:scrollbars="vertical" />-->
-            <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <Button
                 android:id="@+id/btnCreateServiceSave"

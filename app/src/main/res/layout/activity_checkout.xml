@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/Page"
     tools:context=".views.gifter.CheckoutActivity">
 
     <include
@@ -26,11 +27,10 @@
 
         <LinearLayout
             android:id="@+id/mainLayout"
-            style="@style/Pane"
+            style="@style/Content"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:paddingBottom="20dp"
             app:layout_constraintVertical_weight="1">
 
             <TextView

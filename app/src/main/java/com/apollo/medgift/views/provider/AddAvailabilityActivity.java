@@ -158,5 +158,36 @@ public class AddAvailabilityActivity extends BaseActivity {
                 }
             }
         });
+
+        if(!Util.isNullOrEmpty(this.dayTime.getKey())){
+            binding.btnDeleteAvailability.setVisibility(View.VISIBLE);
+            binding.btnDeleteAvailability.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                // Delete here
+                Util.showConfirm(AddAvailabilityActivity.this, "Delete", "Do your really want to delete this availability?", (dialog, which) -> {
+                    // Implement delete
+                    List<DayTime> remaining = availability.getTimes().stream().filter( next -> !next.getDay().equals(dayTime.getDay())).collect(Collectors.toList());
+                    availability.setTimes(remaining);
+
+                    Firebase.save(availability, Availability.STORE, (task, key) -> {
+                        if (task.isSuccessful()) {
+
+                            availability = null;
+                            if(task.isSuccessful()){
+                                Util.notify(getApplicationContext(), "Availability deleted!");
+                            }
+                            finish();
+
+                        } else {
+                            Util.notify(getApplicationContext(), "Availability delete failed.");
+                        }
+                    });
+                    dialog.dismiss();
+                });
+                }
+            });
+
+        }
     }
 }

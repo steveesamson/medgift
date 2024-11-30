@@ -13,7 +13,6 @@ import com.apollo.medgift.common.OnModelDeleteCallback;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ContributorItemBinding;
 import com.apollo.medgift.models.GiftInvite;
-import com.apollo.medgift.models.Recipient;
 
 import java.util.List;
 
@@ -23,9 +22,9 @@ public class InviteeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private final List<GiftInvite> invitees;
 
 
-    public InviteeAdapter(Context context, List<GiftInvite> contributorList) {
+    public InviteeAdapter(Context context, List<GiftInvite> invitees) {
         this.context = context;
-        this.invitees = contributorList;
+        this.invitees = invitees;
     }
 
     @NonNull
@@ -64,12 +63,14 @@ public class InviteeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     // Delete here
                     Util.showConfirm(context, "Delete", "Do your really want to delete this invitee?", (dialog, which) -> {
                         // Implement delete
-                        if(invite.getKey() != null && !invite.getKey().isEmpty()){
-                            Firebase.delete(invite, Recipient.STORE,(task) -> {
+                        if(!Util.isNullOrEmpty(invite.getKey())){
+
+                            Firebase.delete(invite, GiftInvite.STORE,(task) -> {
                                 if(task.isSuccessful()){
                                     Util.notify(context, "Invitee deleted!");
                                 }
                             });
+
                         }else{
 
                             OnModelDeleteCallback deletable =  (OnModelDeleteCallback) context;
