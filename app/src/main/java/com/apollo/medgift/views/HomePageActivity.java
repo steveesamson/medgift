@@ -17,13 +17,10 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityHomepageBinding;
 import com.apollo.medgift.models.HealthTip;
 import com.apollo.medgift.models.HomeSlideImageItem;
-import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.gifter.RecipientActivity;
 import com.apollo.medgift.views.provider.HealthTipActivity;
-import com.apollo.medgift.views.gifter.PaymentInformationActivity;
-import com.apollo.medgift.views.gifter.RecipientActivity;
 import com.apollo.medgift.views.gifter.GiftActivity;
-import com.apollo.medgift.views.provider.MyServiceActivity;
+import com.apollo.medgift.views.provider.ServiceActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
@@ -84,7 +81,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         Intent intent, giftIntent;
         // Handle Recipient navigation
         if (view == binding.quickBtnAvailableServices) {
-            intent = new Intent(getApplicationContext(), MyServiceActivity.class);
+            intent = new Intent(getApplicationContext(), ServiceActivity.class);
             startActivity(intent);
         }else if (view == binding.quickBtnRecipient) {
             intent = new Intent(getApplicationContext(), RecipientActivity.class);

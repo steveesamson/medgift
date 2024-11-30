@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:autofillHints="select"
     style="@style/Page"
-    tools:context=".views.provider.CreateServiceActivity">
+    tools:context=".views.provider.AddServiceActivity">
 
     <include
         android:id="@+id/homeAppBar"
@@ -79,14 +79,16 @@
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/serviceImage"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="8dp"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 android:visibility="gone"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@tools:sample/avatars"
+                android:adjustViewBounds="true"
+                app:shapeAppearanceOverlay="@style/RoundedTop" />
 
             <LinearLayout
                 android:id="@+id/addImageButton"

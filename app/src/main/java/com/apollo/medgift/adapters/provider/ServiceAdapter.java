@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.apollo.medgift.R;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
-import com.apollo.medgift.databinding.ForyourecyclerviewBinding;
+import com.apollo.medgift.databinding.ServiceItemBinding;
 import com.apollo.medgift.models.HealthcareService;
 import com.apollo.medgift.models.Role;
-import com.apollo.medgift.views.gifter.ViewServiceActivity;
-import com.apollo.medgift.views.provider.CreateServiceActivity;
+import com.apollo.medgift.views.gifter.ServiceDetailActivity;
+import com.apollo.medgift.views.provider.AddServiceActivity;
 
 import java.util.List;
 import java.util.Random;
@@ -34,7 +34,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        ForyourecyclerviewBinding binding = ForyourecyclerviewBinding.inflate(layoutInflater, parent, false);
+        ServiceItemBinding binding = ServiceItemBinding.inflate(layoutInflater, parent, false);
         return new ServiceHolder(binding);
     }
 
@@ -50,10 +50,10 @@ public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     class ServiceHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final ForyourecyclerviewBinding itemBinding;
+        private final ServiceItemBinding itemBinding;
         private HealthcareService healthcareService;
 
-        public ServiceHolder(ForyourecyclerviewBinding itemBinding) {
+        public ServiceHolder(ServiceItemBinding itemBinding) {
             super(itemBinding.getRoot());
             this.itemBinding = itemBinding;
             setupListeners();
@@ -93,12 +93,12 @@ public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public void onClick(View view) {
             if (view == itemBinding.serviceItem) {
                 if (Firebase.currentUser().getUserRole().equals(Role.GIFTER)) {
-                    Intent intent = new Intent(context, ViewServiceActivity.class);
+                    Intent intent = new Intent(context, ServiceDetailActivity.class);
                     intent.putExtra(HealthcareService.STORE, ServiceHolder.this.healthcareService);
                     context.startActivity(intent);
                 }
                 if (Firebase.currentUser().getUserRole().equals(Role.PROVIDER)) {
-                    Intent intent = new Intent(context, CreateServiceActivity.class);
+                    Intent intent = new Intent(context, AddServiceActivity.class);
                     intent.putExtra(HealthcareService.STORE, ServiceHolder.this.healthcareService);
                     context.startActivity(intent);
                 }

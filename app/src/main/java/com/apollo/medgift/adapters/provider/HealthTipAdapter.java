@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.apollo.medgift.common.Firebase;
-import com.apollo.medgift.common.ReadHealthTipActivity;
+import com.apollo.medgift.views.gifter.HealthTipDetailActivity;
 import com.apollo.medgift.databinding.HealthtipItemBinding;
 import com.apollo.medgift.models.HealthTip;
 import com.apollo.medgift.models.Role;
@@ -62,7 +62,7 @@ public class HealthTipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 @Override
                 public void onClick(View view) {
                     if (Role.GIFTER.equals(Firebase.currentUser().getUserRole())) {
-                        Intent intent = new Intent(context, ReadHealthTipActivity.class);
+                        Intent intent = new Intent(context, HealthTipDetailActivity.class);
                         intent.putExtra(HealthTip.STORE, HealthTipHolder.this.healthtip);
                         context.startActivity(intent);
                     } else {

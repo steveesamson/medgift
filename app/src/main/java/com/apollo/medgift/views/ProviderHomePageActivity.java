@@ -9,7 +9,7 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityProviderhomepageBinding;
 import com.apollo.medgift.views.provider.AvailabilityActivity;
 import com.apollo.medgift.views.provider.HealthTipActivity;
-import com.apollo.medgift.views.provider.MyServiceActivity;
+import com.apollo.medgift.views.provider.ServiceActivity;
 
 public class ProviderHomePageActivity extends BaseActivity {
 
@@ -37,7 +37,7 @@ public class ProviderHomePageActivity extends BaseActivity {
 //        });
 
         binding.categoryCard3.setOnClickListener(v -> {
-            Intent intent = new Intent(ProviderHomePageActivity.this, MyServiceActivity.class);
+            Intent intent = new Intent(ProviderHomePageActivity.this, ServiceActivity.class);
             startActivity(intent);
         });
 

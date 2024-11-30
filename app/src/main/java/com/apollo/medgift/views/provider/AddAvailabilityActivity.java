@@ -159,7 +159,7 @@ public class AddAvailabilityActivity extends BaseActivity {
             }
         });
 
-        if(!Util.isNullOrEmpty(this.dayTime.getKey())){
+        if(!Util.isNullOrEmpty(this.dayTime.getDay())){
             binding.btnDeleteAvailability.setVisibility(View.VISIBLE);
             binding.btnDeleteAvailability.setOnClickListener(new View.OnClickListener() {
                 @Override

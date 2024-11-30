@@ -35,7 +35,7 @@ public class ForYouRecyclerViewAdapter extends RecyclerView.Adapter<ForYouRecycl
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.foryourecyclerview, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.service_item, parent, false);
         return new ViewHolder(view);
     }
 

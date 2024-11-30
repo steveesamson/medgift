@@ -2,8 +2,6 @@ package com.apollo.medgift.views.gifter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,7 +29,7 @@ import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.models.GiftInviteVModel;
 import com.apollo.medgift.views.models.GiftServiceVModel;
-import com.apollo.medgift.views.provider.MyServiceActivity;
+import com.apollo.medgift.views.provider.ServiceActivity;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -227,7 +225,7 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
                     dialog.dismiss();
                 });
         } else if(view == addGiftBinding.btnAddService){
-            Intent intent = new Intent(this, MyServiceActivity.class);
+            Intent intent = new Intent(this, ServiceActivity.class);
             intent.putExtra(Gift.STORE, this.gift);
             startActivity(intent);
         }

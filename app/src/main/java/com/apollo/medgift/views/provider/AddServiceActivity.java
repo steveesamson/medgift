@@ -17,30 +17,29 @@ import com.apollo.medgift.R;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
-import com.apollo.medgift.databinding.ActivityCreateserviceBinding;
+import com.apollo.medgift.databinding.ActivityAddserviceBinding;
 import com.apollo.medgift.models.HealthcareService;
 import com.apollo.medgift.models.Role;
-import com.apollo.medgift.models.User;
 
-public class CreateServiceActivity extends BaseActivity implements View.OnClickListener {
+public class AddServiceActivity extends BaseActivity implements View.OnClickListener {
 
-    ActivityCreateserviceBinding createserviceBinding;
+    private ActivityAddserviceBinding addserviceBinding;
     private HealthcareService healthcareService;
     private ActivityResultLauncher<Intent> serviceImageLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        createserviceBinding = ActivityCreateserviceBinding.inflate(getLayoutInflater());
-        setContentView(createserviceBinding.getRoot());
-        applyWindowInsetsListenerTo(this, createserviceBinding.main);
+        addserviceBinding = ActivityAddserviceBinding.inflate(getLayoutInflater());
+        setContentView(addserviceBinding.getRoot());
+        applyWindowInsetsListenerTo(this, addserviceBinding.main);
 
         Intent intent = getIntent();
         healthcareService = (HealthcareService) intent.getSerializableExtra(HealthcareService.STORE);
 
         boolean exists = Util.exists(healthcareService);
         String title = getString(exists ? R.string.editServiceTitle : R.string.createServiceTitle);
-        setupToolbar(createserviceBinding.homeAppBar.getRoot(), title, true);
+        setupToolbar(addserviceBinding.homeAppBar.getRoot(), title, true);
         if (!exists) {
             healthcareService.setCreatedBy(Firebase.currentUser().getUserId());
         } else {
@@ -53,9 +52,9 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
         // register image
         registerImageResult();
 
-        createserviceBinding.addImageButton.setOnClickListener(v -> openGallery());
-        createserviceBinding.btnCreateServiceSave.setOnClickListener(this);
-        createserviceBinding.btnDeleteService.setOnClickListener(this);
+        addserviceBinding.addImageButton.setOnClickListener(v -> openGallery());
+        addserviceBinding.btnCreateServiceSave.setOnClickListener(this);
+        addserviceBinding.btnDeleteService.setOnClickListener(this);
     }
 
     // Register activity result and load image from gallery
@@ -79,9 +78,9 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
 
     // load the selected image
     private void displayImage(Uri imageUri) {
-        createserviceBinding.serviceImage.setImageURI(imageUri);
-        createserviceBinding.serviceImage.setVisibility(View.VISIBLE); // Show the image
-        createserviceBinding.addImageButtonText.setText(getString(R.string.change_image));
+        addserviceBinding.serviceImage.setImageURI(imageUri);
+        addserviceBinding.serviceImage.setVisibility(View.VISIBLE); // Show the image
+        addserviceBinding.addImageButtonText.setText(getString(R.string.change_image));
     }
 
     private void initializeDropdown() {
@@ -89,8 +88,8 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
 
         // Set up the Spinner
         ArrayAdapter<String> adapterItems = new ArrayAdapter<String>(this, R.layout.servicetype_item, serviceTypes);
-        createserviceBinding.autoCompleteTxt.setAdapter(adapterItems);
-        createserviceBinding.autoCompleteTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        addserviceBinding.autoCompleteTxt.setAdapter(adapterItems);
+        addserviceBinding.autoCompleteTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             }
@@ -98,83 +97,83 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
     }
 
     private void setup() {
-        createserviceBinding.edtServiceName.setText(healthcareService.getServiceName());
-        createserviceBinding.edtPrice.setText(String.valueOf(healthcareService.getPrice()));
-        createserviceBinding.edtDescription.setText(healthcareService.getDescription());
-        createserviceBinding.btnCreateServiceSave.setOnClickListener(this);
+        addserviceBinding.edtServiceName.setText(healthcareService.getServiceName());
+        addserviceBinding.edtPrice.setText(String.valueOf(healthcareService.getPrice()));
+        addserviceBinding.edtDescription.setText(healthcareService.getDescription());
+        addserviceBinding.btnCreateServiceSave.setOnClickListener(this);
 
         String currentServiceType = healthcareService.getServiceType();
         if (currentServiceType != null && !currentServiceType.isEmpty()) {
-            createserviceBinding.autoCompleteTxt.setText(currentServiceType, false);
+            addserviceBinding.autoCompleteTxt.setText(currentServiceType, false);
         }
 
         if (healthcareService.getBannerUrl() != null && !healthcareService.getBannerUrl().isEmpty()) {
-            createserviceBinding.serviceImage.setVisibility(View.VISIBLE);
-            Util.loadImageUri(createserviceBinding.serviceImage, healthcareService.getBannerUrl(), this);
+            addserviceBinding.serviceImage.setVisibility(View.VISIBLE);
+            Util.loadImageUri(addserviceBinding.serviceImage, healthcareService.getBannerUrl(), this);
             Log.e("Banner URI: ", "URI: " + healthcareService.getBannerUrl());
-            createserviceBinding.addImageButtonText.setText(getString(R.string.change_image));
+            addserviceBinding.addImageButtonText.setText(getString(R.string.change_image));
         } else {
-            createserviceBinding.addImageButtonText.setText(getString(R.string.add_image));
+            addserviceBinding.addImageButtonText.setText(getString(R.string.add_image));
         }
 
-        createserviceBinding.btnDeleteService.setVisibility(View.VISIBLE);
+        addserviceBinding.btnDeleteService.setVisibility(View.VISIBLE);
 
         // Restrict editing for "Gifter" role
         if (Role.GIFTER.equals(Firebase.currentUser().getUserRole())) {
-            createserviceBinding.btnCreateServiceSave.setVisibility(View.GONE);
-            createserviceBinding.edtServiceName.setEnabled(false);
-            createserviceBinding.edtPrice.setEnabled(false);
-            createserviceBinding.edtDescription.setEnabled(false);
-            createserviceBinding.autoCompleteTxt.setEnabled(false);
-            createserviceBinding.addImageButton.setEnabled(false);
+            addserviceBinding.btnCreateServiceSave.setVisibility(View.GONE);
+            addserviceBinding.edtServiceName.setEnabled(false);
+            addserviceBinding.edtPrice.setEnabled(false);
+            addserviceBinding.edtDescription.setEnabled(false);
+            addserviceBinding.autoCompleteTxt.setEnabled(false);
+            addserviceBinding.addImageButton.setEnabled(false);
         } else {
             // enable buttons for other roles
-            createserviceBinding.btnCreateServiceSave.setVisibility(View.VISIBLE);
+            addserviceBinding.btnCreateServiceSave.setVisibility(View.VISIBLE);
         }
     }
 
     private void clearErrors() {
-        createserviceBinding.lytServiceName.setError("");
-        createserviceBinding.lytPrice.setError("");
-        createserviceBinding.lytType.setError("");
-        createserviceBinding.lytDescription.setError("");
+        addserviceBinding.lytServiceName.setError("");
+        addserviceBinding.lytPrice.setError("");
+        addserviceBinding.lytType.setError("");
+        addserviceBinding.lytDescription.setError("");
     }
 
     private void saveService() {
         boolean exists = Util.exists(healthcareService);
         Log.e("TEST DATA: ", "SaveService: " + healthcareService.getServiceName());
-        Util.startProgress(createserviceBinding.progress, "Saving Service...");
+        Util.startProgress(addserviceBinding.progress, "Saving Service...");
 
         // Save service data in Firebase Database
         Firebase.save(healthcareService, HealthcareService.STORE, (task, key) -> {
-            Util.stopProgress(createserviceBinding.progress);
+            Util.stopProgress(addserviceBinding.progress);
             if (task.isSuccessful()) {
-                Util.notify(CreateServiceActivity.this, Util.success("Service", exists));
+                Util.notify(AddServiceActivity.this, Util.success("Service", exists));
                 finish();
             } else {
-                Util.notify(CreateServiceActivity.this, Util.fail("Service", exists));
+                Util.notify(AddServiceActivity.this, Util.fail("Service", exists));
             }
         });
 
         clearFields();
 
-        Util.stopProgress(createserviceBinding.progress);
+        Util.stopProgress(addserviceBinding.progress);
     }
 
     private void clearFields() {
-        createserviceBinding.edtServiceName.setText("");
-        createserviceBinding.edtPrice.setText("0.0");
-        createserviceBinding.edtDescription.setText("");
-        createserviceBinding.serviceImage.setVisibility(View.INVISIBLE);
-        createserviceBinding.addImageButtonText.setText(getString(R.string.add_image));
+        addserviceBinding.edtServiceName.setText("");
+        addserviceBinding.edtPrice.setText("0.0");
+        addserviceBinding.edtDescription.setText("");
+        addserviceBinding.serviceImage.setVisibility(View.INVISIBLE);
+        addserviceBinding.addImageButtonText.setText(getString(R.string.add_image));
     }
 
     @Override
     public void onClick(View v) {
-        if (v == createserviceBinding.btnCreateServiceSave) {
+        if (v == addserviceBinding.btnCreateServiceSave) {
             createService();
         }
-        if (v == createserviceBinding.btnDeleteService) {
+        if (v == addserviceBinding.btnDeleteService) {
             deleteService();
         }
     }
@@ -183,21 +182,21 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
         clearErrors();
 
         boolean formIsValid = true;
-        String serviceName = Util.valueOf(createserviceBinding.edtServiceName);
-        String priceStr = Util.valueOf(createserviceBinding.edtPrice);
-        String description = Util.valueOf(createserviceBinding.edtDescription);
-        String serviceType = createserviceBinding.autoCompleteTxt.getText().toString();
+        String serviceName = Util.valueOf(addserviceBinding.edtServiceName);
+        String priceStr = Util.valueOf(addserviceBinding.edtPrice);
+        String description = Util.valueOf(addserviceBinding.edtDescription);
+        String serviceType = addserviceBinding.autoCompleteTxt.getText().toString();
 
         if (serviceName.isEmpty()) {
-            createserviceBinding.lytServiceName.setError("Service name is required.");
+            addserviceBinding.lytServiceName.setError("Service name is required.");
             formIsValid = false;
         }
         if (priceStr.isEmpty()) {
-            createserviceBinding.lytPrice.setError("Price is required.");
+            addserviceBinding.lytPrice.setError("Price is required.");
             formIsValid = false;
         }
         if (description.isEmpty()) {
-            createserviceBinding.lytDescription.setError("Description is required.");
+            addserviceBinding.lytDescription.setError("Description is required.");
             formIsValid = false;
         }
         if (serviceType.isEmpty()) {
@@ -214,10 +213,10 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
             healthcareService.setServiceType(serviceType);
 
             if (healthcareService.bannerUri != null) {
-                Util.startProgress(createserviceBinding.progress, "Saving Service...");
+                Util.startProgress(addserviceBinding.progress, "Saving Service...");
                 uploadImage();
             } else {
-                Util.startProgress(createserviceBinding.progress, "Saving Service...");
+                Util.startProgress(addserviceBinding.progress, "Saving Service...");
                 saveService();
             }
 
@@ -228,10 +227,10 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
         Util.showConfirm(this, "Delete", "Do your really want to delete this service?", (dialog, which) -> {
             // Implement delete
             Firebase.delete(healthcareService, HealthcareService.STORE, (task) -> {
-                Util.startProgress(createserviceBinding.progress, "Deleting Service...");
+                Util.startProgress(addserviceBinding.progress, "Deleting Service...");
                 if (task.isSuccessful()) {
                     Util.notify(this, "Service deleted!");
-                    Util.stopProgress(createserviceBinding.progress);
+                    Util.stopProgress(addserviceBinding.progress);
                     finish();
                 }
             });
@@ -254,6 +253,6 @@ public class CreateServiceActivity extends BaseActivity implements View.OnClickL
         }, (error) -> {
         });
 
-        Util.stopProgress(createserviceBinding.progress);
+        Util.stopProgress(addserviceBinding.progress);
     }
 }
