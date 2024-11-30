@@ -60,7 +60,7 @@
                         style="@style/TextEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="gifter@medgift.com"
+                        android:text=""
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,7 +76,7 @@
                         style="@style/TextEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="123456"
+                        android:text=""
                         android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
