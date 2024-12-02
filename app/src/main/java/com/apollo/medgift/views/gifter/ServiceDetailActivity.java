@@ -5,40 +5,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CalendarView;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.apollo.medgift.R;
-import com.apollo.medgift.adapters.gifters.RecipientAdapter;
 import com.apollo.medgift.adapters.gifters.ScheduleAdapter;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.OnModelSelectCallback;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityServicedetailBinding;
-import com.apollo.medgift.databinding.ContributorDialogBinding;
 import com.apollo.medgift.models.Availability;
-import com.apollo.medgift.models.Day;
 import com.apollo.medgift.models.DayTime;
 import com.apollo.medgift.models.Gift;
-import com.apollo.medgift.models.GiftInvite;
 import com.apollo.medgift.models.HealthcareService;
-import com.apollo.medgift.models.Recipient;
 import com.apollo.medgift.models.Schedule;
-import com.apollo.medgift.models.SessionUser;
-import com.apollo.medgift.models.User;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class ServiceDetailActivity extends BaseActivity implements View.OnClickListener, OnModelSelectCallback {
     private static final String TAG = ServiceDetailActivity.class.getSimpleName();
@@ -57,6 +45,8 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
         servicedetailBinding = ActivityServicedetailBinding.inflate(getLayoutInflater());
         setContentView(servicedetailBinding.getRoot());
         applyWindowInsetsListenerTo(this, servicedetailBinding.main);
+        // Setup tool bar and title
+        setupToolbar(servicedetailBinding.homeAppBar.getRoot(), getString(R.string.serviceDetails), true);
 
         Intent intent = getIntent();
         healthcareService = (HealthcareService) intent.getSerializableExtra(HealthcareService.STORE);
@@ -141,6 +131,9 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
         if (v == servicedetailBinding.btnCheckoutService) {
             Intent intent = new Intent(this, CheckoutActivity.class);
             intent.putExtra(HealthcareService.STORE, healthcareService);
+            intent.putExtra(Gift.STORE, this.gift);
+            intent.putExtra(Schedule.STORE, this.selectedSchedule);
+
             this.startActivity(intent);
         }
     }
@@ -165,6 +158,8 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
         });
         servicedetailBinding.scheduleDialog.btnConfirm.setOnClickListener((v) -> {
             servicedetailBinding.scheduleDialog.getRoot().setVisibility(View.GONE);
+            servicedetailBinding.btnAddToGift.setVisibility(View.GONE);
+            servicedetailBinding.btnCheckoutService.setVisibility(View.VISIBLE);
         });
         scheduleAdapter.notifyDataSetChanged();
 

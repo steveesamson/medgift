@@ -48,11 +48,11 @@ public class Util {
     // network activities.
     public static void startProgress(ProgressBinding progress, String message) {
         progress.progressText.setText(message);
-        progress.progressLoader.setVisibility(View.VISIBLE);
+        progress.getRoot().setVisibility(View.VISIBLE);
     }
 
     public static void stopProgress(ProgressBinding progress) {
-        progress.progressLoader.setVisibility(View.GONE);
+        progress.getRoot().setVisibility(View.GONE);
     }
 
     // Extracts resource name from Uri string
@@ -242,13 +242,13 @@ public class Util {
 
     public static String formatTime(Date date){
         String DATE_PATTERN = "h:mm a";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.CANADA);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.getDefault());
         return simpleDateFormat.format(date);
     }
     // Date formater method
     public static String formatedDueTime(Date date){
         String DATE_PATTERN = "dd-MM-yyyy HH:mm";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.CANADA);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.getDefault());
         return simpleDateFormat.format(date);
     }
 
@@ -257,7 +257,7 @@ public class Util {
         try {
 //        String DATE_PATTERN = "HH:mm. MMM dd, yyyy";
             String DATE_PATTERN = "dd-MM-yyyy HH:mm";
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.CANADA);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.getDefault());
             return simpleDateFormat.parse(date);
         }catch (ParseException e){
             return null;
@@ -267,7 +267,7 @@ public class Util {
     public static String formatToReadableDate(Date date){
 //        String DATE_PATTERN = "HH:mm. MMM dd, yyyy";
         String DATE_PATTERN = "MMM dd yyyy";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.CANADA);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.getDefault());
         return simpleDateFormat.format(date);
     }
 
@@ -279,7 +279,7 @@ public class Util {
 
     public static String formatDayOfWeek(Calendar cal) {
             String DATE_PATTERN = "EEE";
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.CANADA);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.getDefault());
             return simpleDateFormat.format(cal.getTime()).toUpperCase();
 
     }
