@@ -109,10 +109,11 @@
                 android:hint="@string/enter_recipient_s_email_address">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtRecipientEmail"
+                    android:id="@+id/edtRecipient"
                     style="@style/TextEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 

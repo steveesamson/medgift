@@ -153,7 +153,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     // Helper method to start activity
-    private void navigateTo(Class<?> destinationClass) {
+    protected void navigateTo(Class<?> destinationClass) {
         startActivity(new Intent(this, destinationClass));
     }
 

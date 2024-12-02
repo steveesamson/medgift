@@ -1,6 +1,9 @@
 package com.apollo.medgift.models;
 
-public class Schedule {
+import java.io.Serializable;
+
+public class Schedule implements Serializable {
+    public static final String STORE = "Schedule";
     private String schedule;
     private boolean check;
 
