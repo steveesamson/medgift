@@ -25,35 +25,18 @@ public class ProviderHomePageActivity extends BaseActivity {
         // Setup tool bar and title
         setupToolbar(binding.homeAppBar.getRoot(), "MedGift", false);
 
-//        // Set click listener for category_card_1 to open CreateServiceActivity
-//        binding.categoryCard1.setOnClickListener(v -> {
-//            Intent intent = new Intent(ProviderHomePageActivity.this, CreateServiceActivity.class);
-//            startActivity(intent);
-//        });
-//
-//        binding.categoryCard2.setOnClickListener(v -> {
-//            Intent intent = new Intent(ProviderHomePageActivity.this, PublishHealthTipsActivity.class);
-//            startActivity(intent);
-//        });
-
-        binding.categoryCard3.setOnClickListener(v -> {
+        binding.serviceCard.setOnClickListener(v -> {
             Intent intent = new Intent(ProviderHomePageActivity.this, ServiceActivity.class);
             startActivity(intent);
         });
 
-        binding.categoryCard4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.healthTipCard.setOnClickListener( v -> {
                 Intent intent = new Intent(ProviderHomePageActivity.this, HealthTipActivity.class);
                 startActivity(intent);
-            }
         });
-        binding.availabilityCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.availabilityCard.setOnClickListener(v -> {
                 Intent intent = new Intent(ProviderHomePageActivity.this, AvailabilityActivity.class);
                 startActivity(intent);
-            }
         });
 
     }

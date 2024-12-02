@@ -2,20 +2,15 @@ package com.apollo.medgift.views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityRegisterBinding;
-import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.User;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {

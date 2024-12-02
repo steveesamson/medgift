@@ -3,20 +3,52 @@ package com.apollo.medgift.views.gifter;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.apollo.medgift.R;
+import com.apollo.medgift.adapters.gifters.RecipientAdapter;
+import com.apollo.medgift.adapters.gifters.ScheduleAdapter;
 import com.apollo.medgift.common.BaseActivity;
+import com.apollo.medgift.common.Firebase;
+import com.apollo.medgift.common.OnModelSelectCallback;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityServicedetailBinding;
+import com.apollo.medgift.databinding.ContributorDialogBinding;
+import com.apollo.medgift.models.Availability;
+import com.apollo.medgift.models.Day;
+import com.apollo.medgift.models.DayTime;
+import com.apollo.medgift.models.Gift;
+import com.apollo.medgift.models.GiftInvite;
 import com.apollo.medgift.models.HealthcareService;
+import com.apollo.medgift.models.Recipient;
+import com.apollo.medgift.models.Schedule;
+import com.apollo.medgift.models.SessionUser;
+import com.apollo.medgift.models.User;
 
-public class ServiceDetailActivity extends BaseActivity implements View.OnClickListener {
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
-    ActivityServicedetailBinding servicedetailBinding;
+public class ServiceDetailActivity extends BaseActivity implements View.OnClickListener, OnModelSelectCallback {
+    private static final String TAG = ServiceDetailActivity.class.getSimpleName();
+
+    private ActivityServicedetailBinding servicedetailBinding;
     private HealthcareService healthcareService;
+    private Gift gift;
+    private Map<String, DayTime> dayTimeMap = new HashMap<>();
+    private Availability availability;
+    private Schedule selectedSchedule;
     private ActivityResultLauncher<Intent> serviceImageLauncher;
 
     @Override
@@ -28,6 +60,20 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
 
         Intent intent = getIntent();
         healthcareService = (HealthcareService) intent.getSerializableExtra(HealthcareService.STORE);
+        assert healthcareService != null;
+
+        Firebase.getModelBy(Availability.STORE,"createdBy", healthcareService.getCreatedBy(), Availability.class, ( availability1 ) ->{
+            availability = availability1;
+            if(availability != null){
+                if(availability.getTimes() != null){
+                    for(DayTime d: availability.getTimes()){
+                        dayTimeMap.put(d.getDay(), d);
+                    }
+                }
+            }
+        });
+
+        gift = (Gift) intent.getSerializableExtra(Gift.STORE);
 
         setupToolbar(servicedetailBinding.homeAppBar.getRoot(), "", true);
 
@@ -42,11 +88,39 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
 
     @SuppressLint("SetTextI18n")
     private void setup() {
+
         servicedetailBinding.serviceTitle.setText(healthcareService.getServiceName());
         servicedetailBinding.provider.setText(" " + healthcareService.getCreatedBy());
         servicedetailBinding.serviceType.setText(" " + healthcareService.getServiceType());
         servicedetailBinding.price.setText("$ " + healthcareService.getPrice());
         servicedetailBinding.description.setText(healthcareService.getDescription());
+        servicedetailBinding.calendarDialog.calAvailability.setMinDate(Calendar.getInstance().getTimeInMillis());
+        servicedetailBinding.calendarDialog.btnCancel.setOnClickListener((v) -> {
+            servicedetailBinding.calendarDialog.getRoot().setVisibility(View.GONE);
+        });
+        servicedetailBinding.calendarDialog.calAvailability.setOnDateChangeListener((calView, year, month, dayOfMonth) -> {
+            if(availability != null){
+
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.YEAR, year);
+                cal.set(Calendar.MONTH, month);
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                String day = Util.formatDayOfWeek(cal);
+                DayTime dayTime = dayTimeMap.get(day);
+                if(dayTime != null){
+                   selectSchedule(dayTime, cal);
+                }else{
+                    Util.notify(ServiceDetailActivity.this, "There are no availability for the selected day.");
+                }
+            }else{
+                Log.i("DBUG:", "No availability");
+            }
+
+        });
+        if(gift != null){
+            servicedetailBinding.txtGiftName.setText(String.format("You will be adding this service to the '%s' gift.",gift.getName()));
+        }
+
 
         if (healthcareService.getBannerUrl() != null && !healthcareService.getBannerUrl().isEmpty()) {
             Util.loadImageUri(servicedetailBinding.serviceImage, healthcareService.getBannerUrl(), this);
@@ -62,11 +136,43 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         if (v == servicedetailBinding.btnAddToGift) {
             // DO ADD TO GIFT
+            servicedetailBinding.calendarDialog.getRoot().setVisibility(View.VISIBLE);
         }
         if (v == servicedetailBinding.btnCheckoutService) {
             Intent intent = new Intent(this, CheckoutActivity.class);
             intent.putExtra(HealthcareService.STORE, healthcareService);
             this.startActivity(intent);
         }
+    }
+
+    private void selectSchedule(DayTime dayTime, Calendar cal) {
+        servicedetailBinding.calendarDialog.getRoot().setVisibility(View.GONE);
+        selectedSchedule = null;
+        List<Schedule> schedules = Util.getTimes(cal, dayTime);
+
+        RecyclerView recyclerView = servicedetailBinding.scheduleDialog.scheduleList;
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ScheduleAdapter scheduleAdapter = new ScheduleAdapter(this, schedules);
+        recyclerView.setAdapter(scheduleAdapter);
+        servicedetailBinding.scheduleDialog.scheduleTitle.setText(String.format("Select a time for %s", Util.formatToReadableDate(cal.getTime())));
+        servicedetailBinding.scheduleDialog.getRoot().setVisibility(View.VISIBLE);
+        servicedetailBinding.scheduleDialog.btnCancel.setOnClickListener((v) -> {
+            selectedSchedule = null;
+            scheduleAdapter.clearActiveSchedule();
+            servicedetailBinding.calendarDialog.getRoot().setVisibility(View.VISIBLE);
+
+            servicedetailBinding.scheduleDialog.getRoot().setVisibility(View.GONE);
+        });
+        servicedetailBinding.scheduleDialog.btnConfirm.setOnClickListener((v) -> {
+            servicedetailBinding.scheduleDialog.getRoot().setVisibility(View.GONE);
+        });
+        scheduleAdapter.notifyDataSetChanged();
+
+    }
+
+
+    @Override
+    public void onScheduleSelected(Schedule schedule) {
+        this.selectedSchedule = schedule;
     }
 }

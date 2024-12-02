@@ -6,15 +6,11 @@ import android.view.View;
 import android.content.Intent;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityLoginBinding;
 import com.apollo.medgift.models.Role;
-import com.apollo.medgift.models.User;
 
 
 public class LogInActivity extends AppCompatActivity implements View.OnClickListener{
