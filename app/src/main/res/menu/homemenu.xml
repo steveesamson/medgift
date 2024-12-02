@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/notification"
-        android:icon="@drawable/ic_notification"
+        android:icon="@drawable/notification"
         android:title="@string/notification"
         app:showAsAction="always" />
 
@@ -22,7 +22,7 @@
 
     <item
         android:id="@+id/healthTips"
-        android:icon="@drawable/ic_notification"
+        android:icon="@drawable/ic_healthtips"
         android:title="@string/health_tips"
         app:showAsAction="never" />
 
@@ -34,7 +34,7 @@
 
     <item
         android:id="@+id/logOut"
-        android:icon="@drawable/ic_notification"
+        android:icon="@drawable/logout"
         android:title="@string/logout"
         app:showAsAction="never" />
 

@@ -1,92 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/Page"
-tools:context=".views.provider.AddHealthTipActivity">
-<LinearLayout
-    android:orientation="vertical"
-    android:id="@+id/addHealthtipActivity"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".views.provider.AddHealthTipActivity">
 
-    <include
-        android:id="@+id/homeAppBar"
-        layout="@layout/homeappbar"
+    <LinearLayout
+        android:id="@+id/addHealthtipActivity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <LinearLayout
+        <include
+            android:id="@+id/homeAppBar"
+            layout="@layout/homeappbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            style="@style/Content"
-            android:id="@+id/layoutmain">
+            android:layout_height="wrap_content" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lytTitle"
-                style="@style/TextLayout"
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/layoutmain"
+                style="@style/Content"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:hint="@string/title">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tipTitle"
-                    style="@style/TextEdit"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lytTitle"
+                    style="@style/TextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/title">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tipTitle"
+                        style="@style/TextEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lytDescription"
+                    style="@style/TextLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:hint="@string/description">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lytDescription"
-                style="@style/TextLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/description">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tipDescription"
+                        style="@style/TextEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        android:gravity="top|start"
+                        android:inputType="textMultiLine"
+                        android:minLines="5"
+                        android:scrollbars="vertical" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tipDescription"
-                    style="@style/TextEdit"
+                <Button
+                    android:id="@+id/btnAddTip"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:gravity="top|start"
-                    android:inputType="textMultiLine"
-                    android:minLines="5"
-                    android:scrollbars="vertical" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="45dp"
+                    android:layout_marginTop="60dp"
+                    android:background="@drawable/rounded_button_blue"
+                    android:text="@string/publish_now"
+                    android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnAddTip"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="60dp"
-                android:background="@drawable/rounded_button_blue"
-                android:text="@string/publish_now"
-                android:textStyle="bold" />
-            <Button
-                android:id="@+id/btnDeleteHealthTip"
-                style="@style/DestructiveButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="40dp"
-                android:text="@string/delete"
-                android:visibility="gone" />
+                <Button
+                    android:id="@+id/btnDeleteHealthTip"
+                    style="@style/DestructiveButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="40dp"
+                    android:text="@string/delete"
+                    android:visibility="gone" />
 
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
-<include
-    android:id="@+id/progress"
-    layout="@layout/progress" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/progress"
+        layout="@layout/progress" />
 </FrameLayout>

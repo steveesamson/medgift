@@ -1,7 +1,12 @@
 package com.apollo.medgift.views.gifter;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ScrollView;
 
 import com.apollo.medgift.R;
 import com.apollo.medgift.common.BaseActivity;
@@ -37,7 +42,6 @@ public class PaymentInformationActivity extends BaseActivity {
         setContentView(binding.getRoot());
         applyWindowInsetsListenerTo(this, binding.main);
         setupToolbar(binding.homeAppBar.getRoot(), getString(R.string.paymentDetail), true);
-
         Intent intent = getIntent();
         service = (HealthcareService) intent.getSerializableExtra(HealthcareService.STORE);
         recipient = (Recipient) intent.getSerializableExtra(Recipient.STORE);

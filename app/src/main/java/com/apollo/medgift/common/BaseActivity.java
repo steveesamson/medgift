@@ -45,8 +45,9 @@ public class BaseActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(title);
+            getSupportActionBar().setIcon(R.drawable.icon);
             getSupportActionBar().setDisplayHomeAsUpEnabled(showBackButton);
-            getSupportActionBar().setDisplayShowHomeEnabled(showBackButton);
+//            getSupportActionBar().setDisplayShowHomeEnabled(showBackButton);
         }
     }
 
@@ -86,7 +87,7 @@ public class BaseActivity extends AppCompatActivity {
         } else if (userType.equals(Role.PROVIDER)) {
             inflater.inflate(R.menu.providermenu, menu);
         }
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     // Retrieve user type from shared pref or backend
@@ -134,9 +135,8 @@ public class BaseActivity extends AppCompatActivity {
         } else if (itemId == R.id.logOut) {
             logout();
             return true;
-        } else {
-            return false;
         }
+            return false;
     }
 
     // Handle Provider menu
@@ -147,9 +147,8 @@ public class BaseActivity extends AppCompatActivity {
         } else if (itemId == R.id.logOut) {
             logout();
             return true;
-        } else {
-            return false;
         }
+            return false;
     }
 
     // Helper method to start activity

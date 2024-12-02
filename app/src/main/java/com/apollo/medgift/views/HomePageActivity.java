@@ -2,6 +2,9 @@ package com.apollo.medgift.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +20,7 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityHomepageBinding;
 import com.apollo.medgift.models.HealthTip;
 import com.apollo.medgift.models.HomeSlideImageItem;
+import com.apollo.medgift.models.Role;
 import com.apollo.medgift.views.gifter.RecipientActivity;
 import com.apollo.medgift.views.provider.HealthTipActivity;
 import com.apollo.medgift.views.gifter.GiftActivity;
@@ -44,9 +48,9 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
 
         binding = ActivityHomepageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        Util.applyWindowInsetsListenerTo(this, binding.main);
-        // Setup tool bar and title
         setupToolbar(binding.homeAppBar.getRoot(), "MedGift", false);
+        applyWindowInsetsListenerTo(this, binding.main);
+
         // Image Slider
         ViewPager2 viewPager2 = binding.imageSlider;
 
@@ -66,6 +70,8 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
 //        forYouRecyclerView.setAdapter(forYouAdapter);
         registerListeners();
     }
+
+
 
     private void registerListeners() {
         NotificationUtil.createNotificationChannel(this, getString(R.string.channel_name), getString(R.string.channel_description));
