@@ -20,8 +20,7 @@
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:id="@+id/mainLayout"
@@ -142,7 +141,7 @@
 
     </LinearLayout>
 
-    <include layout="@layout/scheule_dialog" android:id="@+id/scheduleDialog" android:visibility="gone"/>
+    <include layout="@layout/schedule_dialog" android:id="@+id/scheduleDialog" android:visibility="gone"/>
     <include layout="@layout/calendar_dialog" android:id="@+id/calendarDialog" android:visibility="gone"/>
     <include
         android:id="@+id/progress"

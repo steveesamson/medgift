@@ -21,9 +21,9 @@ public class ProviderHomePageActivity extends BaseActivity {
 
         binding = ActivityProviderhomepageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        Util.applyWindowInsetsListenerTo(this, binding.main);
-        // Setup tool bar and title
         setupToolbar(binding.homeAppBar.getRoot(), "MedGift", false);
+        applyWindowInsetsListenerTo(this, binding.main);
+        // Setup tool bar and title
 
         binding.serviceCard.setOnClickListener(v -> {
             Intent intent = new Intent(ProviderHomePageActivity.this, ServiceActivity.class);
