@@ -106,12 +106,12 @@
     <string name="failed_to_load_image_error">Failed to load image. Please try again.</string>
     <string name="add_service">+ Add Service</string>
     <string name="myServicesTitle">My Services</string>
-    <string name="availability">Availability</string>
+    <string name="availability">Select delivery day:</string>
     <string name="add_image">Add Image</string>
     <string name="rating"><![CDATA[<rating>]]></string>
     <string name="delete">Delete</string>
     <string name="checkout">Checkout</string>
-    <string name="add_to_gift">Add to Gift</string>
+    <string name="add_to_gift">Add this to gift</string>
     <string name="type">Type:</string>
     <string name="provider">Provider:</string>
     <string name="about_service">About Service:</string>
@@ -158,6 +158,8 @@
     <string name="btnEditHint">Edit button</string>
     <string name="addDayTimeTitle">Add Availability</string>
     <string name="editDayTimeTitle">Edit Availability</string>
+    <string name="delivery_time">Select a delivery time</string>
+    <string name="confirmSelect">Confirm selection</string>
 
 
 </resources>

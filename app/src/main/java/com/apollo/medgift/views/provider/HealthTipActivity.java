@@ -67,7 +67,7 @@ public class HealthTipActivity extends BaseActivity {
             this.query = Firebase.database(HealthTip.STORE);
         }
         // checking role of user
-        checkUserRole(sessionUser);
+        healthtipBinding.btnAddHealthtip.setVisibility(Role.GIFTER.equals(sessionUser.getUserRole())? View.GONE : View.VISIBLE);
 
         RecyclerView recyclerView = healthtipBinding.healthTipList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -98,15 +98,6 @@ public class HealthTipActivity extends BaseActivity {
                 healthtipBinding.emptyItem.getRoot().setVisibility(list.isEmpty()? View.VISIBLE : View.GONE);
             });
 
-        }
-    }
-    private void checkUserRole(SessionUser user) {
-        if (Role.GIFTER.equals(user.getUserRole())) {
-            // hide button for "Gifter"
-            healthtipBinding.btnAddHealthtip.setVisibility(View.GONE);
-        } else {
-            // enable for other roles
-            healthtipBinding.btnAddHealthtip.setVisibility(View.VISIBLE);
         }
     }
 }

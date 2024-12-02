@@ -16,6 +16,7 @@ import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.common.ValueEvents;
 import com.apollo.medgift.databinding.ActivityServiceBinding;
+import com.apollo.medgift.models.Gift;
 import com.apollo.medgift.models.HealthcareService;
 import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.SessionUser;
@@ -32,7 +33,7 @@ public class ServiceActivity extends BaseActivity {
     private final List<HealthcareService> healthcareServices = new ArrayList<>();
     private ServiceAdapter serviceAdapter;
     private Query query;
-
+    private Gift gift;
     private ValueEventListener serviceListener;
 
     @Override
@@ -47,6 +48,8 @@ public class ServiceActivity extends BaseActivity {
         setupToolbar(serviceBinding.homeAppBar.getRoot(), toolbarTitle, true);
 
         applyWindowInsetsListenerTo(this, serviceBinding.serviceActivity);
+        Intent intent = getIntent();
+        gift = (Gift)intent.getSerializableExtra(Gift.STORE);
 
         setPageUp();
     }
@@ -74,7 +77,7 @@ public class ServiceActivity extends BaseActivity {
 
         RecyclerView recyclerView = serviceBinding.serviceList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        serviceAdapter = new ServiceAdapter(healthcareServices, this);
+        serviceAdapter = new ServiceAdapter(healthcareServices, this.gift, this);
         recyclerView.setAdapter(serviceAdapter);
         fetchAndListenOnRecipients();
     }

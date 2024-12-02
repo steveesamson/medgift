@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Page"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/Content"
+            android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/scheduleTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="15dp"
+                    android:text="@string/availability"
+                    android:textAlignment="center"
+                    android:textColor="@color/title"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <CalendarView
+                    android:id="@+id/calAvailability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border" />
+                <include layout="@layout/horizontal_border" />
+                <Button
+                    android:id="@+id/btnCancel"
+                    style="@style/SecondaryButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/lblCancelBtn" />
+
+        </LinearLayout>
+
+</LinearLayout>

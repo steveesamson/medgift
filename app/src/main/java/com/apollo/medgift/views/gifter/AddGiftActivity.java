@@ -137,7 +137,7 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
                         .filter(next -> next.getKey().equals(gift.getRecipientId())).findAny();
                 if(result.isPresent()){
                     Recipient r = result.get();
-                    addGiftBinding.acRecipient.setText(String.format("%s %s", r.getFirstName(), r.getLastName(), r.getEmail()));
+                    addGiftBinding.acRecipient.setText(String.format("%s %s", r.getFirstName(), r.getLastName()));
                 }
             }
         });

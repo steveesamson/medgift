@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -22,18 +21,20 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.apollo.medgift.R;
 import com.apollo.medgift.databinding.ProgressBinding;
 import com.apollo.medgift.models.DateTimeValue;
-import com.apollo.medgift.views.LogInActivity;
+import com.apollo.medgift.models.DayTime;
+import com.apollo.medgift.models.Schedule;
 import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -239,13 +240,18 @@ public class Util {
             return field == null || field.isEmpty();
     }
 
+    public static String formatTime(Date date){
+        String DATE_PATTERN = "h:mm a";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.CANADA);
+        return simpleDateFormat.format(date);
+    }
     // Date formater method
     public static String formatedDueTime(Date date){
-//        String DATE_PATTERN = "HH:mm. MMM dd, yyyy";
         String DATE_PATTERN = "dd-MM-yyyy HH:mm";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.CANADA);
         return simpleDateFormat.format(date);
     }
+
 
     public static Date parseTime(String date)  {
         try {
@@ -258,10 +264,49 @@ public class Util {
         }
     }
 
+    public static String formatToReadableDate(Date date){
+//        String DATE_PATTERN = "HH:mm. MMM dd, yyyy";
+        String DATE_PATTERN = "MMM dd yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.CANADA);
+        return simpleDateFormat.format(date);
+    }
+
 
     public static String today() {
         Calendar c = Calendar.getInstance();
         return formatedDueTime(c.getTime());
+    }
+
+    public static String formatDayOfWeek(Calendar cal) {
+            String DATE_PATTERN = "EEE";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.CANADA);
+            return simpleDateFormat.format(cal.getTime()).toUpperCase();
+
+    }
+
+    public static List<Schedule> getTimes(Calendar instance, DayTime dayTime) {
+
+        List<Schedule> schedules = new ArrayList<>();
+
+        DateTimeValue startv = new DateTimeValue(dayTime.getStartTime());
+        DateTimeValue endv = new DateTimeValue(dayTime.getEndTime());
+
+        Calendar start = Calendar.getInstance();
+        start.setTime(instance.getTime());
+        Calendar end = Calendar.getInstance();
+        end.setTime(instance.getTime());
+
+        start.set(Calendar.HOUR_OF_DAY, startv.hourOfDay);
+        start.set(Calendar.MINUTE, startv.minute);
+
+        end.set(Calendar.HOUR_OF_DAY, endv.hourOfDay);
+        end.set(Calendar.MINUTE, endv.minute);
+
+        while(start.getTime().before(end.getTime())){
+            schedules.add(new Schedule(formatedDueTime(start.getTime())));
+            start.add(Calendar.HOUR, 1);
+        }
+        return schedules;
     }
 }
 

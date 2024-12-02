@@ -13,6 +13,7 @@ import com.apollo.medgift.R;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ServiceItemBinding;
+import com.apollo.medgift.models.Gift;
 import com.apollo.medgift.models.HealthcareService;
 import com.apollo.medgift.models.Role;
 import com.apollo.medgift.views.gifter.ServiceDetailActivity;
@@ -24,9 +25,10 @@ import java.util.Random;
 public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final Context context;
     private final List<HealthcareService> healthcareServices;
-
-    public ServiceAdapter(List<HealthcareService> healthcareServices, Context context) {
+    private final Gift gift;
+    public ServiceAdapter(List<HealthcareService> healthcareServices, Gift gift, Context context) {
         this.context = context;
+        this.gift = gift;
         this.healthcareServices = healthcareServices;
     }
 
@@ -95,6 +97,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 if (Firebase.currentUser().getUserRole().equals(Role.GIFTER)) {
                     Intent intent = new Intent(context, ServiceDetailActivity.class);
                     intent.putExtra(HealthcareService.STORE, ServiceHolder.this.healthcareService);
+                    intent.putExtra(Gift.STORE, ServiceAdapter.this.gift);
                     context.startActivity(intent);
                 }
                 if (Firebase.currentUser().getUserRole().equals(Role.PROVIDER)) {

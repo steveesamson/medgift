@@ -60,7 +60,7 @@
                         style="@style/TextEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="provider@medgift.com"
+                        android:text="gifter@medgift.com"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 

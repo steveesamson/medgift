@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.gifter.AddRecipientActivity">
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
+    android:orientation="vertical"
     android:id="@+id/addRecipient"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -16,19 +17,13 @@
         android:id="@+id/homeAppBar"
         layout="@layout/homeappbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content" />
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/homeAppBar">
+        android:layout_weight="1">
 
         <LinearLayout
             android:id="@+id/mainLayout"
@@ -174,7 +169,7 @@
 
         </LinearLayout>
     </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
     <include
         android:id="@+id/progress"
         layout="@layout/progress" />

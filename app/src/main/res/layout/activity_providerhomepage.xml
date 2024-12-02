@@ -87,7 +87,7 @@
 <!--            </LinearLayout>-->
 
             <LinearLayout
-                android:id="@+id/categoryCard3"
+                android:id="@+id/service_card"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@drawable/rounded_corner_category_bg"
@@ -114,7 +114,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/categoryCard4"
+                android:id="@+id/health_tip_card"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@drawable/rounded_corner_category_bg"
