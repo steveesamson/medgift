@@ -146,6 +146,7 @@ public class AvailabilityActivity extends BaseActivity implements OnModelManageC
             availabilityBinding.emptyItem.getRoot().setVisibility(times.isEmpty()? View.VISIBLE : View.GONE);
         }else {
             availability = new Availability();
+            availabilityBinding.btnAddAvailability.setVisibility(View.VISIBLE);
             availability.setCreatedBy(Firebase.currentUser().getUserId());
             availabilityBinding.emptyItem.txtEmpty.setText( Util.getEmpty("availabilities"));
             availabilityBinding.emptyItem.getRoot().setVisibility(View.VISIBLE);
