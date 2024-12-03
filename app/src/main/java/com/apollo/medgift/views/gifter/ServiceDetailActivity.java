@@ -128,8 +128,13 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         if (v == servicedetailBinding.btnAddToGift) {
+            if(gift == null){
+                navigateTo(GiftActivity.class);
+            }else{
             // DO ADD TO GIFT
             servicedetailBinding.calendarDialog.getRoot().setVisibility(View.VISIBLE);
+
+            }
         }
         if (v == servicedetailBinding.btnCheckoutService) {
             Intent intent = new Intent(this, CheckoutActivity.class);

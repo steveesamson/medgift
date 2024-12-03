@@ -39,8 +39,6 @@ public class ServiceActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-
         serviceBinding = ActivityServiceBinding.inflate(getLayoutInflater());
         setContentView(serviceBinding.getRoot());
 
