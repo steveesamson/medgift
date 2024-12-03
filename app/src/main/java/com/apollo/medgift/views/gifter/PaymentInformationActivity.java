@@ -106,6 +106,8 @@ public class PaymentInformationActivity extends BaseActivity {
                 giftService.setDeliveryDate(schedule.getSchedule());
                 giftService.setStatus(ServiceStatus.SCHEDULED);
                 giftService.setContributionDate(Util.today());
+                giftService.setServiceOwner(service.getCreatedBy());
+                giftService.setGiftOwner(gift.getCreatedBy());
                 saveGiftService(giftService);
             }
         });

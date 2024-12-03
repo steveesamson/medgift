@@ -11,6 +11,7 @@ public class GiftInvite extends BaseModel {
     private String email;
     private String name;
     private String creationDate;
+    private String status = InviteStatus.PENDING;
 
     public String getGiftId() {
         return giftId;
@@ -19,7 +20,6 @@ public class GiftInvite extends BaseModel {
     public void setGiftId(String giftId) {
         this.giftId = giftId;
     }
-
 
     public String getCreationDate() {
         return creationDate;
@@ -45,10 +45,17 @@ public class GiftInvite extends BaseModel {
         this.name = name;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @NonNull
     @Override
     public String toString(){
         return name;
-//        return String.format("%s", name, email);
     }
 }
