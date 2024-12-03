@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,8 +19,10 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.common.ValueEvents;
 import com.apollo.medgift.databinding.ActivityGiftBinding;
 import com.apollo.medgift.models.Gift;
+import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.views.models.GiftVModel;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class GiftActivity extends BaseActivity{
     private GiftAdapter giftAdapter;
 
 
-    private DatabaseReference db;
+    private Query query;
     private ValueEventListener giftsListener;
 
     @Override
@@ -65,8 +64,10 @@ public class GiftActivity extends BaseActivity{
             }
         });
 
+        SessionUser sessionUser = Firebase.currentUser();
+        assert sessionUser != null;
 
-        this.db = Firebase.database(Gift.STORE);
+        this.query = Firebase.database(Gift.STORE).orderByChild("createdBy").equalTo(sessionUser.getUserId());
         RecyclerView recyclerView = giftBinding.giftList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         giftAdapter = new GiftAdapter(gift, this);
@@ -77,7 +78,7 @@ public class GiftActivity extends BaseActivity{
     // Unregister listeners on db
     private void unRegisterValueListener() {
         if (giftsListener != null) {
-            db.removeEventListener(giftsListener);
+            query.removeEventListener(giftsListener);
         }
     }
 
@@ -90,11 +91,11 @@ public class GiftActivity extends BaseActivity{
     // Fetch Gifts and begin to
     // listen to changes on the list
     private void fetchAndListenOnGifts() {
-        if (db != null) {
+        if (query != null) {
             GiftVModel giftVModel = new ViewModelProvider(this).get(GiftVModel.class);
             ValueEvents<Gift> valueEvents = new ValueEvents<Gift>();
             Util.startProgress(giftBinding.progress, "Fetching gifts...");
-            giftsListener = valueEvents.registerListener(db, this, giftAdapter, giftVModel, gift, Gift.class, (list) -> {
+            giftsListener = valueEvents.registerListener(query, this, giftAdapter, giftVModel, gift, Gift.class, (list) -> {
                 Util.stopProgress(giftBinding.progress);
                 giftBinding.emptyItem.txtEmpty.setText(list.isEmpty()? Util.getEmpty("gifts") : "");
                 giftBinding.emptyItem.getRoot().setVisibility(list.isEmpty()? View.VISIBLE : View.GONE);

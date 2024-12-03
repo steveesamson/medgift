@@ -115,7 +115,7 @@
                     android:id="@+id/txtGiftName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No gift was selected yet."
+                    android:text="No gift was selected yet. You need to select an existing gift or add a new one in order to add service."
                     android:textColor="@color/success"
                     android:textStyle="bold" />
 
