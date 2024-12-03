@@ -15,6 +15,7 @@ import com.apollo.medgift.adapters.gifters.ContributorAdapter;
 import com.apollo.medgift.adapters.gifters.InviteeAdapter;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.BaseModel;
+import com.apollo.medgift.common.Closeable;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.OnModelDeleteCallback;
 import com.apollo.medgift.common.Util;
@@ -47,6 +48,8 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
     private ValueEventListener contributionsListener;
     private Query inviteeQuery;
     private Query contributorQuery;
+    private Closeable userCloseable;
+    private Closeable recipientCloseable;
 
 
     private Gift gift;
@@ -118,7 +121,8 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
     private void setUpRecipientsDropdown() {
         SessionUser sessionUser = Firebase.currentUser();
         assert sessionUser != null;
-        Firebase.getModelsBy(Recipient.STORE,"createdBy", sessionUser.getUserId(), Recipient.class, (_recipients) -> {
+        recipientCloseable = Firebase.getModelsBy(Recipient.STORE,"createdBy", sessionUser.getUserId(), Recipient.class, (_recipients) -> {
+            recipientCloseable.release();
             if (_recipients != null) {
                 Recipient[] recipients = _recipients.toArray(new Recipient[]{});
                 ArrayAdapter<Recipient> recipientAdapter = new ArrayAdapter<Recipient>(AddGiftActivity.this, R.layout.recipient_acitem, recipients);
@@ -239,9 +243,10 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
             SessionUser sessionUser = Firebase.currentUser();
             assert sessionUser != null;
             if (!email.isEmpty() && Util.isEmail(email) && !email.equals(sessionUser.getEmail())) {
-                Firebase.getModelBy(User.STORE, "email", email, User.class, (user) -> {
+                userCloseable =  Firebase.getModelBy(User.STORE, "email", email, User.class, (user) -> {
                     dialogBinding.txtSuccess.setVisibility(View.GONE);
                     dialogBinding.txtError.setVisibility(View.GONE);
+                    userCloseable.release();
                     if (user == null) {
                         dialogBinding.txtError.setText(R.string.user_with_email_not_found);
                         dialogBinding.txtError.setVisibility(View.VISIBLE);

@@ -1,6 +1,5 @@
 package com.apollo.medgift.views.gifter;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +8,7 @@ import androidx.activity.EdgeToEdge;
 
 import com.apollo.medgift.R;
 import com.apollo.medgift.common.BaseActivity;
+import com.apollo.medgift.common.Closeable;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.databinding.ActivityCheckoutBinding;
 import com.apollo.medgift.models.Gift;
@@ -16,9 +16,6 @@ import com.apollo.medgift.models.HealthcareService;
 import com.apollo.medgift.models.Payment;
 import com.apollo.medgift.models.Recipient;
 import com.apollo.medgift.models.Schedule;
-
-import android.text.TextWatcher;
-import android.text.Editable;
 
 import java.util.Locale;
 
@@ -30,6 +27,7 @@ public class CheckoutActivity extends BaseActivity implements View.OnClickListen
     private Schedule schedule;
     private Recipient recipient;
     private Payment payment;
+    private Closeable closeable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +48,11 @@ public class CheckoutActivity extends BaseActivity implements View.OnClickListen
             finish();
             return;
         }
-        Firebase.getModelBy(Recipient.STORE, "key", gift.getRecipientId(), Recipient.class, (rec) -> {
+
+        closeable = Firebase.getModelBy(Recipient.STORE, "key", gift.getRecipientId(), Recipient.class, (rec) -> {
+            closeable.release();
             this.recipient = rec;
+            checkoutBinding.btnConfirmNow.setVisibility( rec != null? View.VISIBLE : View.GONE);
             if (this.recipient != null) {
                 checkoutBinding.edtRecipient.setText(String.format("%s %s", this.recipient.getFirstName(), this.recipient.getLastName()));
             }

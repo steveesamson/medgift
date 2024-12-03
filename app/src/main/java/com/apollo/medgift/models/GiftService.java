@@ -10,13 +10,14 @@ public class GiftService extends BaseModel {
     public static final String STORE ="GiftService";
 
     private String giftId;
+    private String giftOwner;
     private String serviceId;
+    private String serviceOwner;
     private String gifterEmail;
     private String gifterName;
     private String serviceName;
     private String serviceDescription;
     private double servicePrice;
-
     private String status = ServiceStatus.SCHEDULED;
     private String contributionDate;
     private String deliveryDate;
@@ -30,6 +31,21 @@ public class GiftService extends BaseModel {
         this.giftId = giftId;
     }
 
+    public String getGiftOwner() {
+        return giftOwner;
+    }
+
+    public void setGiftOwner(String giftOwner) {
+        this.giftOwner = giftOwner;
+    }
+
+    public String getServiceOwner() {
+        return serviceOwner;
+    }
+
+    public void setServiceOwner(String serviceOwner) {
+        this.serviceOwner = serviceOwner;
+    }
     public String getGifterEmail() {
         return gifterEmail;
     }

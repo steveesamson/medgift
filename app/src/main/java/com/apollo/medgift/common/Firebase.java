@@ -55,7 +55,7 @@ public class Firebase {
         return FirebaseAuth.getInstance();
     }
 
-    public  static <T extends BaseModel> void  getModelBy(String storeName, String key, String value, Class<T> modelClass, OnModel<T> onComplete){
+    public  static <T extends BaseModel> Closeable  getModelBy(String storeName, String key, String value, Class<T> modelClass, OnModel<T> onComplete){
 //        Query query = Firebase.database(storeName).orderByChild(key).equalTo(value);
 //        ValueEventListener postListener = new ValueEventListener() {
 //            @Override
@@ -74,7 +74,7 @@ public class Firebase {
 //            }
 //        };
 //        query.addValueEventListener(postListener);
-        Firebase.getModelsBy(storeName, key, value, modelClass, (list) -> {
+        return Firebase.getModelsBy(storeName, key, value, modelClass, (list) -> {
             Log.i(TAG, String.valueOf(list.size()));
             if(list.isEmpty()){
                 onComplete.onComplete(null);
@@ -85,7 +85,7 @@ public class Firebase {
     }
 
 
-    public  static <T extends BaseModel> void  getModelsBy(String storeName, String key, String value, Class<T> modelClass, OnModel<List<T>> onComplete){
+    public  static <T extends BaseModel> Closeable getModelsBy(String storeName, String key, String value, Class<T> modelClass, OnModel<List<T>> onComplete){
 
 
         Query query = Firebase.database(storeName).orderByChild(key).equalTo(value);
@@ -113,6 +113,10 @@ public class Firebase {
             }
         };
         query.addValueEventListener(postListener);
+
+        return () -> {
+                query.removeEventListener(postListener);
+        };
     }
     // Get current user
     public static SessionUser currentUser(){

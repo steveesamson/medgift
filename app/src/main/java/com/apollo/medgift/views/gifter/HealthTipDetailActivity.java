@@ -7,8 +7,6 @@ import androidx.activity.EdgeToEdge;
 
 import com.apollo.medgift.R;
 import com.apollo.medgift.common.BaseActivity;
-import com.apollo.medgift.common.Firebase;
-import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityHealthtipdetailBinding;
 import com.apollo.medgift.models.HealthTip;
 
@@ -30,15 +28,7 @@ public class HealthTipDetailActivity extends BaseActivity {
 
         Intent intent = getIntent();
         healthTip = (HealthTip) intent.getSerializableExtra(HealthTip.STORE);
-
-        boolean exists = Util.exists(healthTip);
-
-        if (exists) {
-            healthTip.setCreatedByName(Firebase.currentUser().getUserName());
-            healthTip.setCreatedBy(Firebase.currentUser().getEmail());
-            setup();
-
-        }
+        setup();
 
     }
     private  void setup(){
