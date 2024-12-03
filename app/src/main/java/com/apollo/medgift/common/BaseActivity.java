@@ -27,10 +27,13 @@ import com.apollo.medgift.models.GiftService;
 import com.apollo.medgift.models.HealthTip;
 import com.apollo.medgift.databinding.ContributorDialogBinding;
 import com.apollo.medgift.models.InviteStatus;
+import com.apollo.medgift.models.Message;
+import com.apollo.medgift.models.NotificationType;
 import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.ServiceStatus;
 import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.models.User;
+import com.apollo.medgift.views.AlertDetail;
 import com.apollo.medgift.views.HomePageActivity;
 import com.apollo.medgift.views.LogInActivity;
 import com.apollo.medgift.views.ProviderHomePageActivity;
@@ -52,7 +55,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        NotificationUtil.createNotificationChannel(this, getString(R.string.channel_name), getString(R.string.channel_description));
     }
     // Set up toolbar with a dynamic title
     protected void setupToolbar(Toolbar toolbar, String title, boolean showBackButton) {
@@ -94,24 +97,50 @@ public class BaseActivity extends AppCompatActivity {
         SessionUser sessionUser = Firebase.currentUser();
         assert  sessionUser != null;
         if(sessionUser.getUserRole().equals(Role.GIFTER)){
-            giftServiceCloseable = Firebase.getModelsBy(GiftService.STORE,"giftOwner", sessionUser.getUserId(), GiftService.class, (giftServices) ->{
-                giftServiceCloseable.release();
-            });
+//            giftServiceCloseable = Firebase.getModelsBy(GiftService.STORE,"giftOwner", sessionUser.getUserId(), GiftService.class, (giftServices) ->{
+//                if(giftServices != null){
+////                    for(GiftService gs: giftServices){
+//////                        if()
+////                    }
+//                }
+//                giftServiceCloseable.release();
+//            });
             //My Gifts
             giftServiceChildEvents = new ChildEvents<>(GiftService.STORE,"giftOwner", sessionUser.getUserId(), GiftService.class, (added) ->{
                 if(added != null && !added.getGifterEmail().equals(sessionUser.getEmail())){
                     // notify new service for gift
+                    Message message = new Message();
+                    String title = "New Contributor";
+                    String msg = String.format("Congrats! %s just contributed '%s' to your group gift. Click details to see.", added.getGifterName(), added.getServiceName());
+                    message.setTitle(title);
+                    message.setBody(msg);
+                    message.setButtonLabel("See Details");
+                    message.setTargetKey(added.getKey());
+                    message.setNotificationType(NotificationType.GiftService);
+                    NotificationUtil.sendNotification(this, message, AlertDetail.class);
                 }
             }, (updated) ->{
                 if(updated != null && !updated.getStatus().equals(ServiceStatus.SCHEDULED)){
                     // notify service update for gift
+                    String status = updated.getStatus().equals(ServiceStatus.DELIVERED)? "Gift Service Delivered!":
+                            updated.getStatus().equals(ServiceStatus.CONFIRMED)? "Gift Service Completed!"
+                    Message message = new Message();
+                    String title = "Gift Service Update";
+
+                    String msg = String.format("Congrats! %s just contributed '%s' to your group gift. Click details to see.", added.getGifterName(), added.getServiceName());
+                    message.setTitle(title);
+                    message.setBody(msg);
+                    message.setButtonLabel("See Details");
+                    message.setTargetKey(added.getKey());
+                    message.setNotificationType(NotificationType.GiftService);
+                    NotificationUtil.sendNotification(this, message, AlertDetail.class);
                 }
             } );
 
         }else if(sessionUser.getUserRole().equals(Role.PROVIDER)){
-            giftServiceCloseable = Firebase.getModelsBy(GiftService.STORE,"serviceOwner", sessionUser.getUserId(), GiftService.class, (giftServices) ->{
-                giftInviteCloseable.release();
-            });
+//            giftServiceCloseable = Firebase.getModelsBy(GiftService.STORE,"serviceOwner", sessionUser.getUserId(), GiftService.class, (giftServices) ->{
+//                giftInviteCloseable.release();
+//            });
             giftServiceChildEvents = new ChildEvents<>(GiftService.STORE,"serviceOwner", sessionUser.getUserId(), GiftService.class, (added) ->{
                 if(added != null){
                     // Notify of a service schedule
@@ -123,9 +152,9 @@ public class BaseActivity extends AppCompatActivity {
                 }
             } );
         }
-        giftInviteCloseable = Firebase.getModelsBy(GiftService.STORE,"serviceOwner", sessionUser.getUserId(), GiftService.class, (giftServices) ->{
-            giftInviteCloseable.release();
-        });
+//        giftInviteCloseable = Firebase.getModelsBy(GiftService.STORE,"serviceOwner", sessionUser.getUserId(), GiftService.class, (giftServices) ->{
+//            giftInviteCloseable.release();
+//        });
         giftInviteChildEvents = new ChildEvents<>(GiftInvite.STORE, "gifterEmail", sessionUser.getEmail(), GiftInvite.class, (added) ->{
             if(added != null && added.getStatus().equals(InviteStatus.PENDING)){
 

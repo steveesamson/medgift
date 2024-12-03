@@ -74,7 +74,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
 
 
     private void registerListeners() {
-        NotificationUtil.createNotificationChannel(this, getString(R.string.channel_name), getString(R.string.channel_description));
+
         binding.quickBtnAvailableServices.setOnClickListener(this);
         binding.quickBtnRecipient.setOnClickListener(this);
         binding.quickBtnHealthTips.setOnClickListener(this);
