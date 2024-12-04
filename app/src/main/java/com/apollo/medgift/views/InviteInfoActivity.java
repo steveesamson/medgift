@@ -34,7 +34,7 @@ public class InviteInfoActivity extends BaseActivity {
 
         applyWindowInsetsListenerTo(this, binding.main);
         // Setup tool bar and title
-        setupToolbar(binding.homeAppBar.getRoot(), getString(R.string.serviceDetails), true);
+        setupToolbar(binding.homeAppBar.getRoot(), getString(R.string.invitationDetails), true);
 
         Intent intent = getIntent();
         giftInvite = (GiftInvite) intent.getSerializableExtra(GiftInvite.STORE);
@@ -59,6 +59,8 @@ public class InviteInfoActivity extends BaseActivity {
                 });
             });
     }
+
+
     private void setupActivity() {
         Util.stopProgress(binding.progress);
         binding.giftTitle.setText(gift.getName());
