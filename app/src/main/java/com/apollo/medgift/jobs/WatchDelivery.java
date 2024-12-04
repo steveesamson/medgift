@@ -3,14 +3,16 @@ package com.apollo.medgift.jobs;
 import android.content.Context;
 
 import com.apollo.medgift.common.BaseJob;
+import com.apollo.medgift.common.NotificationUtil;
 import com.apollo.medgift.models.GiftService;
 import com.apollo.medgift.models.Message;
 import com.apollo.medgift.models.NotificationType;
 import com.apollo.medgift.views.AlertDetail;
 
 public class WatchDelivery extends BaseJob {
-    public WatchDelivery(Context context, GiftService giftService) {
-        super(context, giftService);
+
+    public WatchDelivery(Context context, GiftService giftService, String createdFor) {
+        super(context, giftService, createdFor);
     }
 
     @Override
@@ -23,6 +25,7 @@ public class WatchDelivery extends BaseJob {
         m.setNotificationType(NotificationType.GiftService);
         m.setButtonLabel("Service details");
         m.setPayLoad(this.giftService);
+        NotificationUtil.saveNotification(m, this.createdFor);
         sendNotification(m, AlertDetail.class);
     }
 }
