@@ -155,9 +155,9 @@ public class AddRecipientActivity extends BaseActivity implements View.OnClickLi
         } else if (view == addRecipientBinding.edtDOB) {
             Calendar min = Calendar.getInstance();
             min.add(Calendar.YEAR, -18);
-            Calendar max = Calendar.getInstance();
-            max.set(Calendar.YEAR, 100);
-            Util.showDatePickerFor(this,min,max, ( dtv ) ->{
+//            Calendar max = Calendar.getInstance();
+//            max.set(Calendar.YEAR, 100);
+            Util.showDatePickerFor(this, min, null, ( dtv ) ->{
                 String dob = String.format("%s-%s-%s", dtv.dayOfMonth, dtv.month, dtv.year);
                 recipient.setDateOfBirth(dob);
                 addRecipientBinding.edtDOB.setText(dob);
