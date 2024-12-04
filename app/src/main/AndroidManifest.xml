@@ -17,29 +17,41 @@
         android:theme="@style/Theme.Medgift"
         tools:targetApi="31">
         <activity
+            android:name=".views.InviteInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.ServiceInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.provider.AddAvailabilityActivity"
-            android:exported="false" android:windowSoftInputMode="adjustResize"/>
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".views.provider.AvailabilityActivity"
             android:exported="false" />
         <activity
             android:name=".views.gifter.CheckoutActivity"
-            android:exported="false" android:windowSoftInputMode="adjustResize"/>
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".views.gifter.PaymentInformationActivity"
-            android:exported="false" android:windowSoftInputMode="adjustResize"/>
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".views.gifter.HealthTipDetailActivity"
             android:exported="false" />
         <activity
             android:name=".views.gifter.AddRecipientActivity"
-            android:exported="false" android:windowSoftInputMode="adjustResize"/>
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".views.gifter.AddGiftActivity"
-            android:exported="false" android:windowSoftInputMode="adjustResize"/>
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".views.provider.AddHealthTipActivity"
-            android:exported="false" android:windowSoftInputMode="adjustResize" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".views.provider.HealthTipActivity"
             android:exported="false" />
@@ -54,11 +66,12 @@
             android:exported="false" />
         <activity
             android:name=".views.gifter.ServiceDetailActivity"
-            android:exported="false" android:windowSoftInputMode="adjustResize"/>
-
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".views.provider.AddServiceActivity"
-            android:exported="false" android:windowSoftInputMode="adjustResize"/>
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".views.provider.ServiceActivity"
             android:exported="false" />
@@ -70,10 +83,12 @@
             android:exported="false" />
         <activity
             android:name=".views.RegisterActivity"
-            android:exported="false" android:windowSoftInputMode="adjustResize" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".views.LogInActivity"
-            android:exported="true" android:windowSoftInputMode="adjustResize">
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
