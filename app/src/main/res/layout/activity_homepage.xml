@@ -185,21 +185,21 @@
                             android:orientation="vertical"
                             android:paddingLeft="15dp">
 
-<!--                            <ImageView-->
-<!--                                android:id="@+id/ic_category_card_4"-->
-<!--                                android:layout_width="40dp"-->
-<!--                                android:layout_height="40dp"-->
-<!--                                android:layout_marginBottom="5dp"-->
-<!--                                app:srcCompat="@drawable/ic_groupgifting" />-->
+                            <!--                            <ImageView-->
+                            <!--                                android:id="@+id/ic_category_card_4"-->
+                            <!--                                android:layout_width="40dp"-->
+                            <!--                                android:layout_height="40dp"-->
+                            <!--                                android:layout_marginBottom="5dp"-->
+                            <!--                                app:srcCompat="@drawable/ic_groupgifting" />-->
 
-<!--                            <TextView-->
-<!--                                android:id="@+id/category_4"-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:text="@string/group_gifts"-->
-<!--                                android:textColor="#FFFFFF"-->
-<!--                                android:textSize="12sp"-->
-<!--                                android:textStyle="bold" />-->
+                            <!--                            <TextView-->
+                            <!--                                android:id="@+id/category_4"-->
+                            <!--                                android:layout_width="match_parent"-->
+                            <!--                                android:layout_height="wrap_content"-->
+                            <!--                                android:text="@string/group_gifts"-->
+                            <!--                                android:textColor="#FFFFFF"-->
+                            <!--                                android:textSize="12sp"-->
+                            <!--                                android:textStyle="bold" />-->
                         </LinearLayout>
 
                     </TableRow>
@@ -211,17 +211,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:text="@string/for_you"
+                    android:text="@string/featured_services"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/forYouRecyclerView"
+                    android:id="@+id/serviceList"
                     android:layout_width="match_parent"
-                    android:layout_height="380dp"
+                    android:layout_height="250dp"
                     android:layout_marginBottom="30dp"
                     android:divider="@android:color/transparent" />
+
             </LinearLayout>
+
+            <include
+                android:id="@+id/progress"
+                layout="@layout/progress" />
         </LinearLayout>
     </ScrollView>
 

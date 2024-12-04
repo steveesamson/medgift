@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.content.Intent;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,8 +14,9 @@ import com.apollo.medgift.databinding.ActivityLoginBinding;
 import com.apollo.medgift.models.Role;
 
 
-public class LogInActivity extends AppCompatActivity implements View.OnClickListener{
+public class LogInActivity extends AppCompatActivity implements View.OnClickListener {
     private ActivityLoginBinding loginBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +34,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private void register(){
+    private void register() {
 
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
@@ -51,34 +53,36 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         String password = Util.valueOf(loginBinding.edtPassword);
         boolean formIsValid = true;
 
-        if(email.isEmpty() || !Util.isEmail(email)){
+        if (email.isEmpty() || !Util.isEmail(email)) {
             loginBinding.lytEmail.setError("Email is required.");
             formIsValid = false;
         }
 
-        if(password.isEmpty()){
+        if (password.isEmpty()) {
             loginBinding.lytPassword.setError("Password is required.");
             formIsValid = false;
         }
 
-        if(formIsValid){
+        if (formIsValid) {
             Util.startProgress(loginBinding.progress, "Signing in...");
             Firebase.login(email, password, (task) -> {
 
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     String ROLE = Firebase.currentUser().getUserRole();
                     Log.i("ROLE:", ROLE);
                     Intent intent = null;
 
-                    if(ROLE.equals(Role.GIFTER)){
+                    if (ROLE.equals(Role.GIFTER)) {
                         intent = new Intent(LogInActivity.this, HomePageActivity.class);
                         startActivity(intent);
-                    }else if(ROLE.equals(Role.PROVIDER)){
+                        finish();
+                    } else if (ROLE.equals(Role.PROVIDER)) {
                         intent = new Intent(LogInActivity.this, ProviderHomePageActivity.class);
                         startActivity(intent);
+                        finish();
                     }
 
-                }else{
+                } else {
                     Util.notify(LogInActivity.this, "Invalid credentials.");
                 }
                 Util.stopProgress(loginBinding.progress);
@@ -89,7 +93,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        if(view == this.loginBinding.btnSignup){
+        if (view == this.loginBinding.btnSignup) {
             register();
         } else if (view == this.loginBinding.btnLogin) { // Handle btnLogin click
             login();

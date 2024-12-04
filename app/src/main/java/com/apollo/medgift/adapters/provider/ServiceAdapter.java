@@ -2,6 +2,7 @@ package com.apollo.medgift.adapters.provider;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +27,13 @@ public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private final Context context;
     private final List<HealthcareService> healthcareServices;
     private final Gift gift;
-    public ServiceAdapter(List<HealthcareService> healthcareServices, Gift gift, Context context) {
+    private final String page;
+
+    public ServiceAdapter(List<HealthcareService> healthcareServices, Gift gift, Context context, String page) {
         this.context = context;
         this.gift = gift;
         this.healthcareServices = healthcareServices;
+        this.page = page;
     }
 
     @NonNull
@@ -48,7 +52,15 @@ public class ServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return healthcareServices.size();
+        if (page.equals("service")) {
+            return healthcareServices.size();
+        }
+        if (page.equals("home")) {
+            return Math.min(2, healthcareServices.size());
+        }
+
+        Log.i("SERVICE_SIZE: ", String.valueOf(healthcareServices.size()));
+        return 0;
     }
 
     class ServiceHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

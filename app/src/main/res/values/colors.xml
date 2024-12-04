@@ -17,4 +17,5 @@
     <color name="gray_2">#808080</color>
     <color name="text_hint_color">#9C9C9C</color>
     <color name="ratingBar">#FF700A</color>
+    <color name="lightblue">#B5C5D3</color>
 </resources>
