@@ -162,6 +162,13 @@
     <string name="serviceDetails">Service details</string>
     <string name="checkoutTitle">Checkout</string>
     <string name="paymentDetail">Payment details</string>
+    <string name="lblSchedule">Delivery time</string>
+    <string name="lblRecipientAddress">Recipient address</string>
+    <string name="gifterName">Gifter</string>
+    <string name="lblStatus">Service status</string>
+    <string name="lblContribute">Contribute now</string>
+    <string name="lblGiftOwner">Gift owner</string>
+    <string name="view_details">View details</string>
 
 
 </resources>

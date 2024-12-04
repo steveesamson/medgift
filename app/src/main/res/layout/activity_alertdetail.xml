@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
-            android:text="Contribute" />
+            android:text="@string/view_details" />
 
 
     </LinearLayout>
