@@ -56,24 +56,6 @@ public class Firebase {
     }
 
     public  static <T extends BaseModel> Closeable  getModelBy(String storeName, String key, String value, Class<T> modelClass, OnModel<T> onComplete){
-//        Query query = Firebase.database(storeName).orderByChild(key).equalTo(value);
-//        ValueEventListener postListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // Get Post object and use the values to update the UI
-//                T model = dataSnapshot.getValue(modelClass);
-//                onComplete.onComplete(model);
-//                // ..
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                // Getting Post failed, log a message
-//                Log.w("getModelBy", ":onCancelled", databaseError.toException());
-//                onComplete.onComplete(null);
-//            }
-//        };
-//        query.addValueEventListener(postListener);
         return Firebase.getModelsBy(storeName, key, value, modelClass, (list) -> {
             Log.i(TAG, String.valueOf(list.size()));
             if(list.isEmpty()){
