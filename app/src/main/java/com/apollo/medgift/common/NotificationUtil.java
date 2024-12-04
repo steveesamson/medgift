@@ -19,8 +19,6 @@ import com.apollo.medgift.models.Message;
 public class NotificationUtil {
     private static int NOTIFICATION_ID = 1;
 
-    private static final String TITLE = "TITLE";
-    private static final String BODY = "BODY";
     public static  final String CHANNEL_ID = "MEDGIFT_CHANNEL";
     // Init notification
     public static void createNotificationChannel(AppCompatActivity activity,  String channelName, String channelDescription) {
