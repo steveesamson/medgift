@@ -21,8 +21,8 @@ public class Delivery extends BaseJob {
         m.setTitle(title);
         m.setBody(body);
         m.setNotificationType(NotificationType.GiftService);
-        m.setButtonLabel("See details");
-        m.setTargetKey(this.giftService.getKey());
+        m.setButtonLabel("Service details");
+        m.setPayLoad(this.giftService);
         sendNotification(m, AlertDetail.class);
     }
 }
