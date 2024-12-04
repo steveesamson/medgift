@@ -75,7 +75,7 @@ public class ServiceActivity extends BaseActivity {
 
         RecyclerView recyclerView = serviceBinding.serviceList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        serviceAdapter = new ServiceAdapter(healthcareServices, this.gift, this);
+        serviceAdapter = new ServiceAdapter(healthcareServices, this.gift, this,"service");
         recyclerView.setAdapter(serviceAdapter);
         fetchAndListenOnRecipients();
     }

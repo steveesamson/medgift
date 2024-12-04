@@ -36,12 +36,14 @@ import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.ServiceStatus;
 import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.models.User;
+import com.apollo.medgift.views.AboutUsActivity;
 import com.apollo.medgift.views.AlertDetail;
 import com.apollo.medgift.views.HomePageActivity;
 import com.apollo.medgift.views.LogInActivity;
 import com.apollo.medgift.views.ProviderHomePageActivity;
 import com.apollo.medgift.R;
 import com.apollo.medgift.views.provider.HealthTipActivity;
+import com.apollo.medgift.views.provider.ServiceActivity;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -57,7 +59,7 @@ public class BaseActivity extends AppCompatActivity {
     private static final String TAG = BaseActivity.class.getSimpleName();
     private Notifier notifier;
 
-//    private static ChildEvents<GiftService> giftServiceChildEvents;
+    //    private static ChildEvents<GiftService> giftServiceChildEvents;
 //    private static ChildEvents<GiftInvite> giftInviteChildEvents;
 //    private static Closeable giftServiceCloseable;
 //    private static Closeable giftInviteCloseable;
@@ -67,11 +69,12 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Setup Tasker with android handler
-        JobUtil.init( new Handler(Looper.getMainLooper()));
+        JobUtil.init(new Handler(Looper.getMainLooper()));
         NotificationUtil.createNotificationChannel(this, getString(R.string.channel_name), getString(R.string.channel_description));
 
 
     }
+
     // Set up toolbar with a dynamic title
     protected void setupToolbar(Toolbar toolbar, String title, boolean showBackButton) {
         setSupportActionBar(toolbar);
@@ -97,9 +100,9 @@ public class BaseActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         SessionUser sessionUser = Firebase.currentUser();
-        if(sessionUser == null){
+        if (sessionUser == null) {
             finish();
-        }else{
+        } else {
             notifier = new Notifier(this);
             notifier.beginWatches();
         }
@@ -160,19 +163,20 @@ public class BaseActivity extends AppCompatActivity {
         if (itemId == R.id.home) {
             navigateTo(HomePageActivity.class);
             return true;
-        } else if (itemId == R.id.categories) {
+        } else if (itemId == R.id.availableservices) {
+            navigateTo(ServiceActivity.class);
             return true;
         } else if (itemId == R.id.healthTips) {
             navigateTo(HealthTipActivity.class);
             return true;
         } else if (itemId == R.id.aboutUs) {
-            //
+            navigateTo(AboutUsActivity.class);
             return true;
         } else if (itemId == R.id.logOut) {
             logout();
             return true;
         }
-            return false;
+        return false;
     }
 
     // Handle Provider menu
@@ -184,7 +188,7 @@ public class BaseActivity extends AppCompatActivity {
             logout();
             return true;
         }
-            return false;
+        return false;
     }
 
     // Helper method to start activity
@@ -201,7 +205,7 @@ public class BaseActivity extends AppCompatActivity {
         finish();
     }
 
-    protected void showIDialogFor(View view, String title, String positiveLabel, DialogInterface.OnClickListener onPositive ) {
+    protected void showIDialogFor(View view, String title, String positiveLabel, DialogInterface.OnClickListener onPositive) {
 
         new androidx.appcompat.app.AlertDialog.Builder(this)
                 .setTitle(title)
@@ -215,7 +219,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(notifier != null){
+        if (notifier != null) {
             notifier.release();
         }
     }

@@ -17,7 +17,7 @@
     <string name="lblRegisterBtn">Register</string>
     <string name="notification">Notification</string>
     <string name="more_health_tips"><![CDATA[More health tips >]]></string>
-    <string name="health_tips">Health tips</string>
+    <string name="health_tips">Health Tips</string>
     <string name="for_you">For you</string>
     <string name="group_gifts">Group gifts</string>
     <string name="gift_care">Gift care</string>
@@ -26,7 +26,7 @@
     <string name="categories">Categories</string>
     <string name="about_us">About us</string>
     <string name="logout">Log out</string>
-    <string name="available_services">Available services</string>
+    <string name="available_services">Available Services</string>
     <string name="recipients">Recipients</string>
     <string name="gift">Gift</string>
     <string name="sample_title">Title</string>
@@ -35,7 +35,7 @@
     <string name="sample_description">Description</string>
     <string name="sample_rating_count">1,944</string>
     <string name="sample_price">$ xxx.xx</string>
-    <string name="get_started">Get started</string>
+    <string name="get_started">Get Started</string>
     <string name="service_name">Service name</string>
     <string name="service_assignee">Service assignee</string>
     <string name="hospital">Hospital</string>
@@ -170,6 +170,20 @@
     <string name="lblGiftOwner">Gift owner</string>
     <string name="view_details">View details</string>
     <string name="invitationDetails">Invite details</string>
+    <string name="featured_services">Featured Services</string>
+    <string name="medgift">MEDGIFT</string>
+    <string name="care_in_click_nhealth_in_every_gift">Care in Click, \nHealth in Every Gift.</string>
+    <string name="thank_you">Thank you!</string>
+    <string name="your_payment_has_been_successfully_processed">Your payment has been successfully processed.</string>
+    <string name="a_confirmation_email_has_been_sent_to_both_your_email_address_and_the_recipient_s_email">A confirmation email has been sent to both your email address and the recipient\'s email.</string>
+    <string name="go_to_home">Go to Home</string>
+    <string name="at_medgift_we_believe_in_the_power_of_thoughtful_giving_to_support_the_health_and_well_being_of_your_loved_ones_our_platform_allows_you_to_easily_gift_personalized_healthcare_services_ensuring_that_those_you_care_about_receive_the_attention_and_care_they_deserve_whether_it_s_for_a_routine_checkup_or_a_specialized_treatment_medgift_simplifies_the_process_of_contributing_towards_health_services_creating_a_lasting_impact_with_every_gift">At MedGift, we believe in the power of thoughtful giving to support the health and well-being of your loved ones. Our platform allows you to easily gift personalized healthcare services, ensuring that those you care about receive the attention and care they deserve. Whether it\'s for a routine checkup or a specialized treatment, MedGift simplifies the process of contributing towards health services, creating a lasting impact with every gift.</string>
+    <string name="website">Website:</string>
+    <string name="www_medgift_com">www.medgift.com</string>
+    <string name="email">Email:</string>
+    <string name="info_medgift_com">info@medgift.com</string>
+    <string name="_1_xxx_xxx_xxxx">+1 xxx-xxx-xxxx</string>
+    <string name="hot_line">Hot-line:</string>
 
 
 </resources>
