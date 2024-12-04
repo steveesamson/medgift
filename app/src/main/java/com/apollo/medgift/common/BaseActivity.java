@@ -40,6 +40,7 @@ import com.apollo.medgift.views.AboutUsActivity;
 import com.apollo.medgift.views.AlertDetail;
 import com.apollo.medgift.views.HomePageActivity;
 import com.apollo.medgift.views.LogInActivity;
+import com.apollo.medgift.views.NotificationActivity;
 import com.apollo.medgift.views.ProviderHomePageActivity;
 import com.apollo.medgift.R;
 import com.apollo.medgift.views.provider.HealthTipActivity;
@@ -160,7 +161,10 @@ public class BaseActivity extends AppCompatActivity {
 
     // Handle Gifter menu
     private boolean handleGifterMenuSelection(int itemId) {
-        if (itemId == R.id.home) {
+        if (itemId == R.id.notification) {
+            navigateTo(NotificationActivity.class);
+            return true;
+        } else if (itemId == R.id.home) {
             navigateTo(HomePageActivity.class);
             return true;
         } else if (itemId == R.id.availableservices) {
@@ -181,7 +185,10 @@ public class BaseActivity extends AppCompatActivity {
 
     // Handle Provider menu
     private boolean handleProviderMenuSelection(int itemId) {
-        if (itemId == R.id.home) {
+        if (itemId == R.id.notification) {
+            navigateTo(NotificationActivity.class);
+            return true;
+        }else if (itemId == R.id.home) {
             navigateTo(ProviderHomePageActivity.class);
             return true;
         } else if (itemId == R.id.logOut) {

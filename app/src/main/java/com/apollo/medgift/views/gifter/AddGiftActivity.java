@@ -153,35 +153,6 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void saveGift() {
-        clearErrors();
-
-        String giftName = Util.valueOf(addGiftBinding.edtGiftName);
-        String giftDescription = Util.valueOf(addGiftBinding.edtGiftDescription);
-
-        boolean formIsValid = true;
-
-        if (Util.isNullOrEmpty(giftName)) {
-            addGiftBinding.lytGiftName.setError("Gift name is required.");
-            formIsValid = false;
-        }
-        if (Util.isNullOrEmpty(giftDescription)) {
-            addGiftBinding.lytGiftDescription.setError("Gift description is required.");
-            formIsValid = false;
-        }
-
-        if (gift.getIsGroup() && invitees.isEmpty()) {
-            Util.notify(AddGiftActivity.this, "A group gift must have at least an invited contrubutor.");
-            formIsValid = false;
-        }
-
-        if (Util.isNullOrEmpty(gift.getRecipientId())) {
-            addGiftBinding.lytRecipient.setError("Recipient is required.");
-            formIsValid = false;
-        }
-
-        if (formIsValid) {
-            gift.setName(giftName);
-            gift.setDescription(giftDescription);
 
             boolean exists = Util.exists(gift);
 
@@ -199,19 +170,12 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
                     Util.notify(AddGiftActivity.this, Util.success("Gift", exists));
 
                     this.gift.setKey(key);
-//                    finish();
-                    if(!Util.isNullOrEmpty(this.gift.getKey())){
-                        addGiftBinding.btnDeleteGift.setOnClickListener(this);
-                        addGiftBinding.btnDeleteGift.setVisibility(View.VISIBLE);
-                        addGiftBinding.btnAddService.setOnClickListener(this);
-                        addGiftBinding.btnAddService.setVisibility(View.VISIBLE);
-                    }
+                    finish();
 
                 } else {
                     Util.notify(AddGiftActivity.this, Util.fail("Gift", exists));
                 }
             });
-        }
 
     }
 
@@ -219,7 +183,39 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onClick(View view) {
         if (view == addGiftBinding.btnSave) {
-            saveGift();
+
+            clearErrors();
+
+            String giftName = Util.valueOf(addGiftBinding.edtGiftName);
+            String giftDescription = Util.valueOf(addGiftBinding.edtGiftDescription);
+
+            boolean formIsValid = true;
+
+            if (giftName.isEmpty()) {
+                addGiftBinding.lytGiftName.setError("Gift name is required.");
+                formIsValid = false;
+            }
+            if (giftDescription.isEmpty()) {
+                addGiftBinding.lytGiftDescription.setError("Gift description is required.");
+                formIsValid = false;
+            }
+
+            if (gift.getIsGroup() && invitees.isEmpty()) {
+                Util.notify(AddGiftActivity.this, "A group gift must have at least an invited contrubutor.");
+                formIsValid = false;
+            }
+
+            if (Util.isNullOrEmpty(gift.getRecipientId())) {
+                addGiftBinding.lytRecipient.setError("Recipient is required.");
+                formIsValid = false;
+            }
+
+            if (formIsValid) {
+                gift.setName(giftName);
+                gift.setDescription(giftDescription);
+                saveGift();
+            }
+
         } else if (view == addGiftBinding.inviteContributors) {
             showInviteContributorsDialog();
         }
