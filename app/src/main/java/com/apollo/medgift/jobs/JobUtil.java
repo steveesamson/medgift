@@ -28,7 +28,7 @@ public class JobUtil {
 
 
     //Schedule a single task
-    public static void scheduleJob(GiftService giftService, Context context){
+    public static void scheduleJob(GiftService giftService, String createdFor, Context context){
         //If it contain an existing tasker id, skip enqueue
         if(cache.contains(giftService.getKey())){
             return;
@@ -37,12 +37,12 @@ public class JobUtil {
         // Schedule it only when due time has not passed
         if(giftService.isPending()){
 
-            Runnable task = new Delivery(context, giftService);
+            Runnable task = new Delivery(context, giftService, createdFor);
             handler.postDelayed(task, giftService.dueIntervalInMillis());
             Log.i(TAG, String.format("%s scheduled for run.", giftService.toString()));
             // Schedule it only when due time minus 3 hours has not passed
             if(giftService.isPendingWatch()){
-                Runnable watch = new WatchDelivery(context, giftService);
+                Runnable watch = new WatchDelivery(context, giftService, createdFor);
                 handler.postDelayed(watch, giftService.watchIntervalInMillis());
                 Log.i(TAG, String.format("%s scheduled for notify.", giftService.toString()));
             }
@@ -52,10 +52,10 @@ public class JobUtil {
     }
 
     //Enqueue multiple tasks
-    public static void scheduleJobs(List<GiftService> giftServices, Context context) {
+    public static void scheduleJobs(List<GiftService> giftServices, String createdFor, Context context) {
         // Loop over tasks and schedule them
         for(GiftService g : giftServices){
-            scheduleJob(g, context);
+            scheduleJob(g, createdFor, context);
         }
     }
 }

@@ -2,6 +2,7 @@ package com.apollo.medgift.views.gifter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -57,7 +58,6 @@ public class CheckoutActivity extends BaseActivity implements View.OnClickListen
                 checkoutBinding.edtRecipient.setText(String.format("%s %s", this.recipient.getFirstName(), this.recipient.getLastName()));
             }
         });
-
 
         setup();
 

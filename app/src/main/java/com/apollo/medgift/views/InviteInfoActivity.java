@@ -3,18 +3,14 @@ package com.apollo.medgift.views;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.apollo.medgift.R;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Closeable;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityInviteinfoBinding;
-import com.apollo.medgift.databinding.ActivityServiceinfoBinding;
 import com.apollo.medgift.models.Gift;
 import com.apollo.medgift.models.GiftInvite;
-import com.apollo.medgift.models.GiftService;
 import com.apollo.medgift.models.HealthcareService;
 import com.apollo.medgift.models.Recipient;
 import com.apollo.medgift.models.User;

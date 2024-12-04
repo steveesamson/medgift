@@ -9,8 +9,6 @@ import com.apollo.medgift.common.Closeable;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityServiceinfoBinding;
-import com.apollo.medgift.models.Availability;
-import com.apollo.medgift.models.DayTime;
 import com.apollo.medgift.models.Gift;
 import com.apollo.medgift.models.GiftService;
 import com.apollo.medgift.models.HealthcareService;

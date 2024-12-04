@@ -5,42 +5,43 @@ import com.apollo.medgift.common.BaseModel;
 public class Notification extends BaseModel {
     public static final String STORE ="Notification";
 
-    private String userId;
-    private String giftServiceId;
-    private String message;
-    private String status = NotificationStatus.PENDING;
+    private String title;
+    private String modelName;
+    private String modelKey;
+    private String body;
+    private String createdFor;
     private String creationDate;
 
-    public String getUserId() {
-        return userId;
+    public String getTitle() {
+        return title;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getGiftServiceId() {
-        return giftServiceId;
+    public String getModelName() {
+        return modelName;
     }
 
-    public void setGiftServiceId(String giftServiceId) {
-        this.giftServiceId = giftServiceId;
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
     }
 
-    public String getMessage() {
-        return message;
+    public String getModelKey() {
+        return modelKey;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setModelKey(String modelKey) {
+        this.modelKey = modelKey;
     }
 
-    public String getStatus() {
-        return status;
+    public String getBody() {
+        return body;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setBody(String body) {
+        this.body = body;
     }
 
     public String getCreationDate() {
@@ -49,5 +50,13 @@ public class Notification extends BaseModel {
 
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public String getCreatedFor() {
+        return createdFor;
+    }
+
+    public void setCreatedFor(String createdFor) {
+        this.createdFor = createdFor;
     }
 }

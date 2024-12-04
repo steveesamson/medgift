@@ -7,6 +7,7 @@ import com.apollo.medgift.models.GiftInvite;
 import com.apollo.medgift.models.GiftService;
 import com.apollo.medgift.models.InviteStatus;
 import com.apollo.medgift.models.Message;
+import com.apollo.medgift.models.Notification;
 import com.apollo.medgift.models.NotificationType;
 import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.ServiceStatus;
@@ -41,6 +42,9 @@ public class Notifier implements Closeable {
         message.setNotificationType(NotificationType.GiftInvite);
         NotificationUtil.sendNotification(context, message, AlertDetail.class);
         added.setStatus(InviteStatus.NOTIFIED);
+
+        NotificationUtil.saveNotification(message, sessionUser.getUserId());
+
         Firebase.save(added, GiftInvite.STORE,(task, key) ->{});
     }
     public void beginWatches() {
@@ -59,7 +63,7 @@ public class Notifier implements Closeable {
                             srvs.add(gs);
                         }
                     }
-                    JobUtil.scheduleJobs(srvs, context);
+                    JobUtil.scheduleJobs(srvs, sessionUser.getUserId(), context);
                 }
                 giftServiceCloseable.release();
             });
@@ -77,7 +81,8 @@ public class Notifier implements Closeable {
                     message.setPayLoad(added);
                     message.setNotificationType(NotificationType.GiftService);
                     NotificationUtil.sendNotification(context, message, AlertDetail.class);
-                    JobUtil.scheduleJob(added, context);
+                    NotificationUtil.saveNotification(message, sessionUser.getUserId());
+                    JobUtil.scheduleJob(added, sessionUser.getUserId(), context);
                 }
             }, (updated) ->{
                 if(updated != null && !(updated.getStatus().equals(ServiceStatus.SCHEDULED) || updated.getStatus().equals(ServiceStatus.NOTIFIED))){
@@ -100,6 +105,7 @@ public class Notifier implements Closeable {
                     message.setButtonLabel("Service Details");
                     message.setPayLoad(updated);
                     message.setNotificationType(NotificationType.GiftService);
+                    NotificationUtil.saveNotification(message, sessionUser.getUserId());
                     NotificationUtil.sendNotification(context, message, AlertDetail.class);
                 }
             } );
@@ -113,7 +119,7 @@ public class Notifier implements Closeable {
                             srvs.add(gs);
                         }
                     }
-                    JobUtil.scheduleJobs(srvs, context);
+                    JobUtil.scheduleJobs(srvs, sessionUser.getUserId(), context);
                 }
                 giftInviteCloseable.release();
             });
@@ -130,7 +136,7 @@ public class Notifier implements Closeable {
 
                     message.setNotificationType(NotificationType.GiftService);
                     NotificationUtil.sendNotification(context, message, AlertDetail.class);
-                    JobUtil.scheduleJob(added, context);
+                    JobUtil.scheduleJob(added, sessionUser.getUserId(), context);
                 }
             }, (updated) ->{
                 if(updated != null && updated.getStatus().equals(ServiceStatus.CONFIRMED)){

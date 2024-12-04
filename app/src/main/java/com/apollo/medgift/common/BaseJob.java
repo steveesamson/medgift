@@ -11,10 +11,11 @@ public class BaseJob implements Runnable {
 
     protected Context context;
     protected GiftService giftService;
-
-    public BaseJob(Context context, GiftService giftService){
+    protected String createdFor;
+    public BaseJob(Context context, GiftService giftService, String createdFor){
         this.context = context;
         this.giftService = giftService;
+        this.createdFor = createdFor;
     }
     @Override
     public void run() {
@@ -23,6 +24,7 @@ public class BaseJob implements Runnable {
 
     // Share method for sending notification
     protected void sendNotification(Message message, Class<? extends AppCompatActivity> contentActivityClass){
+
         NotificationUtil.sendNotification(context, message, contentActivityClass);
     }
 

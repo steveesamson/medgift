@@ -188,16 +188,24 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
             Util.startProgress(addGiftBinding.progress, "Adding Gift...");
 
             Firebase.save(gift, Gift.STORE, (task, key) -> {
+
                 Util.stopProgress(addGiftBinding.progress);
                 if (task.isSuccessful()) {
-                    gift = null;
                     for(GiftInvite gi: dirtyInvitees){
                         gi.setGiftId(key);
                         gi.setCreationDate(Util.today());
                         Firebase.save(gi, GiftInvite.STORE, (tk, id) ->{});
                     }
                     Util.notify(AddGiftActivity.this, Util.success("Gift", exists));
-                    finish();
+
+                    this.gift.setKey(key);
+//                    finish();
+                    if(!Util.isNullOrEmpty(this.gift.getKey())){
+                        addGiftBinding.btnDeleteGift.setOnClickListener(this);
+                        addGiftBinding.btnDeleteGift.setVisibility(View.VISIBLE);
+                        addGiftBinding.btnAddService.setOnClickListener(this);
+                        addGiftBinding.btnAddService.setVisibility(View.VISIBLE);
+                    }
 
                 } else {
                     Util.notify(AddGiftActivity.this, Util.fail("Gift", exists));
