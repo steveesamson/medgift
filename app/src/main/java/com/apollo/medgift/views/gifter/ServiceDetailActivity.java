@@ -112,6 +112,8 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
         });
         if(gift != null){
             servicedetailBinding.txtGiftName.setText(String.format("You will be adding this service to the '%s' gift.",gift.getName()));
+        }else{
+            servicedetailBinding.btnAddToGift.setVisibility(View.GONE);
         }
 
 
