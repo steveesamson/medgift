@@ -41,32 +41,43 @@ public class InviteInfoActivity extends BaseActivity {
 
             closeable = Firebase.getModelBy(Gift.STORE, "key", giftInvite.getGiftId(), Gift.class, (gft) -> {
                 gift = gft;
+                if(gift != null){
+                    binding.giftTitle.setText(gift.getName());
+                    binding.txtGiftDescription.setText(gift.getDescription());
+                    setupActivity();
+                }
                 closeable.release();
-                assert gift != null;
-                closeable = Firebase.getModelBy(Recipient.STORE, "key", gift.getRecipientId(), Recipient.class, (recp) -> {
-                    recipient = recp;
-                    closeable.release();
-                    closeable = Firebase.getModelBy(User.STORE, "key", gift.getCreatedBy(), User.class, (gftOwner) -> {
-                        giftOwner = gftOwner;
-                        closeable.release();
-                        setupActivity();
-                    });
 
-                });
             });
     }
 
 
     private void setupActivity() {
+
+        assert gift != null;
+        closeable = Firebase.getModelBy(Recipient.STORE, "key", gift.getRecipientId(), Recipient.class, (recp) -> {
+            recipient = recp;
+            closeable.release();
+            if(recipient != null){
+                binding.txtRecipient.setText(recipient.toString());
+            }
+            closeable = Firebase.getModelBy(User.STORE, "key", gift.getCreatedBy(), User.class, (gftOwner) -> {
+                giftOwner = gftOwner;
+                closeable.release();
+                if(giftOwner != null){
+                    binding.txtGifterName.setText(String.format("%s %s <%s>", giftOwner.getFirstName(), giftOwner.getLastName(), giftOwner.getEmail()));
+                }
+            });
+
+        });
         Util.stopProgress(binding.progress);
-        binding.giftTitle.setText(gift.getName());
-        binding.txtGiftDescription.setText(gift.getDescription());
-        binding.txtRecipient.setText(recipient.toString());
-        binding.txtGifterName.setText(String.format("%s %s <%s>", giftOwner.getFirstName(), giftOwner.getLastName(), giftOwner.getEmail()));
         binding.btnContribute.setOnClickListener((v) -> {
             Intent intent = new Intent(this, HealthcareService.class);
             intent.putExtra(Gift.STORE, gift);
             startActivity(intent);
         });
+
+
+
     }
 }
