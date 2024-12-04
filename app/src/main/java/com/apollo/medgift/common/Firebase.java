@@ -169,6 +169,7 @@ public class Firebase {
         if(key != null){
             // Save to Firebase
             String finalKey = key;
+            model.setKey(finalKey);
             db.child(key).setValue(model).addOnCompleteListener((task) -> {
                 onComplete.onComplete(task, finalKey);
             });
