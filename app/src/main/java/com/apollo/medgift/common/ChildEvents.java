@@ -8,7 +8,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
 
-public class ChildEvents<T extends BaseModel> {
+public class ChildEvents<T extends BaseModel> implements Closeable {
     private final OnModel<T> onChildAdded;
     private final OnModel<T> onChildUpdated;
     private final Class<T> modelClass;

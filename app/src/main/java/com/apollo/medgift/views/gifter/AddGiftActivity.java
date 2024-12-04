@@ -63,7 +63,6 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         addGiftBinding = ActivityAddgiftBinding.inflate(getLayoutInflater());
         setContentView(addGiftBinding.getRoot());
         applyWindowInsetsListenerTo(this, addGiftBinding.addGift);

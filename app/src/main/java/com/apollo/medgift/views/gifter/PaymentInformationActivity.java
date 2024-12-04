@@ -13,6 +13,7 @@ import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityPaymentinformationBinding;
+import com.apollo.medgift.jobs.JobUtil;
 import com.apollo.medgift.models.Gift;
 import com.apollo.medgift.models.GiftService;
 import com.apollo.medgift.models.HealthcareService;
@@ -107,6 +108,7 @@ public class PaymentInformationActivity extends BaseActivity {
                 giftService.setStatus(ServiceStatus.SCHEDULED);
                 giftService.setContributionDate(Util.today());
                 giftService.setServiceOwner(service.getCreatedBy());
+                giftService.setRecipientName(String.format("%s %s", this.recipient.getFirstName(), this.recipient.getLastName()));
                 giftService.setGiftOwner(gift.getCreatedBy());
                 saveGiftService(giftService);
             }
@@ -122,6 +124,7 @@ public class PaymentInformationActivity extends BaseActivity {
 
                 Util.notify(PaymentInformationActivity.this, Util.success("GiftService", exists));
                 finish();
+
                 navigateTo(HomePageActivity.class);
 
             } else {

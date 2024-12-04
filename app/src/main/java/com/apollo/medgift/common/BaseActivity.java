@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -22,15 +24,19 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.apollo.medgift.jobs.JobUtil;
 import com.apollo.medgift.models.GiftInvite;
 import com.apollo.medgift.models.GiftService;
 import com.apollo.medgift.models.HealthTip;
 import com.apollo.medgift.databinding.ContributorDialogBinding;
 import com.apollo.medgift.models.InviteStatus;
+import com.apollo.medgift.models.Message;
+import com.apollo.medgift.models.NotificationType;
 import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.ServiceStatus;
 import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.models.User;
+import com.apollo.medgift.views.AlertDetail;
 import com.apollo.medgift.views.HomePageActivity;
 import com.apollo.medgift.views.LogInActivity;
 import com.apollo.medgift.views.ProviderHomePageActivity;
@@ -41,17 +47,29 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class BaseActivity extends AppCompatActivity {
     private static final String TAG = BaseActivity.class.getSimpleName();
+    private Notifier notifier;
 
-    private static ChildEvents<GiftService> giftServiceChildEvents;
-    private static ChildEvents<GiftInvite> giftInviteChildEvents;
-    private static Closeable giftServiceCloseable;
-    private static Closeable giftInviteCloseable;
+//    private static ChildEvents<GiftService> giftServiceChildEvents;
+//    private static ChildEvents<GiftInvite> giftInviteChildEvents;
+//    private static Closeable giftServiceCloseable;
+//    private static Closeable giftInviteCloseable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        // Setup Tasker with android handler
+        JobUtil.init( new Handler(Looper.getMainLooper()));
+        NotificationUtil.createNotificationChannel(this, getString(R.string.channel_name), getString(R.string.channel_description));
+
 
     }
     // Set up toolbar with a dynamic title
@@ -82,57 +100,12 @@ public class BaseActivity extends AppCompatActivity {
         if(sessionUser == null){
             finish();
         }else{
-            beginWatches();
+            notifier = new Notifier(this);
+            notifier.beginWatches();
         }
 
     }
 
-    private void beginWatches() {
-        // GiftService
-        // GiftInvite
-        //
-        SessionUser sessionUser = Firebase.currentUser();
-        assert  sessionUser != null;
-        if(sessionUser.getUserRole().equals(Role.GIFTER)){
-            giftServiceCloseable = Firebase.getModelsBy(GiftService.STORE,"giftOwner", sessionUser.getUserId(), GiftService.class, (giftServices) ->{
-                giftServiceCloseable.release();
-            });
-            //My Gifts
-            giftServiceChildEvents = new ChildEvents<>(GiftService.STORE,"giftOwner", sessionUser.getUserId(), GiftService.class, (added) ->{
-                if(added != null && !added.getGifterEmail().equals(sessionUser.getEmail())){
-                    // notify new service for gift
-                }
-            }, (updated) ->{
-                if(updated != null && !updated.getStatus().equals(ServiceStatus.SCHEDULED)){
-                    // notify service update for gift
-                }
-            } );
-
-        }else if(sessionUser.getUserRole().equals(Role.PROVIDER)){
-            giftServiceCloseable = Firebase.getModelsBy(GiftService.STORE,"serviceOwner", sessionUser.getUserId(), GiftService.class, (giftServices) ->{
-                giftInviteCloseable.release();
-            });
-            giftServiceChildEvents = new ChildEvents<>(GiftService.STORE,"serviceOwner", sessionUser.getUserId(), GiftService.class, (added) ->{
-                if(added != null){
-                    // Notify of a service schedule
-                }
-            }, (updated) ->{
-                if(updated != null && !updated.getStatus().equals(ServiceStatus.CONFIRMED)){
-                    // Notify of a service delivery confirmation
-
-                }
-            } );
-        }
-        giftInviteCloseable = Firebase.getModelsBy(GiftService.STORE,"serviceOwner", sessionUser.getUserId(), GiftService.class, (giftServices) ->{
-            giftInviteCloseable.release();
-        });
-        giftInviteChildEvents = new ChildEvents<>(GiftInvite.STORE, "gifterEmail", sessionUser.getEmail(), GiftInvite.class, (added) ->{
-            if(added != null && added.getStatus().equals(InviteStatus.PENDING)){
-
-            }
-        }, (updated) ->{  } );
-
-    }
 
     // Inflate menu based on user type
     @Override
@@ -242,11 +215,8 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(giftServiceChildEvents != null){
-            giftServiceChildEvents.release();
-        }
-        if(giftInviteChildEvents != null){
-            giftInviteChildEvents.release();
+        if(notifier != null){
+            notifier.release();
         }
     }
 }

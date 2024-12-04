@@ -14,6 +14,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.apollo.medgift.R;
+import com.apollo.medgift.models.Message;
 
 public class NotificationUtil {
     private static int NOTIFICATION_ID = 1;
@@ -37,13 +38,14 @@ public class NotificationUtil {
     }
 
     // Share method for sending notification
-    public static  void sendNotification(Context context, String notificationTitle, String notificationText, Class<? extends AppCompatActivity> contentActivityClass){
+    public static  void sendNotification(Context context, Message message, Class<? extends AppCompatActivity> contentActivityClass){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
-        builder.setContentTitle(notificationTitle);
-        builder.setContentText(notificationText);
+        builder.setContentTitle(message.getTitle());
+        builder.setContentText(message.getBody());
         builder.setSmallIcon(R.drawable.ic_notification);
         if(contentActivityClass != null){
             Intent intent = new Intent(context, contentActivityClass);
+            intent.putExtra(Message.STORE, message);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
             builder.setContentIntent(pendingIntent);

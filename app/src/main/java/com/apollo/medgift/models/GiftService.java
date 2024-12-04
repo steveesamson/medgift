@@ -1,9 +1,16 @@
 package com.apollo.medgift.models;
 
 
+import android.icu.util.Calendar;
+
 import androidx.annotation.NonNull;
 
 import com.apollo.medgift.common.BaseModel;
+import com.apollo.medgift.common.Util;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class GiftService extends BaseModel {
 
@@ -22,6 +29,7 @@ public class GiftService extends BaseModel {
     private String contributionDate;
     private String deliveryDate;
     private String confirmationDate;
+    private String recipientName;
 
     public String getGiftId() {
         return giftId;
@@ -126,11 +134,60 @@ public class GiftService extends BaseModel {
         this.servicePrice = servicePrice;
     }
 
+    public String getRecipientName() {
+        return recipientName;
+    }
+
+    public void setRecipientName(String recipientName) {
+        this.recipientName = recipientName;
+    }
+
     @NonNull
     @Override
     public String toString(){
         return gifterName;
-//        return String.format("%s <%s>", gifterName, gifterEmail);
+    }
+
+
+    // Parse input to date and time object
+    private Calendar getDate(){
+        Calendar cal = Calendar.getInstance();
+        Date d = Util.parseTime(this.deliveryDate);
+        cal.setTime(d);
+        return cal;
+    }
+
+
+    // Date formater method
+    private String formatedDueTime(Date date){
+        String DATE_PATTERN = "HH:mm. MMM dd, yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.getDefault());
+        return simpleDateFormat.format(date);
+    }
+
+    // Calculate interval for task
+    public long dueIntervalInMillis(){
+        return Math.abs(getDate().getTimeInMillis() - Calendar.getInstance().getTimeInMillis());
+    }
+
+    // Calculate interval for watch
+    public long watchIntervalInMillis(){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(getDate().getTime());
+        cal.add(Calendar.HOUR, - 3);
+        return Math.abs(cal.getTimeInMillis() - Calendar.getInstance().getTimeInMillis());
+    }
+
+    // Check validity of task
+    public boolean isPending(){
+        return getDate().getTimeInMillis() > Calendar.getInstance().getTimeInMillis();
+    }
+
+    // Check validity of task for watch
+    public boolean isPendingWatch(){
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.HOUR, 3);
+        return cal.getTimeInMillis() < getDate().getTimeInMillis() ;
     }
 }
 
