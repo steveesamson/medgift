@@ -36,10 +36,12 @@ public class Notifier implements Closeable {
 
         message.setTitle(title);
         message.setBody(body);
-        message.setButtonLabel("See Details");
-        message.setTargetKey(added.getKey());
+        message.setButtonLabel("Contribute now");
+        message.setPayLoad(added);
         message.setNotificationType(NotificationType.GiftInvite);
         NotificationUtil.sendNotification(context, message, AlertDetail.class);
+        added.setStatus(InviteStatus.NOTIFIED);
+        Firebase.save(added, GiftInvite.STORE,(task, key) ->{});
     }
     public void beginWatches() {
         // GiftService
@@ -71,8 +73,8 @@ public class Notifier implements Closeable {
                     String msg = String.format("Congrats! %s just contributed '%s' to your group gift for %s. Click details to see.", added.getGifterName(), added.getServiceName(), added.getRecipientName());
                     message.setTitle(title);
                     message.setBody(msg);
-                    message.setButtonLabel("See Details");
-                    message.setTargetKey(added.getKey());
+                    message.setButtonLabel("Service Details");
+                    message.setPayLoad(added);
                     message.setNotificationType(NotificationType.GiftService);
                     NotificationUtil.sendNotification(context, message, AlertDetail.class);
                     JobUtil.scheduleJob(added, context);
@@ -95,8 +97,8 @@ public class Notifier implements Closeable {
 
                     message.setTitle(title);
                     message.setBody(body);
-                    message.setButtonLabel("See Details");
-                    message.setTargetKey(updated.getKey());
+                    message.setButtonLabel("Service Details");
+                    message.setPayLoad(updated);
                     message.setNotificationType(NotificationType.GiftService);
                     NotificationUtil.sendNotification(context, message, AlertDetail.class);
                 }
@@ -123,8 +125,9 @@ public class Notifier implements Closeable {
                     String msg = String.format("Hello! Your service, %s has been purchased for delivery to '%s' on %s. Click details to see.", added.getServiceName(), added.getRecipientName(), added.getDeliveryDate());
                     message.setTitle(title);
                     message.setBody(msg);
-                    message.setButtonLabel("See Details");
-                    message.setTargetKey(added.getKey());
+                    message.setButtonLabel("Service Details");
+                    message.setPayLoad(added);
+
                     message.setNotificationType(NotificationType.GiftService);
                     NotificationUtil.sendNotification(context, message, AlertDetail.class);
                     JobUtil.scheduleJob(added, context);
@@ -139,8 +142,8 @@ public class Notifier implements Closeable {
 
                     message.setTitle(title);
                     message.setBody(body);
-                    message.setButtonLabel("See Details");
-                    message.setTargetKey(updated.getKey());
+                    message.setButtonLabel("Service Details");
+                    message.setPayLoad(updated);
                     message.setNotificationType(NotificationType.GiftService);
                     NotificationUtil.sendNotification(context, message, AlertDetail.class);
 

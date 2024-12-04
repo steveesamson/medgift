@@ -8,7 +8,8 @@ public class Message implements Serializable {
     public static final String STORE = "Message";
     private String title;
     private String body;
-    private String targetKey;
+
+    private BaseModel payLoad;
     private String buttonLabel;
     private NotificationType notificationType;
 
@@ -28,14 +29,14 @@ public class Message implements Serializable {
         this.body = body;
     }
 
-    public String getTargetKey() {
-        return targetKey;
+
+    public BaseModel getPayLoad() {
+        return payLoad;
     }
 
-    public void setTargetKey(String targetKey) {
-        this.targetKey = targetKey;
+    public void setPayLoad(BaseModel payLoad) {
+        this.payLoad = payLoad;
     }
-
     public String getButtonLabel() {
         return buttonLabel;
     }
