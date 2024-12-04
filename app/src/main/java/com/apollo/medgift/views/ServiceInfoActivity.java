@@ -41,36 +41,43 @@ public class ServiceInfoActivity extends BaseActivity {
         closeable = Firebase.getModelBy(HealthcareService.STORE, "key", giftService.getServiceId(), HealthcareService.class, (srv) -> {
             service = srv;
             closeable.release();
-            closeable = Firebase.getModelBy(Gift.STORE, "key", giftService.getGiftId(), Gift.class, (gft) -> {
-                gift = gft;
-                closeable.release();
-                assert gift != null;
-                closeable = Firebase.getModelBy(Recipient.STORE, "key", gift.getRecipientId(), Recipient.class, (recp) -> {
-                    recipient = recp;
-                    closeable.release();
-                    setupActivity();
-                });
-            });
+            if(service != null){
+                binding.serviceTitle.setText(service.getServiceName());
+                binding.provider.setText(" " + service.getCreatedBy());
+                binding.serviceType.setText(" " + service.getServiceType());
+                binding.price.setText("$ " + service.getPrice());
+                binding.description.setText(service.getDescription());
+                if (service.getBannerUrl() != null && !service.getBannerUrl().isEmpty()) {
+                    Util.loadImageUri(binding.serviceImage, service.getBannerUrl(), this);
+                } else {
+                    binding.serviceImage.setImageResource(R.drawable.default_service_image);
+                }
+                setupActivity();
+            }
         });
 
     }
 
     private void setupActivity() {
-        Util.stopProgress(binding.progress);
-        binding.serviceTitle.setText(service.getServiceName());
-        binding.provider.setText(" " + service.getCreatedBy());
-        binding.serviceType.setText(" " + service.getServiceType());
-        binding.price.setText("$ " + service.getPrice());
-        binding.description.setText(service.getDescription());
-        if (service.getBannerUrl() != null && !service.getBannerUrl().isEmpty()) {
-            Util.loadImageUri(binding.serviceImage, service.getBannerUrl(), this);
-        } else {
-            binding.serviceImage.setImageResource(R.drawable.default_service_image);
-        }
-        binding.txtRecipient.setText(recipient.toString());
-        binding.txtGiftName.setText(gift.getName());
+
+        closeable = Firebase.getModelBy(Gift.STORE, "key", giftService.getGiftId(), Gift.class, (gft) -> {
+            gift = gft;
+            closeable.release();
+            if(gift != null){
+                binding.txtGiftName.setText(gift.getName());
+                closeable = Firebase.getModelBy(Recipient.STORE, "key", gift.getRecipientId(), Recipient.class, (recp) -> {
+                    Util.stopProgress(binding.progress);
+                    recipient = recp;
+                    closeable.release();
+                    if(recipient != null){
+                        binding.txtRecipient.setText(recipient.toString());
+                        binding.txtRecipientAddress.setText(recipient.getAddress());
+                    }
+                });
+            }
+
+        });
         binding.txtSchedule.setText(Util.formatToReadableDate(Util.parseTime(giftService.getDeliveryDate())));
-        binding.txtRecipientAddress.setText(recipient.getAddress());
         binding.txtStatus.setText(giftService.getStatus());
     }
 }
