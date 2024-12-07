@@ -31,4 +31,9 @@
     <string name="lblStatus">Service status:</string>
     <string name="btnDeleteHint">Delete item</string>
     <string name="lblLoading">Just a sec...</string>
+    <string name="health_tips">Health Tips</string>
+    <string name="notifications">Notifications</string>
+    <string name="medgift_companion">MEDGIFT COMPANION</string>
+    <string name="care_in_click_nhealth_in_every_gift">Care in Click, \nHealth in Every Gift.</string>
+    <string name="get_started">Get Started</string>
 </resources>
