@@ -17,7 +17,6 @@ public class AlertDetail extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAlertdetailBinding.inflate(getLayoutInflater());
-        binding = ActivityAlertdetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         applyWindowInsetsListenerTo(this, binding.main);
         Intent intent = getIntent();
