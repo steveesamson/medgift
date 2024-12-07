@@ -13,6 +13,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.apollo.medgift.R;
+import com.apollo.medgift.jobs.JobUtil;
+
 
 public class BaseActivity extends AppCompatActivity {
     private static final String TAG = BaseActivity.class.getSimpleName();
@@ -23,8 +26,8 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Setup Tasker with android handler
-//        JobUtil.init(new Handler(Looper.getMainLooper()));
-//        NotificationUtil.createNotificationChannel(this, getString(R.string.channel_name), getString(R.string.channel_description));
+        JobUtil.init(new Handler(Looper.getMainLooper()));
+        NotificationUtil.createNotificationChannel(this, getString(R.string.channel_name), getString(R.string.channel_description));
 
 
     }
@@ -60,14 +63,14 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 //    // LogOut on click
-//    protected void logout() {
-//        Firebase.logout();
-//        Notifier.getInstance().release();
+    protected void logout() {
+        Firebase.logout();
+        Notifier.getInstance().release();
 //        Intent intent = new Intent(this, LogInActivity.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //        startActivity(intent);
 //        finish();
-//    }
+    }
 
 
 }

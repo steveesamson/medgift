@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">medgift</string>
+    <string name="channel_name">MedGift channel</string>
+    <string name="channel_description">MedGift notification channel</string>
+    <string name="lblEmail">Email</string>
+    <string name="lblPassword">Password</string>
+    <string name="lblLoginBtn">Login</string>
+    <string name="notification">Notification</string>
+    <string name="health_tips">Health Tips</string>
+    <string name="website">Website:</string>
+    <string name="www_medgift_com">www.medgift.com</string>
+    <string name="info_medgift_com">info@medgift.com</string>
+    <string name="_1_xxx_xxx_xxxx">+1 xxx-xxx-xxxx</string>
+    <string name="hot_line">Hot-line:</string>
+    <string name="tap_me_for_details">Tap me for details</string>
+    <string name="txtAbout">At MedGift, we believe in the power of thoughtful giving to support the health and well-being of your loved ones. Our platform allows you to easily gift personalized healthcare services, ensuring that those you care about receive the attention and care they deserve. Whether it\'s for a routine checkup or a specialized treatment, MedGift simplifies the process of contributing towards health services, creating a lasting impact with every gift.</string>
+    <string name="email">Email:</string>
+    <string name="view_details">View details</string>
+    <string name="contribute_now">Contribute Now</string>
+    <string name="recipient">Recipient</string>
+    <string name="gift_owner">Gift Owner</string>
+    <string name="welcome_message">Welcome to MedGift Companion.</string>
+    <string name="application_logo">App logo</string>
+    <string name="provider">Service Provider</string>
+    <string name="type">Service Type:</string>
+    <string name="giftTitle">Gift:</string>
+    <string name="about_service">Service:</string>
+    <string name="lblSchedule">Schedule:</string>
+    <string name="recieverEmailTytl">Recipient:</string>
+    <string name="lblRecipientAddress">Recipient address:</string>
+    <string name="lblStatus">Service status:</string>
+    <string name="btnDeleteHint">Delete item</string>
+    <string name="lblLoading">Just a sec...</string>
 </resources>

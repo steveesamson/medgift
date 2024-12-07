@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "174379004382",
+    "firebase_url": "https://just-gifts-default-rtdb.firebaseio.com",
+    "project_id": "just-gifts",
+    "storage_bucket": "just-gifts.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174379004382:android:602a37098039baf3c32d4f",
+        "android_client_info": {
+          "package_name": "com.apollo.medgift"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtrXuozmLpepswl2PoPj2iyjASIU6P57I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
