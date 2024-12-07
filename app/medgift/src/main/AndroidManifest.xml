@@ -20,16 +20,21 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".views.LogInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.HealthTipDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.HealthTipActivity"
             android:exported="false" />
         <activity
             android:name=".views.NotificationActivity"
             android:exported="false" />
         <activity
-            android:name=".views.MainActivity"
+            android:name=".views.HomeActivity"
             android:exported="false"
             android:theme="@style/Theme.Medgift">
-
         </activity>
     </application>
 

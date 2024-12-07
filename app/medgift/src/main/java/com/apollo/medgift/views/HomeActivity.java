@@ -7,7 +7,7 @@ import android.view.View;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.databinding.ActivityMainBinding;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private ActivityMainBinding binding;
 
@@ -34,11 +34,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             startActivity(intent);
         }
         if (v == binding.logoutButton) {
-            Intent intent = new Intent(this, LandingPage.class);
+            Intent intent = new Intent(this, LogInActivity.class);
             startActivity(intent);
         }
         if (v == binding.aboutUsButton) {
-            Intent intent = new Intent(this, NotificationActivity.class);
+            Intent intent = new Intent(this, AboutUsActivity.class);
             startActivity(intent);
         }
     }

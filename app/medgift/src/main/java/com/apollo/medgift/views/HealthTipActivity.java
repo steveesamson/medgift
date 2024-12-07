@@ -2,6 +2,7 @@ package com.apollo.medgift.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -34,38 +35,38 @@ public class HealthTipActivity extends BaseActivity {
     private Query query;
 
     private ValueEventListener healthTipListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
 
         healthtipBinding = ActivityHealthtipBinding.inflate(getLayoutInflater());
         setContentView(healthtipBinding.getRoot());
         // Setup tool bar and title
-//        setupToolbar(healthtipBinding.homeAppBar.getRoot(), getString(R.string.healthTipTitle), true);
         applyWindowInsetsListenerTo(this, healthtipBinding.main);
 
         setPageUp();
 
     }
+
     private void setPageUp() {
 
 
         SessionUser sessionUser = Firebase.currentUser();
         assert sessionUser != null;
-        if(sessionUser.getUserRole().equals(Role.PROVIDER)) {
-            this.query = Firebase.database(HealthTip.STORE).orderByChild("createdBy").equalTo(sessionUser.getUserId());
-        } else {
-            this.query = Firebase.database(HealthTip.STORE);
-        }
+
+        this.query = Firebase.database(HealthTip.STORE);
+
         // checking role of user
 
         RecyclerView recyclerView = healthtipBinding.healthTipsList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         healthTipAdapter = new HealthTipAdapter(healthTips, this);
         recyclerView.setAdapter(healthTipAdapter);
+        Log.i("HealthT","Here");
         fetchAndListenOnHealthTip();
     }
+
     private void unRegisterValueListener() {
         if (healthTipListener != null) {
             query.removeEventListener(healthTipListener);
@@ -84,9 +85,14 @@ public class HealthTipActivity extends BaseActivity {
             ValueEvents<HealthTip> valueEvents = new ValueEvents<HealthTip>();
             Util.startProgress(healthtipBinding.progress, "Fetching Health Tips...");
             healthTipListener = valueEvents.registerListener(query, this, healthTipAdapter, healthtipVModel, healthTips, HealthTip.class, (list) -> {
+
                 Util.stopProgress(healthtipBinding.progress);
-                healthtipBinding.emptyItem.txtEmpty.setText(list.isEmpty()? Util.getEmpty("health tips") : "");
-                healthtipBinding.emptyItem.getRoot().setVisibility(list.isEmpty()? View.VISIBLE : View.GONE);
+                if(!list.isEmpty()){
+                    HealthTip ht = list.get(0);
+                    Log.i("TAG", ht.getTitle());
+                }
+                healthtipBinding.emptyItem.txtEmpty.setText(list.isEmpty() ? Util.getEmpty("health tips") : "");
+                healthtipBinding.emptyItem.getRoot().setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
             });
 
         }

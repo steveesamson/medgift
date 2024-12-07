@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/wearos_bg"
     android:padding="15dp"
-    tools:context=".views.MainActivity">
+    tools:context=".views.HomeActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -146,11 +146,7 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:layout_gravity="center"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_aboutus" />
+                    app:srcCompat="@drawable/ic_info" />
 
             </LinearLayout>
 

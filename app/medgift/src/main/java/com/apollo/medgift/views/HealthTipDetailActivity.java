@@ -24,7 +24,7 @@ public class HealthTipDetailActivity extends BaseActivity {
         setContentView(binding.getRoot());
 
 //        setupToolbar(binding.homeAppBar.getRoot(), getString(R.string.healthTipTitle), true);
-        applyWindowInsetsListenerTo(this, binding.readHealthTipActivity);
+        applyWindowInsetsListenerTo(this, binding.main);
 
         Intent intent = getIntent();
         healthTip = (HealthTip) intent.getSerializableExtra(HealthTip.STORE, HealthTip.class);

@@ -2,6 +2,7 @@ package com.apollo.medgift.adapters.provider;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,7 @@ public class HealthTipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public void bindData(HealthTip healthTip) {
             this.healthtip = healthTip;
+            Log.i("HealthT", healthTip.getTitle());
             itemBinding.txtTitle.setText(healthTip.getTitle());
             itemBinding.createdBy.setText(healthTip.getCreatedByName());
         }
