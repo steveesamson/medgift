@@ -11,6 +11,7 @@ import com.apollo.medgift.R;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Closeable;
 import com.apollo.medgift.common.Firebase;
+import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityCheckoutBinding;
 import com.apollo.medgift.models.Gift;
 import com.apollo.medgift.models.HealthcareService;
@@ -28,7 +29,6 @@ public class CheckoutActivity extends BaseActivity implements View.OnClickListen
     private Schedule schedule;
     private Recipient recipient;
     private Payment payment;
-    private Closeable closeable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,20 +50,22 @@ public class CheckoutActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        closeable = Firebase.getModelBy(Recipient.STORE, "key", gift.getRecipientId(), Recipient.class, (rec) -> {
-            closeable.release();
+        Util.startProgress(checkoutBinding.progress, "Loading data...");
+        Firebase.getModelBy(Recipient.STORE, "key", gift.getRecipientId(), Recipient.class, (rec) -> {
             this.recipient = rec;
             checkoutBinding.btnConfirmNow.setVisibility( rec != null? View.VISIBLE : View.GONE);
             if (this.recipient != null) {
                 checkoutBinding.edtRecipient.setText(String.format("%s %s", this.recipient.getFirstName(), this.recipient.getLastName()));
+                setup();
             }
         });
 
-        setup();
+
 
     }
 
     private void setup() {
+        Util.stopProgress(checkoutBinding.progress);
         checkoutBinding.btnConfirmNow.setOnClickListener(this);
         // Set service title and type
         checkoutBinding.serviceTitle.setText(healthcareService.getServiceName());
@@ -82,6 +84,7 @@ public class CheckoutActivity extends BaseActivity implements View.OnClickListen
         double orderTotal = healthcareService.getPrice() + tax;
         payment.setOrderTotal(orderTotal);
         checkoutBinding.orderTotal.setText(String.format(Locale.getDefault(),"$ %.2f", orderTotal));
+
     }
 
     @Override

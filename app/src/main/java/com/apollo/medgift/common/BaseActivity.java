@@ -58,12 +58,8 @@ import java.util.Set;
 
 public class BaseActivity extends AppCompatActivity {
     private static final String TAG = BaseActivity.class.getSimpleName();
-    private Notifier notifier;
+    protected Menu menu;
 
-    //    private static ChildEvents<GiftService> giftServiceChildEvents;
-//    private static ChildEvents<GiftInvite> giftInviteChildEvents;
-//    private static Closeable giftServiceCloseable;
-//    private static Closeable giftInviteCloseable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -96,6 +92,7 @@ public class BaseActivity extends AppCompatActivity {
         });
     }
 
+
     // Handle session
     @Override
     protected void onStart() {
@@ -103,17 +100,21 @@ public class BaseActivity extends AppCompatActivity {
         SessionUser sessionUser = Firebase.currentUser();
         if (sessionUser == null) {
             finish();
-        } else {
-            notifier = new Notifier(this);
-            notifier.beginWatches();
+        } else{
+            Notifier.getInstance().beginWatches(this);
         }
 
     }
 
 
+
+    protected void onNotified(boolean isActive){
+        this.menu.getItem(0).setIcon(isActive? R.drawable.notification_active: R.drawable.notification);
+    }
     // Inflate menu based on user type
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
 
         // Retrieve usertype based on user status
         String userType = getUserType();
@@ -127,6 +128,7 @@ public class BaseActivity extends AppCompatActivity {
         } else if (userType.equals(Role.PROVIDER)) {
             inflater.inflate(R.menu.providermenu, menu);
         }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -206,6 +208,7 @@ public class BaseActivity extends AppCompatActivity {
     // LogOut on click
     protected void logout() {
         Firebase.logout();
+        Notifier.getInstance().release();
         Intent intent = new Intent(this, LogInActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -223,11 +226,4 @@ public class BaseActivity extends AppCompatActivity {
                 .show();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (notifier != null) {
-            notifier.release();
-        }
-    }
 }

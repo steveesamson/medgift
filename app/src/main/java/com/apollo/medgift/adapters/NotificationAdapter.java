@@ -25,7 +25,6 @@ import java.util.List;
 public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context context;
-    private Closeable closeable;
     private List<Notification> notifications = new ArrayList<>();
 
     public NotificationAdapter(List<Notification> notifications, Context context) {
@@ -72,18 +71,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     NotificationType type = NotificationType.valueOf(notification.getModelName());
                     switch (type){
                         case GiftInvite:
-                            closeable = Firebase.getModelBy(GiftInvite.STORE,"key", notification.getModelKey(), GiftInvite.class, (giftInvite) ->{
-                                closeable.release();
-
+                            Firebase.getModelBy(GiftInvite.STORE,"key", notification.getModelKey(), GiftInvite.class, (giftInvite) ->{
                                 Intent intent = new Intent(context, InviteInfoActivity.class);
                                 intent.putExtra(GiftInvite.STORE, giftInvite);
                                 context.startActivity(intent);
                             });
                             break;
                         case GiftService:
-                            closeable = Firebase.getModelBy(GiftService.STORE,"key", notification.getModelKey(), GiftService.class, (giftService) ->{
-                                closeable.release();
-
+                            Firebase.getModelBy(GiftService.STORE,"key", notification.getModelKey(), GiftService.class, (giftService) ->{
                                 Intent intent = new Intent(context, ServiceInfoActivity.class);
                                 intent.putExtra(GiftService.STORE, giftService);
                                 context.startActivity(intent);

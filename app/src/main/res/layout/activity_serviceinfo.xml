@@ -170,6 +170,6 @@
     </LinearLayout>
     <include
         android:id="@+id/progress"
-        layout="@layout/progress" />
+        layout="@layout/progress"/>
 
 </FrameLayout>

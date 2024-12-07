@@ -38,7 +38,6 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
     private Map<String, DayTime> dayTimeMap = new HashMap<>();
     private Availability availability;
     private Schedule selectedSchedule;
-    private Closeable closeable;
     private ActivityResultLauncher<Intent> serviceImageLauncher;
 
     @Override
@@ -54,9 +53,8 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
         healthcareService = (HealthcareService) intent.getSerializableExtra(HealthcareService.STORE);
         assert healthcareService != null;
 
-        closeable = Firebase.getModelBy(Availability.STORE,"createdBy", healthcareService.getCreatedBy(), Availability.class, ( availability1 ) ->{
+        Firebase.getModelBy(Availability.STORE,"createdBy", healthcareService.getCreatedBy(), Availability.class, ( availability1 ) ->{
             availability = availability1;
-            closeable.release();
             if(availability != null){
                 if(availability.getTimes() != null){
                     for(DayTime d: availability.getTimes()){

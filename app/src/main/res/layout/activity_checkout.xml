@@ -239,4 +239,7 @@
 
     </ScrollView>
 </LinearLayout>
+    <include
+        android:id="@+id/progress"
+        layout="@layout/progress"/>
 </FrameLayout>

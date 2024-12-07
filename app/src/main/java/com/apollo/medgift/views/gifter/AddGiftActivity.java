@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import androidx.activity.EdgeToEdge;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -17,6 +16,7 @@ import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.BaseModel;
 import com.apollo.medgift.common.Closeable;
 import com.apollo.medgift.common.Firebase;
+import com.apollo.medgift.common.Notifier;
 import com.apollo.medgift.common.OnModelDeleteCallback;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.common.ValueEvents;
@@ -26,6 +26,7 @@ import com.apollo.medgift.models.Gift;
 import com.apollo.medgift.models.GiftInvite;
 import com.apollo.medgift.models.GiftService;
 import com.apollo.medgift.models.Recipient;
+import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.models.GiftInviteVModel;
@@ -48,8 +49,6 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
     private ValueEventListener contributionsListener;
     private Query inviteeQuery;
     private Query contributorQuery;
-    private Closeable userCloseable;
-    private Closeable recipientCloseable;
 
 
     private Gift gift;
@@ -120,8 +119,7 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
     private void setUpRecipientsDropdown() {
         SessionUser sessionUser = Firebase.currentUser();
         assert sessionUser != null;
-        recipientCloseable = Firebase.getModelsBy(Recipient.STORE,"createdBy", sessionUser.getUserId(), Recipient.class, (_recipients) -> {
-            recipientCloseable.release();
+        Firebase.getModelsBy(Recipient.STORE,"createdBy", sessionUser.getUserId(), Recipient.class, (_recipients) -> {
             if (_recipients != null) {
                 Recipient[] recipients = _recipients.toArray(new Recipient[]{});
                 ArrayAdapter<Recipient> recipientAdapter = new ArrayAdapter<Recipient>(AddGiftActivity.this, R.layout.recipient_acitem, recipients);
@@ -162,14 +160,16 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
 
                 Util.stopProgress(addGiftBinding.progress);
                 if (task.isSuccessful()) {
+                    this.gift.setKey(key);
+//                    Notifier notifier = Notifier.getInstance();
                     for(GiftInvite gi: dirtyInvitees){
                         gi.setGiftId(key);
                         gi.setCreationDate(Util.today());
+//                        notifier.notifyInvite(getApplicationContext(), gi);
                         Firebase.save(gi, GiftInvite.STORE, (tk, id) ->{});
                     }
                     Util.notify(AddGiftActivity.this, Util.success("Gift", exists));
 
-                    this.gift.setKey(key);
                     finish();
 
                 } else {
@@ -246,26 +246,30 @@ public class AddGiftActivity extends BaseActivity implements View.OnClickListene
             SessionUser sessionUser = Firebase.currentUser();
             assert sessionUser != null;
             if (!email.isEmpty() && Util.isEmail(email) && !email.equals(sessionUser.getEmail())) {
-                userCloseable =  Firebase.getModelBy(User.STORE, "email", email, User.class, (user) -> {
+                Firebase.getModelBy(User.STORE, "email", email, User.class, (user) -> {
                     dialogBinding.txtSuccess.setVisibility(View.GONE);
                     dialogBinding.txtError.setVisibility(View.GONE);
-                    userCloseable.release();
                     if (user == null) {
                         dialogBinding.txtError.setText(R.string.user_with_email_not_found);
                         dialogBinding.txtError.setVisibility(View.VISIBLE);
                     } else {
-                        GiftInvite invite = new GiftInvite();
-                        invite.setGiftId(gift.getKey());
-                        invite.setEmail(email);
-                        invite.setName(String.format("%s %s", user.getFirstName(), user.getLastName()));
-                        invitees.add(invite);
-                        dirtyInvitees.add(invite);
-                        inviteeAdapter.notifyDataSetChanged();
-                        addGiftBinding.emptyItemInvitees.getRoot().setVisibility(View.GONE);
-                        dialogBinding.txtSuccess.setText(R.string.user_successfull_added);
-                        dialogBinding.edtContributorEmail.setText("");
-                        Util.notify(this, "Invitee " + email + ", added.");
-                        dialog.dismiss();
+                        if(user.getRole().equals(Role.GIFTER)){
+                            GiftInvite invite = new GiftInvite();
+                            invite.setGiftId(gift.getKey());
+                            invite.setInviteeId(user.getKey());
+                            invite.setName(String.format("%s %s", user.getFirstName(), user.getLastName()));
+                            invitees.add(invite);
+                            dirtyInvitees.add(invite);
+                            inviteeAdapter.notifyDataSetChanged();
+                            addGiftBinding.emptyItemInvitees.getRoot().setVisibility(View.GONE);
+                            dialogBinding.txtSuccess.setText(R.string.user_successfull_added);
+                            dialogBinding.edtContributorEmail.setText("");
+                            Util.notify(this, "Invitee " + email + ", added.");
+                            dialog.dismiss();
+                        }else{
+                            Util.notify(this, getString(R.string.user_not_a_gifter));
+                        }
+
                     }
                 });
 

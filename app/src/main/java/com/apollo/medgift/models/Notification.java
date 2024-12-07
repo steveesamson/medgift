@@ -11,6 +11,7 @@ public class Notification extends BaseModel {
     private String body;
     private String createdFor;
     private String creationDate;
+    private String status = NotificationStatus.PENDING;
 
     public String getTitle() {
         return title;
@@ -58,5 +59,13 @@ public class Notification extends BaseModel {
 
     public void setCreatedFor(String createdFor) {
         this.createdFor = createdFor;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -184,6 +184,8 @@
     <string name="info_medgift_com">info@medgift.com</string>
     <string name="_1_xxx_xxx_xxxx">+1 xxx-xxx-xxxx</string>
     <string name="hot_line">Hot-line:</string>
+    <string name="user_not_a_gifter">Sorry, this user is not a gifter. Gifter is needed.</string>
+    <string name="tap_me_for_details">Tap me for details</string>
 
 
 </resources>

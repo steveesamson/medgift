@@ -15,7 +15,6 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.common.ValueEvents;
 import com.apollo.medgift.databinding.ActivityNotificationBinding;
 import com.apollo.medgift.models.Notification;
-import com.apollo.medgift.models.Recipient;
 import com.apollo.medgift.models.SessionUser;
 import com.apollo.medgift.views.models.NotificationVModel;
 import com.google.firebase.database.Query;
@@ -52,6 +51,7 @@ public class NotificationActivity extends BaseActivity {
         notificationAdapter = new NotificationAdapter(notifications, this);
         recyclerView.setAdapter(notificationAdapter);
         fetchAndListenOnNotifications();
+
     }
 
     // Unregister listeners on db
@@ -65,6 +65,7 @@ public class NotificationActivity extends BaseActivity {
     public void onDestroy() {
         super.onDestroy();
         unRegisterValueListener();
+        onNotified(false);
     }
 
     // Fetch Recipient and begin to
