@@ -8,7 +8,7 @@ public class GiftInvite extends BaseModel {
     public static final String STORE ="GiftInvite";
 
     private String giftId;
-    private String email;
+    private String inviteeId;
     private String name;
     private String creationDate;
     private String status = InviteStatus.PENDING;
@@ -29,12 +29,12 @@ public class GiftInvite extends BaseModel {
         this.creationDate = creationDate;
     }
 
-    public String getEmail() {
-        return email;
+    public String getInviteeId() {
+        return inviteeId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setInviteeId(String inviteeId) {
+        this.inviteeId = inviteeId;
     }
 
     public String getName() {

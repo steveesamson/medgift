@@ -8,7 +8,6 @@ import com.apollo.medgift.databinding.ActivityAlertdetailBinding;
 import com.apollo.medgift.models.GiftInvite;
 import com.apollo.medgift.models.GiftService;
 import com.apollo.medgift.models.Message;
-import com.apollo.medgift.models.NotificationType;
 
 public class AlertDetail extends BaseActivity {
 

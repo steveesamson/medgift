@@ -1,6 +1,7 @@
 package com.apollo.medgift.common;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.apollo.medgift.jobs.JobUtil;
 import com.apollo.medgift.models.GiftInvite;
@@ -8,29 +9,37 @@ import com.apollo.medgift.models.GiftService;
 import com.apollo.medgift.models.InviteStatus;
 import com.apollo.medgift.models.Message;
 import com.apollo.medgift.models.Notification;
+import com.apollo.medgift.models.NotificationStatus;
 import com.apollo.medgift.models.NotificationType;
 import com.apollo.medgift.models.Role;
 import com.apollo.medgift.models.ServiceStatus;
 import com.apollo.medgift.models.SessionUser;
-import com.apollo.medgift.views.AlertDetail;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Notifier implements Closeable {
     private static Closeable giftServiceChildEvents;
-    private static Closeable giftInviteChildEvents;
-    private static Closeable giftServiceCloseable;
-    private static Closeable giftInviteCloseable;
-
-    private Context context;
+    private static Closeable notificationChildEvents;
+    private boolean watchIsStarted = false;
     private SessionUser sessionUser;
-    public Notifier(Context context){
-        this.context = context;
-        this.sessionUser = Firebase.currentUser();
+    private static Notifier instance = null;
+
+    private Notifier(){
+            this.sessionUser = Firebase.currentUser();
+    }
+    public static Notifier getInstance(){
+        if(instance == null){
+           instance = new Notifier();
+        }
+        return instance;
     }
 
-    private void notifyInvite(GiftInvite added){
+
+    public void notifyInvite(Context context, GiftInvite added){
+        if(added.getStatus().equals(InviteStatus.NOTIFIED)){
+            return;
+        }
         String title = "Group Gift Invitation";
         String body = String.format("Hey %s, you have been invited to contribute to a group gift.", sessionUser.getUserName());
         Message message = new Message();
@@ -40,22 +49,39 @@ public class Notifier implements Closeable {
         message.setButtonLabel("Contribute now");
         message.setPayLoad(added);
         message.setNotificationType(NotificationType.GiftInvite);
-        NotificationUtil.sendNotification(context, message, AlertDetail.class);
+        NotificationUtil.sendNotification(context, message);
         added.setStatus(InviteStatus.NOTIFIED);
-
-        NotificationUtil.saveNotification(message, sessionUser.getUserId());
+        NotificationUtil.saveNotification(message, added.getInviteeId());
 
         Firebase.save(added, GiftInvite.STORE,(task, key) ->{});
     }
-    public void beginWatches() {
+    public void beginWatches(Context context) {
         // GiftService
         // GiftInvite
         //
+
+        if(watchIsStarted){
+            return;
+        }
+        watchIsStarted = true;
+        Log.i("DBUG: ", "beginWatches");
         SessionUser sessionUser = Firebase.currentUser();
         assert  sessionUser != null;
+
+        notificationChildEvents = new ChildEvents<>(Notification.STORE,"createdFor", sessionUser.getUserId(), Notification.class, (added) ->{
+            if(added != null && added.getStatus().equals(NotificationStatus.PENDING)){
+               BaseActivity base = (BaseActivity) context;
+               added.setStatus(NotificationStatus.VIEWED);
+               Firebase.save(added, Notification.STORE,(task, key) ->{
+                   base.onNotified(true);
+               });
+
+            }
+        }, (updated) ->{});
+
         if(sessionUser.getUserRole().equals(Role.GIFTER)){
-//            Set<String> h = new HashSet<>(Arrays.asList(ServiceStatus.SCHEDULED, ServiceStatus.SCHEDULED, "b"));
-            giftServiceCloseable = Firebase.getModelsBy(GiftService.STORE,"giftOwner", sessionUser.getUserId(), GiftService.class, (giftServices) ->{
+
+             Firebase.getModelsBy(GiftService.STORE,"giftOwner", sessionUser.getUserId(), GiftService.class, (giftServices) ->{
                 if(giftServices != null){
                     List<GiftService> srvs = new ArrayList<>();
                     for(GiftService gs: giftServices){
@@ -65,7 +91,17 @@ public class Notifier implements Closeable {
                     }
                     JobUtil.scheduleJobs(srvs, sessionUser.getUserId(), context);
                 }
-                giftServiceCloseable.release();
+            });
+
+            // Invitee
+            Firebase.getModelsBy(GiftInvite.STORE,"inviteeId", sessionUser.getUserId(), GiftInvite.class, (giftInvites) ->{
+                if(giftInvites != null){
+                    for(GiftInvite gi: giftInvites){
+                        if(gi.getStatus().equals(InviteStatus.PENDING)){
+                            notifyInvite(context, gi);
+                        }
+                    }
+                }
             });
 
             //My Gifts
@@ -80,7 +116,7 @@ public class Notifier implements Closeable {
                     message.setButtonLabel("Service Details");
                     message.setPayLoad(added);
                     message.setNotificationType(NotificationType.GiftService);
-                    NotificationUtil.sendNotification(context, message, AlertDetail.class);
+                    NotificationUtil.sendNotification(context, message);
                     NotificationUtil.saveNotification(message, sessionUser.getUserId());
                     JobUtil.scheduleJob(added, sessionUser.getUserId(), context);
                 }
@@ -106,12 +142,14 @@ public class Notifier implements Closeable {
                     message.setPayLoad(updated);
                     message.setNotificationType(NotificationType.GiftService);
                     NotificationUtil.saveNotification(message, sessionUser.getUserId());
-                    NotificationUtil.sendNotification(context, message, AlertDetail.class);
+                    NotificationUtil.sendNotification(context, message);
                 }
             } );
 
+
+
         }else if(sessionUser.getUserRole().equals(Role.PROVIDER)){
-            giftServiceCloseable = Firebase.getModelsBy(GiftService.STORE,"serviceOwner", sessionUser.getUserId(), GiftService.class, (giftServices) ->{
+            Firebase.getModelsBy(GiftService.STORE,"serviceOwner", sessionUser.getUserId(), GiftService.class, (giftServices) ->{
                 if(giftServices != null){
                     List<GiftService> srvs = new ArrayList<>();
                     for(GiftService gs: giftServices){
@@ -121,7 +159,6 @@ public class Notifier implements Closeable {
                     }
                     JobUtil.scheduleJobs(srvs, sessionUser.getUserId(), context);
                 }
-                giftInviteCloseable.release();
             });
             giftServiceChildEvents = new ChildEvents<>(GiftService.STORE,"serviceOwner", sessionUser.getUserId(), GiftService.class, (added) ->{
                 if(added != null){
@@ -135,7 +172,7 @@ public class Notifier implements Closeable {
                     message.setPayLoad(added);
 
                     message.setNotificationType(NotificationType.GiftService);
-                    NotificationUtil.sendNotification(context, message, AlertDetail.class);
+                    NotificationUtil.sendNotification(context, message);
                     JobUtil.scheduleJob(added, sessionUser.getUserId(), context);
                 }
             }, (updated) ->{
@@ -151,27 +188,12 @@ public class Notifier implements Closeable {
                     message.setButtonLabel("Service Details");
                     message.setPayLoad(updated);
                     message.setNotificationType(NotificationType.GiftService);
-                    NotificationUtil.sendNotification(context, message, AlertDetail.class);
+                    NotificationUtil.sendNotification(context, message);
 
                 }
             } );
         }
-        giftInviteCloseable = Firebase.getModelsBy(GiftInvite.STORE,"email", sessionUser.getEmail(), GiftInvite.class, (giftInvites) ->{
-            if(giftInvites != null){
-                for(GiftInvite gi: giftInvites){
-                    if(gi.getStatus().equals(InviteStatus.PENDING)){
-                        notifyInvite(gi);
-                    }
-                }
-            }
-            giftInviteCloseable.release();
-        });
-        giftInviteChildEvents = new ChildEvents<>(GiftInvite.STORE, "email", sessionUser.getEmail(), GiftInvite.class, (added) ->{
-            if(added != null){
 
-                notifyInvite(added);
-            }
-        }, (updated) ->{  } );
 
     }
 
@@ -179,8 +201,9 @@ public class Notifier implements Closeable {
     @Override
     public void release() {
         giftServiceChildEvents.release();
-       giftInviteChildEvents.release();
-        giftServiceCloseable.release();
-        giftInviteCloseable.release();
+        notificationChildEvents.release();
+        this.sessionUser = null;
+        this.watchIsStarted = false;
+        instance = null;
     }
 }

@@ -7,7 +7,6 @@ import com.apollo.medgift.common.NotificationUtil;
 import com.apollo.medgift.models.GiftService;
 import com.apollo.medgift.models.Message;
 import com.apollo.medgift.models.NotificationType;
-import com.apollo.medgift.views.AlertDetail;
 
 public class WatchDelivery extends BaseJob {
 
@@ -18,7 +17,7 @@ public class WatchDelivery extends BaseJob {
     @Override
     public void run() {
         String title = "Delivery Due Soon";
-        String body = String.format("Service delivery, '%s' for recipient %s is due in 3 hours.", this.giftService.getServiceName(),this.giftService.getRecipientName());
+        String body = String.format("Service delivery: '%s' for recipient '%s' is due in 3 hours.", this.giftService.getServiceName(),this.giftService.getRecipientName());
         Message m = new Message();
         m.setTitle(title);
         m.setBody(body);
@@ -26,6 +25,6 @@ public class WatchDelivery extends BaseJob {
         m.setButtonLabel("Service details");
         m.setPayLoad(this.giftService);
         NotificationUtil.saveNotification(m, this.createdFor);
-        sendNotification(m, AlertDetail.class);
+        sendNotification(m);
     }
 }

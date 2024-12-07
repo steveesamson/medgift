@@ -5,15 +5,14 @@ import android.os.Bundle;
 
 import com.apollo.medgift.R;
 import com.apollo.medgift.common.BaseActivity;
-import com.apollo.medgift.common.Closeable;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityInviteinfoBinding;
 import com.apollo.medgift.models.Gift;
 import com.apollo.medgift.models.GiftInvite;
-import com.apollo.medgift.models.HealthcareService;
 import com.apollo.medgift.models.Recipient;
 import com.apollo.medgift.models.User;
+import com.apollo.medgift.views.provider.ServiceActivity;
 
 public class InviteInfoActivity extends BaseActivity {
     private ActivityInviteinfoBinding binding;
@@ -21,7 +20,6 @@ public class InviteInfoActivity extends BaseActivity {
     private Gift gift;
     private User giftOwner;
     private GiftInvite giftInvite;
-    private Closeable closeable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,40 +37,36 @@ public class InviteInfoActivity extends BaseActivity {
         Util.startProgress(binding.progress, "Loading data...");
 
 
-            closeable = Firebase.getModelBy(Gift.STORE, "key", giftInvite.getGiftId(), Gift.class, (gft) -> {
+            Firebase.getModelBy(Gift.STORE, "key", giftInvite.getGiftId(), Gift.class, (gft) -> {
                 gift = gft;
                 if(gift != null){
                     binding.giftTitle.setText(gift.getName());
                     binding.txtGiftDescription.setText(gift.getDescription());
-                    setupActivity();
-                }
-                closeable.release();
 
+                    Firebase.getModelBy(Recipient.STORE, "key", gift.getRecipientId(), Recipient.class, (recp) -> {
+                        recipient = recp;
+                        if(recipient != null){
+                            binding.txtRecipient.setText(recipient.toString());
+                        }
+                    });
+
+                    Firebase.getModelBy(User.STORE, "key", gift.getCreatedBy(), User.class, (gftOwner) -> {
+                        giftOwner = gftOwner;
+                        if(giftOwner != null){
+                            binding.txtGifterName.setText(String.format("%s %s <%s>", giftOwner.getFirstName(), giftOwner.getLastName(), giftOwner.getEmail()));
+                            setupActivity();
+                        }
+                    });
+                }
             });
     }
 
 
     private void setupActivity() {
 
-        assert gift != null;
-        closeable = Firebase.getModelBy(Recipient.STORE, "key", gift.getRecipientId(), Recipient.class, (recp) -> {
-            recipient = recp;
-            closeable.release();
-            if(recipient != null){
-                binding.txtRecipient.setText(recipient.toString());
-            }
-            closeable = Firebase.getModelBy(User.STORE, "key", gift.getCreatedBy(), User.class, (gftOwner) -> {
-                giftOwner = gftOwner;
-                closeable.release();
-                if(giftOwner != null){
-                    binding.txtGifterName.setText(String.format("%s %s <%s>", giftOwner.getFirstName(), giftOwner.getLastName(), giftOwner.getEmail()));
-                }
-            });
-
-        });
         Util.stopProgress(binding.progress);
         binding.btnContribute.setOnClickListener((v) -> {
-            Intent intent = new Intent(this, HealthcareService.class);
+            Intent intent = new Intent(this, ServiceActivity.class);
             intent.putExtra(Gift.STORE, gift);
             startActivity(intent);
         });

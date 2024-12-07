@@ -12,6 +12,8 @@ import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityRegisterBinding;
 import com.apollo.medgift.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
     private ActivityRegisterBinding registerBinding;
@@ -107,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             Util.stopProgress(registerBinding.progress);
                         });
                         // Keep a copy of user
-                        Firebase.save(user, User.STORE, (tsk, key) -> {});
+
 
                     } else {
                         Util.stopProgress(registerBinding.progress);

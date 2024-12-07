@@ -1,19 +1,13 @@
 package com.apollo.medgift.views.gifter;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ScrollView;
 
 import com.apollo.medgift.R;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityPaymentinformationBinding;
-import com.apollo.medgift.jobs.JobUtil;
 import com.apollo.medgift.models.Gift;
 import com.apollo.medgift.models.GiftService;
 import com.apollo.medgift.models.HealthcareService;
@@ -22,7 +16,6 @@ import com.apollo.medgift.models.Recipient;
 import com.apollo.medgift.models.Schedule;
 import com.apollo.medgift.models.ServiceStatus;
 import com.apollo.medgift.models.SessionUser;
-import com.apollo.medgift.views.HomePageActivity;
 
 import java.util.Locale;
 
@@ -96,20 +89,23 @@ public class PaymentInformationActivity extends BaseActivity {
             if(formIsValid){
                 GiftService giftService = new GiftService();
                 giftService.setGiftId(gift.getKey());
+                giftService.setGiftOwner(gift.getCreatedBy());
                 giftService.setServiceId(service.getKey());
-                giftService.setServicePrice(payment.getOrderTotal());
+                giftService.setServiceOwner(service.getCreatedBy());
                 giftService.setServiceName(service.getServiceName());
                 giftService.setServiceDescription(service.getDescription());
+
                 SessionUser sessionUser = Firebase.currentUser();
                 assert sessionUser != null;
                 giftService.setGifterEmail(sessionUser.getEmail());
                 giftService.setGifterName(sessionUser.getUserName());
+                giftService.setServicePrice(payment.getOrderTotal());
                 giftService.setDeliveryDate(schedule.getSchedule());
                 giftService.setStatus(ServiceStatus.SCHEDULED);
                 giftService.setContributionDate(Util.today());
-                giftService.setServiceOwner(service.getCreatedBy());
+
                 giftService.setRecipientName(String.format("%s %s", this.recipient.getFirstName(), this.recipient.getLastName()));
-                giftService.setGiftOwner(gift.getCreatedBy());
+
                 saveGiftService(giftService);
             }
         });
@@ -125,7 +121,7 @@ public class PaymentInformationActivity extends BaseActivity {
                 Util.notify(PaymentInformationActivity.this, Util.success("GiftService", exists));
                 finish();
 
-                navigateTo(HomePageActivity.class);
+                navigateTo(ConfirmPaymentActivity.class);
 
             } else {
                 Util.notify(PaymentInformationActivity.this, Util.fail("GiftService", exists));

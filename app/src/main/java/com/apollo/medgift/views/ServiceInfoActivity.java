@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import com.apollo.medgift.R;
 import com.apollo.medgift.common.BaseActivity;
-import com.apollo.medgift.common.Closeable;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityServiceinfoBinding;
@@ -21,7 +20,6 @@ public class ServiceInfoActivity extends BaseActivity {
     private HealthcareService service;
     private Gift gift;
     private GiftService giftService;
-    private Closeable closeable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +36,8 @@ public class ServiceInfoActivity extends BaseActivity {
 
         Util.startProgress(binding.progress, "Loading data...");
 
-        closeable = Firebase.getModelBy(HealthcareService.STORE, "key", giftService.getServiceId(), HealthcareService.class, (srv) -> {
+        Firebase.getModelBy(HealthcareService.STORE, "key", giftService.getServiceId(), HealthcareService.class, (srv) -> {
             service = srv;
-            closeable.release();
             if(service != null){
                 binding.serviceTitle.setText(service.getServiceName());
                 binding.provider.setText(" " + service.getCreatedBy());
@@ -52,31 +49,30 @@ public class ServiceInfoActivity extends BaseActivity {
                 } else {
                     binding.serviceImage.setImageResource(R.drawable.default_service_image);
                 }
-                setupActivity();
+                Firebase.getModelBy(Gift.STORE, "key", giftService.getGiftId(), Gift.class, (gft) -> {
+                    gift = gft;
+                    if(gift != null){
+                        binding.txtGiftName.setText(gift.getName());
+                        Firebase.getModelBy(Recipient.STORE, "key", gift.getRecipientId(), Recipient.class, (recp) -> {
+                            Util.stopProgress(binding.progress);
+                            recipient = recp;
+                            if(recipient != null){
+                                binding.txtRecipient.setText(recipient.toString());
+                                binding.txtRecipientAddress.setText(recipient.getAddress());
+                                setupActivity();
+                            }
+                        });
+                    }
+
+                });
+
             }
         });
 
     }
 
     private void setupActivity() {
-
-        closeable = Firebase.getModelBy(Gift.STORE, "key", giftService.getGiftId(), Gift.class, (gft) -> {
-            gift = gft;
-            closeable.release();
-            if(gift != null){
-                binding.txtGiftName.setText(gift.getName());
-                closeable = Firebase.getModelBy(Recipient.STORE, "key", gift.getRecipientId(), Recipient.class, (recp) -> {
-                    Util.stopProgress(binding.progress);
-                    recipient = recp;
-                    closeable.release();
-                    if(recipient != null){
-                        binding.txtRecipient.setText(recipient.toString());
-                        binding.txtRecipientAddress.setText(recipient.getAddress());
-                    }
-                });
-            }
-
-        });
+        Util.stopProgress(binding.progress);
         binding.txtSchedule.setText(Util.formatToReadableDate(Util.parseTime(giftService.getDeliveryDate())));
         binding.txtStatus.setText(giftService.getStatus());
     }

@@ -39,41 +39,74 @@ import java.util.List;
 public class Firebase {
 
     private static final String TAG = Firebase.class.getSimpleName();
+
     // Get a reference to Firebase DatabaseReference
-    public static DatabaseReference database(String root){
+    public static DatabaseReference database(String root) {
         return FirebaseDatabase.getInstance().getReference().child(root);
     }
 
     // Get a reference to Firebase StorageReference
-    public static StorageReference store(String name){
-        String PICTURE = name.startsWith("medgifts/") ? name:  "medgifts/" + name;
+    public static StorageReference store(String name) {
+        String PICTURE = name.startsWith("medgifts/") ? name : "medgifts/" + name;
         return FirebaseStorage.getInstance().getReference().child(PICTURE);
     }
 
     // Get a reference to FirebaseAuth
-    public static FirebaseAuth auth(){
+    public static FirebaseAuth auth() {
         return FirebaseAuth.getInstance();
     }
 
-    public  static <T extends BaseModel> Closeable  getModelBy(String storeName, String key, String value, Class<T> modelClass, OnModel<T> onComplete){
-        return Firebase.getModelsBy(storeName, key, value, modelClass, (list) -> {
-            Log.i(TAG, String.valueOf(list.size()));
-            if(list.isEmpty()){
-                onComplete.onComplete(null);
-            }else{
-                onComplete.onComplete(list.get(0));
-            }
-        });
+    public static <T extends BaseModel> void getModelBy(String storeName, String key, String value, Class<T> modelClass, OnModel<T> onComplete) {
+
+        boolean isKey = key.equals("key");
+        if (isKey) {
+            Query query = Firebase.database(storeName).child(value);
+            ValueEventListener valueEventListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    query.removeEventListener(this);
+                    if (snapshot.exists()) {
+
+                        // Get the value
+                        T r = snapshot.getValue(modelClass);
+                        onComplete.onComplete(r);
+                        // If you know the specific type, you can cast
+                        // For example, if it's a User object
+                        // User user = dataSnapshot.getValue(User.class);
+                    } else {
+                        onComplete.onComplete(null);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    query.removeEventListener(this);
+                    System.err.println("Error reading data: " + databaseError.getMessage());
+                    onComplete.onComplete(null);
+                }
+            };
+            query.addListenerForSingleValueEvent(valueEventListener);
+
+        } else {
+             Firebase.getModelsBy(storeName, key, value, modelClass, (list) -> {
+                if (!list.isEmpty()) {
+                    onComplete.onComplete(list.get(0));
+                } else {
+                    onComplete.onComplete(null);
+                }
+            });
+        }
     }
 
 
-    public  static <T extends BaseModel> Closeable getModelsBy(String storeName, String key, String value, Class<T> modelClass, OnModel<List<T>> onComplete){
+    public static <T extends BaseModel> void getModelsBy(String storeName, String key, String value, Class<T> modelClass, OnModel<List<T>> onComplete) {
 
 
         Query query = Firebase.database(storeName).orderByChild(key).equalTo(value);
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshots) {
+                query.removeEventListener(this);
 
                 List<T> list = new ArrayList<>();
                 for (DataSnapshot snapshot : snapshots.getChildren()) {
@@ -89,21 +122,19 @@ public class Firebase {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                query.removeEventListener(this);
                 // Getting Post failed, log a message
                 Log.w("getModelsBy", ":onCancelled", databaseError.toException());
                 onComplete.onComplete(null);
             }
         };
         query.addValueEventListener(postListener);
-
-        return () -> {
-                query.removeEventListener(postListener);
-        };
     }
+
     // Get current user
-    public static SessionUser currentUser(){
+    public static SessionUser currentUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user == null){
+        if (user == null) {
             return null;
         }
         return new SessionUser(user);
@@ -114,7 +145,7 @@ public class Firebase {
     private static void removeStorage(String imageUri) {
         // Get resource name from Uri
         String name = Util.uriToName(imageUri);
-        if(name == null) return;
+        if (name == null) return;
 
         // Delete from storage
         Firebase.store(name).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -130,31 +161,29 @@ public class Firebase {
         });
     }
 
-    public static void createUser(String email, String password, OnCompleteListener<AuthResult> onComplete){
-           FirebaseAuth auth = FirebaseAuth.getInstance();
-            auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(onComplete);
+    public static void createUser(String email, String password, OnCompleteListener<AuthResult> onComplete) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(onComplete);
     }
 
-    public static void updateProfile(User user, OnCompleteListener<Void> onComplete){
+    public static void updateProfile(User user, OnCompleteListener<Void> onComplete) {
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(String.format("%s %s|%s", user.getFirstName(), user.getLastName(), user.getRole()))
                 .build();
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        user.setKey(firebaseUser.getUid());
+        Firebase.save(user, User.STORE, (tsk, key) -> {});
         firebaseUser.updateProfile(profileUpdates)
                 .addOnCompleteListener(onComplete);
     }
 
-    public static  void login(String email, String password, OnCompleteListener<AuthResult> onComplete ){
+    public static void login(String email, String password, OnCompleteListener<AuthResult> onComplete) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(onComplete);
     }
 
-//    public static String getRole(){
-//        return currentUser().getDisplayName().split("\\|")[1];
-//    }
-//    public static void save(BaseModel model, String storeName, OnCompleteListener<Void> onComplete) {
     public static void save(BaseModel model, String storeName, StoreCompleteListener onComplete) {
 
         String key = model.getKey();
@@ -166,7 +195,7 @@ public class Firebase {
         if (key == null || key.isEmpty()) {
             key = db.push().getKey();
         }
-        if(key != null){
+        if (key != null) {
             // Save to Firebase
             String finalKey = key;
             model.setKey(finalKey);
@@ -181,7 +210,7 @@ public class Firebase {
     }
 
 
-    public static void delete( BaseModel model, String storeName, OnCompleteListener<Void> onComplete){
+    public static void delete(BaseModel model, String storeName, OnCompleteListener<Void> onComplete) {
         Firebase.database(storeName).child(model.getKey()).removeValue().addOnCompleteListener(onComplete);
     }
 
@@ -191,7 +220,8 @@ public class Firebase {
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(c.getType(contentUri));
     }
-    public static void uploadImageToFirebase(Uri contentUri, Activity activity, OnSuccessListener<Uri> onUpload, OnFailureListener onFail ) {
+
+    public static void uploadImageToFirebase(Uri contentUri, Activity activity, OnSuccessListener<Uri> onUpload, OnFailureListener onFail) {
         // Extract the Uri from room's transient field
         // Get a timestamp
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
