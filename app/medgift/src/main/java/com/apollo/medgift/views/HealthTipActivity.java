@@ -43,7 +43,7 @@ public class HealthTipActivity extends BaseActivity {
         setContentView(healthtipBinding.getRoot());
         // Setup tool bar and title
 //        setupToolbar(healthtipBinding.homeAppBar.getRoot(), getString(R.string.healthTipTitle), true);
-        applyWindowInsetsListenerTo(this, healthtipBinding.healthTipActivity);
+        applyWindowInsetsListenerTo(this, healthtipBinding.main);
 
         setPageUp();
 
@@ -60,7 +60,7 @@ public class HealthTipActivity extends BaseActivity {
         }
         // checking role of user
 
-        RecyclerView recyclerView = healthtipBinding.healthTipList;
+        RecyclerView recyclerView = healthtipBinding.healthTipsList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         healthTipAdapter = new HealthTipAdapter(healthTips, this);
         recyclerView.setAdapter(healthTipAdapter);

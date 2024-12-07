@@ -63,7 +63,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_notification" />
+                            app:srcCompat="@drawable/notification" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
@@ -157,4 +157,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
+    <include
+        android:id="@+id/progress"
+        layout="@layout/progress" />
 </androidx.wear.widget.BoxInsetLayout>
