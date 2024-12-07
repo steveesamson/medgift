@@ -7,18 +7,19 @@
     android:layout_height="match_parent"
     android:background="@drawable/wearos_bg"
     android:padding="15dp"
-    tools:context=".views.NotificationActivity">
+    tools:context=".views.LandingPage">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainConstraint"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".MainActivity">
 
         <LinearLayout
             android:id="@+id/mainLinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -26,24 +27,45 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:srcCompat="@drawable/logo_medgift" />
+
             <TextView
-                android:id="@+id/page_title"
+                android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:gravity="center_horizontal"
-                android:text="@string/notifications"
+                android:fontFamily="sans-serif"
+                android:text="@string/medgift_companion"
+                android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <androidx.wear.widget.WearableRecyclerView
-                android:id="@+id/notificationList"
+            <TextView
+                android:id="@+id/textView4"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:padding="15dp" />
+                android:text="@string/care_in_click_nhealth_in_every_gift"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
 
+            <Button
+                android:id="@+id/btnGetStarted"
+                style="@style/GetStartedButton"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="50dp"
+                android:text="@string/get_started"
+                tools:ignore="MissingConstraints" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.wear.widget.BoxInsetLayout>

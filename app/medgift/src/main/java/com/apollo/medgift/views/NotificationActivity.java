@@ -1,6 +1,7 @@
 package com.apollo.medgift.views;
 
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -30,10 +31,23 @@ public class NotificationActivity extends BaseActivity {
     private ValueEventListener notificationListener;
     private List<Notification> notifications = new ArrayList<>();
     private Query query;
+=======
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.apollo.medgift.R;
+
+public class NotificationActivity extends AppCompatActivity {
+>>>>>>> d301d80 (design homepage and landing page)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+<<<<<<< HEAD
         binding = ActivityNotificationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         applyWindowInsetsListenerTo(this, binding.main);
@@ -82,5 +96,14 @@ public class NotificationActivity extends BaseActivity {
             });
 
         }
+=======
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_notification);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+>>>>>>> d301d80 (design homepage and landing page)
     }
 }
