@@ -13,7 +13,6 @@ import com.apollo.medgift.common.Util;
 import com.apollo.medgift.databinding.ActivityLoginBinding;
 import com.apollo.medgift.models.Role;
 
-
 public class LogInActivity extends AppCompatActivity implements View.OnClickListener {
     private ActivityLoginBinding loginBinding;
 
@@ -30,13 +29,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
     private void bindEvents() {
         this.loginBinding.btnLogin.setOnClickListener(this);
-    }
-
-
-    private void register() {
-
-//        Intent intent = new Intent(this, RegisterActivity.class);
-//        startActivity(intent);
     }
 
     // Clear previous errors
@@ -71,15 +63,11 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                     Log.i("ROLE:", ROLE);
                     Intent intent = null;
 
-//                    if (ROLE.equals(Role.GIFTER)) {
-//                        intent = new Intent(LogInActivity.this, HomePageActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    } else if (ROLE.equals(Role.PROVIDER)) {
-//                        intent = new Intent(LogInActivity.this, ProviderHomePageActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    }
+                    if (ROLE.equals(Role.GIFTER)) {
+                        intent = new Intent(LogInActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
 
                 } else {
                     Util.notify(LogInActivity.this, "Invalid credentials.");
@@ -92,7 +80,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-       if (view == this.loginBinding.btnLogin) { // Handle btnLogin click
+        if (view == this.loginBinding.btnLogin) { // Handle btnLogin click
             login();
         }
     }

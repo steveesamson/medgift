@@ -5,16 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import com.apollo.medgift.R;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.databinding.ActivityLandingpageBinding;
-import com.apollo.medgift.databinding.ActivityMainBinding;
 
 public class LandingPage extends BaseActivity implements View.OnClickListener {
     private static final String PREF_NAME = "AppPreferences";
@@ -31,7 +23,7 @@ public class LandingPage extends BaseActivity implements View.OnClickListener {
 
         if (!isFirstTime) {
             // If not the first time, redirect to LogInActivity
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, LogInActivity.class);
             startActivity(intent);
             finish();
             return;
@@ -52,7 +44,7 @@ public class LandingPage extends BaseActivity implements View.OnClickListener {
             editor.putBoolean(KEY_FIRST_TIME, false); // Mark as not first time
             editor.apply();
 
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, LogInActivity.class);
             startActivity(intent);
             finish();
         }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.wear.widget.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,56 +8,49 @@
     android:layout_height="match_parent"
     tools:context=".views.HealthTipDetailActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:id="@+id/readHealthTipActivity"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        app:boxedEdges="all">
 
-        <ScrollView
-            android:id="@+id/scrollView"
+        <LinearLayout
+            android:id="@+id/tytlLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/tytlLayout"
-                style="@style/Content"
+            <TextView
+                android:id="@+id/titleTip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:text="Tip Title"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/titleTip"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Tip Title"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/titlecreatedBy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="created by"
+                android:textColor="@color/gray"
+                android:textSize="10sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/titlecreatedBy"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="created by"
-                    android:textColor="@color/gray"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tipDescription"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tipDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="30dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-        </ScrollView>
-    </LinearLayout>
+    </ScrollView>
 
 
-</FrameLayout>
+</androidx.wear.widget.BoxInsetLayout>
