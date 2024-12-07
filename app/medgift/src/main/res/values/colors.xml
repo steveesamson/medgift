@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="title">#FF000000</color>
+    <color name="primary">#2E8BC0</color>
+    <color name="babyblue">#B1D4E0</color>
+    <color name="blue">#2E8BC0</color>
+    <color name="midnightblue">#145DA0</color>
+    <color name="darkblue">#0C2D48</color>
+    <color name="lightgray">#F0F0F0</color>
+    <color name="linecolor">#CAD0D1</color>
+    <color name="gray">#9C9C9C</color>
+    <color name="secondary">#FFD60A</color>
+    <color name="success">#4CAF50</color>
+    <color name="alert">#F44336</color>
+    <color name="gray_2">#808080</color>
+    <color name="text_hint_color">#9C9C9C</color>
+    <color name="ratingBar">#FF700A</color>
+    <color name="lightblue">#B5C5D3</color>
+</resources>
