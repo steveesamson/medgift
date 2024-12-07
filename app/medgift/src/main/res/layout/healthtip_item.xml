@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tip Title"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/createdBy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="Steve Samson"
+                android:textAlignment="textStart" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/btnReadMore"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/btnDeleteHint"
+            android:src="@drawable/arrow_right" />
+    </LinearLayout>
+
+
+
+
+<!--    <include layout="@layout/horizontal_border" />-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center_vertical"-->
+<!--        android:orientation="horizontal">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1">-->
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/btnEditTip"-->
+<!--                style="@style/TextButton"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true"-->
+<!--                android:text="@string/btnEditTip"-->
+<!--                android:textAlignment="textStart" />-->
+<!--        </LinearLayout>-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/btnDelete"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:contentDescription="@string/btnDeleteHint"-->
+<!--            android:src="@drawable/bin" />-->
+<!--    </LinearLayout>-->
+
+</LinearLayout>

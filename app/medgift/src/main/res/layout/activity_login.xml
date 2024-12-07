@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.LogInActivity">
+
+    <LinearLayout
+        android:id="@+id/loginActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
+
+        <LinearLayout
+            style="@style/Pane"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/signupHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/welcome_message"
+                android:textAlignment="center"
+                android:textColor="@color/title"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="30dp"
+                android:contentDescription="@string/application_logo"
+                android:src="@drawable/applogo_g" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:orientation="vertical"
+                android:paddingVertical="0dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lytEmail"
+                    style="@style/TextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/lblEmail">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtEmail"
+                        style="@style/TextEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="gifter@medgift.com"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lytPassword"
+                    style="@style/TextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/lblPassword">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtPassword"
+                        style="@style/TextEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="123456"
+                        android:inputType="textPassword" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btnLogin"
+                    style="@style/PrimaryButton"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="60dp"
+                    android:text="@string/lblLoginBtn" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/progress"
+        layout="@layout/progress" />
+</FrameLayout>
