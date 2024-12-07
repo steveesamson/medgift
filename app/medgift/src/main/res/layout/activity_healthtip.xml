@@ -37,6 +37,12 @@
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
+            <include
+                android:id="@+id/emptyItem"
+                layout="@layout/empty_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <androidx.wear.widget.WearableRecyclerView
                 android:id="@+id/healthTipsList"
                 android:layout_width="match_parent"
@@ -46,4 +52,8 @@
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/progress"
+        layout="@layout/progress" />
 </androidx.wear.widget.BoxInsetLayout>

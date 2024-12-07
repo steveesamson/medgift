@@ -1,14 +1,12 @@
 package com.apollo.medgift.views;
 
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.apollo.medgift.R;
 import com.apollo.medgift.adapters.NotificationAdapter;
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Firebase;
@@ -31,28 +29,14 @@ public class NotificationActivity extends BaseActivity {
     private ValueEventListener notificationListener;
     private List<Notification> notifications = new ArrayList<>();
     private Query query;
-=======
-
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import com.apollo.medgift.R;
-
-public class NotificationActivity extends AppCompatActivity {
->>>>>>> d301d80 (design homepage and landing page)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
         binding = ActivityNotificationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         applyWindowInsetsListenerTo(this, binding.main);
         // Setup tool bar and title
-//        setupToolbar(binding.homeAppBar.getRoot(), getString(R.string.notification), true);
         setupActivity();
     }
     private void setupActivity() {
@@ -96,14 +80,5 @@ public class NotificationActivity extends AppCompatActivity {
             });
 
         }
-=======
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_notification);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
->>>>>>> d301d80 (design homepage and landing page)
     }
 }

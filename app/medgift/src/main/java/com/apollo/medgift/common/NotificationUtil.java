@@ -45,7 +45,7 @@ public class NotificationUtil {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
         builder.setContentTitle(message.getTitle());
         builder.setContentText(message.getBody());
-        builder.setSmallIcon(R.drawable.ic_notification);
+        builder.setSmallIcon(R.drawable.notification);
             Intent intent = new Intent(context, AlertDetail.class);
             intent.putExtra(Message.STORE, message);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
