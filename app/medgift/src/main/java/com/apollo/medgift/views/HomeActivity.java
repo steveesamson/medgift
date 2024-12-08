@@ -9,14 +9,17 @@ import com.apollo.medgift.databinding.ActivityMainBinding;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
+    //binding obj for homeactivity
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //inflate layout
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //attach click listeners for each button
         binding.notificationsButton.setOnClickListener(this);
         binding.healthtipsButton.setOnClickListener(this);
         binding.logoutButton.setOnClickListener(this);
@@ -26,18 +29,22 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == binding.notificationsButton) {
+            //navigate to notifications
             Intent intent = new Intent(this, NotificationActivity.class);
             startActivity(intent);
         }
         if (v == binding.healthtipsButton) {
+            //navigate to health tips
             Intent intent = new Intent(this, HealthTipActivity.class);
             startActivity(intent);
         }
         if (v == binding.logoutButton) {
+            //logout and navigate to login activity
             Intent intent = new Intent(this, LogInActivity.class);
             startActivity(intent);
         }
         if (v == binding.aboutUsButton) {
+            //navigate to about us
             Intent intent = new Intent(this, AboutUsActivity.class);
             startActivity(intent);
         }
