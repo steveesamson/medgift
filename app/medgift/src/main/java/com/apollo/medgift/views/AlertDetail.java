@@ -31,6 +31,7 @@ public class AlertDetail extends BaseActivity {
         binding.alertContent.setText(message.getBody());
 
         binding.alterButton.setOnClickListener((v) ->{
+            message.setPayloadKey(message.getPayLoad().getKey());
             sendRemoteIntent(message);
         });
     }

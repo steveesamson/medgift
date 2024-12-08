@@ -53,7 +53,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onNotified(boolean isActive){
     }
 
-    protected void sendRemoteIntent(Message message) {
+    public void sendRemoteIntent(Message message) {
         // Find connected nodes with the specific capability
         Wearable.getCapabilityClient(this)
                 .getCapability(CAPABILITY_MOBILE_APP, CapabilityClient.FILTER_REACHABLE)
@@ -70,7 +70,7 @@ public class BaseActivity extends AppCompatActivity {
                             // Prepare the remote intent data
                             Bundle intentData = new Bundle();
                             intentData.putString("type", message.getNotificationType().name());
-                            intentData.putString("key", message.getPayLoad().getKey());
+                            intentData.putString("key", message.getPayloadKey());
 
                             // Send the intent via MessageClient
                             sendIntentToNode(targetNode, intentData);

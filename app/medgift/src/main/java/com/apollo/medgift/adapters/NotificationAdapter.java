@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.common.Firebase;
 import com.apollo.medgift.databinding.NotificationItemBinding;
 import com.apollo.medgift.models.GiftInvite;
 import com.apollo.medgift.models.GiftService;
+import com.apollo.medgift.models.Message;
 import com.apollo.medgift.models.Notification;
 import com.apollo.medgift.models.NotificationType;
 
@@ -66,22 +68,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 @Override
                 public void onClick(View view) {
                     NotificationType type = NotificationType.valueOf(notification.getModelName());
-                    switch (type){
-                        case GiftInvite:
-//                            Firebase.getModelBy(GiftInvite.STORE,"key", notification.getModelKey(), GiftInvite.class, (giftInvite) ->{
-//                                Intent intent = new Intent(context, InviteInfoActivity.class);
-//                                intent.putExtra(GiftInvite.STORE, giftInvite);
-//                                context.startActivity(intent);
-//                            });
-                            break;
-                        case GiftService:
-//                            Firebase.getModelBy(GiftService.STORE,"key", notification.getModelKey(), GiftService.class, (giftService) ->{
-//                                Intent intent = new Intent(context, ServiceInfoActivity.class);
-//                                intent.putExtra(GiftService.STORE, giftService);
-//                                context.startActivity(intent);
-//                            });
-                            break;
-                    }
+                    Message message = new Message();
+                    message.setPayloadKey(notification.getModelKey());
+                    message.setNotificationType(type);
+                    ((BaseActivity)context).sendRemoteIntent(message);
                 }
             });
 
