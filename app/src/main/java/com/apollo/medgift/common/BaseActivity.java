@@ -1,12 +1,10 @@
 package com.apollo.medgift.common;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +15,6 @@ import android.view.ViewGroup;
 import androidx.activity.ComponentActivity;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
@@ -27,37 +24,28 @@ import androidx.core.view.WindowInsetsCompat;
 import com.apollo.medgift.jobs.JobUtil;
 import com.apollo.medgift.models.GiftInvite;
 import com.apollo.medgift.models.GiftService;
-import com.apollo.medgift.models.HealthTip;
-import com.apollo.medgift.databinding.ContributorDialogBinding;
-import com.apollo.medgift.models.InviteStatus;
-import com.apollo.medgift.models.Message;
 import com.apollo.medgift.models.NotificationType;
 import com.apollo.medgift.models.Role;
-import com.apollo.medgift.models.ServiceStatus;
 import com.apollo.medgift.models.SessionUser;
-import com.apollo.medgift.models.User;
 import com.apollo.medgift.views.AboutUsActivity;
-import com.apollo.medgift.views.AlertDetail;
 import com.apollo.medgift.views.HomePageActivity;
+import com.apollo.medgift.views.InviteInfoActivity;
 import com.apollo.medgift.views.LogInActivity;
 import com.apollo.medgift.views.NotificationActivity;
 import com.apollo.medgift.views.ProviderHomePageActivity;
 import com.apollo.medgift.R;
+import com.apollo.medgift.views.ServiceInfoActivity;
 import com.apollo.medgift.views.provider.HealthTipActivity;
 import com.apollo.medgift.views.provider.ServiceActivity;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.android.gms.wearable.MessageClient;
+import com.google.android.gms.wearable.MessageEvent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.ByteArrayInputStream;
+import java.io.ObjectInputStream;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements MessageClient.OnMessageReceivedListener {
     private static final String TAG = BaseActivity.class.getSimpleName();
+    private static final String DATA_PATH = "/medgift_remote_intent";
     protected Menu menu;
 
     @Override
@@ -105,7 +93,6 @@ public class BaseActivity extends AppCompatActivity {
         }
 
     }
-
 
 
     protected void onNotified(boolean isActive){
@@ -224,6 +211,52 @@ public class BaseActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                 .create()
                 .show();
+    }
+
+    @Override
+    public void onMessageReceived(@NonNull MessageEvent messageEvent) {
+        if(messageEvent.getPath().equals(DATA_PATH)){
+            byte[] data = messageEvent.getData();
+            Bundle bundle= toBundle(data);
+            if(bundle != null){
+
+                String key = bundle.getString("key");
+                String type = bundle.getString("type");
+                NotificationType notificationType = NotificationType.valueOf(type);
+                if(notificationType == NotificationType.GiftInvite){
+                    Firebase.getModelBy(GiftInvite.STORE, "key", key, GiftInvite.class, (gi) -> {
+                        if(gi != null){
+                            Intent outIntent  = new Intent(this, InviteInfoActivity.class);
+                        outIntent.putExtra(GiftInvite.STORE, gi);
+                        startActivity(outIntent);
+                        }
+                    });
+                }else if(notificationType == NotificationType.GiftService){
+                    Firebase.getModelBy(GiftService.STORE, "key", key, GiftService.class, (gs) -> {
+                        if(gs != null){
+                            Intent outIntent  = new Intent(this, ServiceInfoActivity.class);
+                            outIntent.putExtra(GiftService.STORE, gs);
+                            startActivity(outIntent);
+                        }
+                    });
+
+                }
+            }
+
+        }
+    }
+
+    private Bundle toBundle(byte[] data) {
+        try {
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(data);
+            ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+            Bundle bundle = (Bundle) objectInputStream.readObject();
+            objectInputStream.close();
+            return bundle;
+        } catch (Exception e) {
+            Log.e(TAG, "Error deserializing bundle", e);
+            return null;
+        }
     }
 
 }

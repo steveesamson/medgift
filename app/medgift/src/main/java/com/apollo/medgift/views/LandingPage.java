@@ -5,12 +5,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.apollo.medgift.common.BaseActivity;
 import com.apollo.medgift.databinding.ActivityLandingpageBinding;
 
-public class LandingPage extends BaseActivity implements View.OnClickListener {
-
-    //shred preferences to store the app pref and to track the first time users on app launch
+public class LandingPage extends AppCompatActivity implements View.OnClickListener {
     private static final String PREF_NAME = "AppPreferences";
     private static final String KEY_FIRST_TIME = "FirstTime";
 
