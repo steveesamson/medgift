@@ -22,6 +22,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.apollo.medgift.jobs.JobUtil;
+import com.apollo.medgift.models.Data;
 import com.apollo.medgift.models.GiftInvite;
 import com.apollo.medgift.models.GiftService;
 import com.apollo.medgift.models.NotificationType;
@@ -217,11 +218,11 @@ public class BaseActivity extends AppCompatActivity implements MessageClient.OnM
     public void onMessageReceived(@NonNull MessageEvent messageEvent) {
         if(messageEvent.getPath().equals(DATA_PATH)){
             byte[] data = messageEvent.getData();
-            Bundle bundle= toBundle(data);
+            Data bundle= toBundle(data);
             if(bundle != null){
 
-                String key = bundle.getString("key");
-                String type = bundle.getString("type");
+                String key = bundle.getKey();
+                String type = bundle.getType();
                 NotificationType notificationType = NotificationType.valueOf(type);
                 if(notificationType == NotificationType.GiftInvite){
                     Firebase.getModelBy(GiftInvite.STORE, "key", key, GiftInvite.class, (gi) -> {
@@ -246,11 +247,11 @@ public class BaseActivity extends AppCompatActivity implements MessageClient.OnM
         }
     }
 
-    private Bundle toBundle(byte[] data) {
+    private Data toBundle(byte[] data) {
         try {
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(data);
             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-            Bundle bundle = (Bundle) objectInputStream.readObject();
+            Data bundle = (Data) objectInputStream.readObject();
             objectInputStream.close();
             return bundle;
         } catch (Exception e) {
