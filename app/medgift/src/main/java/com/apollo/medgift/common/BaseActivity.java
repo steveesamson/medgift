@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.apollo.medgift.R;
 import com.apollo.medgift.jobs.JobUtil;
+import com.apollo.medgift.models.Data;
 import com.apollo.medgift.models.Message;
 import com.apollo.medgift.views.LogInActivity;
 import com.google.android.gms.wearable.CapabilityClient;
@@ -68,9 +69,10 @@ public class BaseActivity extends AppCompatActivity {
                         // Check for nearby node
                         if(targetNode.isNearby()){
                             // Prepare the remote intent data
-                            Bundle intentData = new Bundle();
-                            intentData.putString("type", message.getNotificationType().name());
-                            intentData.putString("key", message.getPayloadKey());
+                            Data intentData = new Data();
+                            intentData.setKey(message.getPayloadKey());
+                            intentData.setType(message.getNotificationType().name());
+
 
                             // Send the intent via MessageClient
                             sendIntentToNode(targetNode, intentData);
@@ -85,7 +87,7 @@ public class BaseActivity extends AppCompatActivity {
                 });
     }
 
-    private void sendIntentToNode(Node node, Bundle intentData) {
+    private void sendIntentToNode(Node node, Data intentData) {
         // Serialize the intent data
         byte[] intentBytes = bundleToByteArray(intentData);
 
@@ -101,7 +103,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     // Utility method to convert Bundle to byte array
-    private byte[] bundleToByteArray(Bundle bundle) {
+    private byte[] bundleToByteArray(Data bundle) {
         // Serialize bundle to byte array
         // This is a simplified example - in production, use more robust serialization
         try {
