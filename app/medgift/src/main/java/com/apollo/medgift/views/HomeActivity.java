@@ -39,9 +39,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             startActivity(intent);
         }
         if (v == binding.logoutButton) {
-            //logout and navigate to login activity
-            Intent intent = new Intent(this, LogInActivity.class);
-            startActivity(intent);
+            logout();
+
         }
         if (v == binding.aboutUsButton) {
             //navigate to about us

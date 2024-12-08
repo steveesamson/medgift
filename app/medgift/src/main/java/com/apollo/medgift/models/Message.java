@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class Message implements Serializable {
     public static final String STORE = "Message";
+    private String payloadKey;
     private String title;
     private String body;
 
@@ -51,5 +52,13 @@ public class Message implements Serializable {
 
     public void setNotificationType(NotificationType notificationType) {
         this.notificationType = notificationType;
+    }
+
+    public String getPayloadKey() {
+        return payloadKey;
+    }
+
+    public void setPayloadKey(String payloadKey) {
+        this.payloadKey = payloadKey;
     }
 }
