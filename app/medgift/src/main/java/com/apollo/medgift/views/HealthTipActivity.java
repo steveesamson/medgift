@@ -30,9 +30,9 @@ import java.util.List;
 public class HealthTipActivity extends BaseActivity {
 
     private ActivityHealthtipBinding healthtipBinding;
-    private final List<HealthTip> healthTips = new ArrayList<>();
-    private HealthTipAdapter healthTipAdapter;
-    private Query query;
+    private final List<HealthTip> healthTips = new ArrayList<>();//store health tips data
+    private HealthTipAdapter healthTipAdapter;//adapter to display health tips recycler view
+    private Query query;//varieable to hold database query
 
     private ValueEventListener healthTipListener;
 
@@ -45,30 +45,30 @@ public class HealthTipActivity extends BaseActivity {
         // Setup tool bar and title
         applyWindowInsetsListenerTo(this, healthtipBinding.main);
 
-        setPageUp();
+        setPageUp();//setup the page and fetch data
 
     }
 
     private void setPageUp() {
-
-
+        //get current user
         SessionUser sessionUser = Firebase.currentUser();
-        assert sessionUser != null;
+        assert sessionUser != null;//check if user is not null
 
         this.query = Firebase.database(HealthTip.STORE);
 
-        // checking role of user
-
+        //set up recycler view
         RecyclerView recyclerView = healthtipBinding.healthTipsList;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //initialize health tip adapter
         healthTipAdapter = new HealthTipAdapter(healthTips, this);
         recyclerView.setAdapter(healthTipAdapter);
-        Log.i("HealthT","Here");
+        Log.i("HealthT", "Here");
         fetchAndListenOnHealthTip();
     }
 
     private void unRegisterValueListener() {
         if (healthTipListener != null) {
+            //remove listener
             query.removeEventListener(healthTipListener);
         }
     }
@@ -76,21 +76,28 @@ public class HealthTipActivity extends BaseActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        //clean up on destory
         unRegisterValueListener();
     }
 
     private void fetchAndListenOnHealthTip() {
         if (query != null) {
+            //view model to handle health tip data
             HealthtipVModel healthtipVModel = new ViewModelProvider(this).get(HealthtipVModel.class);
+            //manage firebase events
             ValueEvents<HealthTip> valueEvents = new ValueEvents<HealthTip>();
+            //show progress for loading
             Util.startProgress(healthtipBinding.progress, "Fetching Health Tips...");
             healthTipListener = valueEvents.registerListener(query, this, healthTipAdapter, healthtipVModel, healthTips, HealthTip.class, (list) -> {
 
+                //stop the loading indicator
                 Util.stopProgress(healthtipBinding.progress);
-                if(!list.isEmpty()){
+
+                if (!list.isEmpty()) {
                     HealthTip ht = list.get(0);
                     Log.i("TAG", ht.getTitle());
                 }
+                //update UI
                 healthtipBinding.emptyItem.txtEmpty.setText(list.isEmpty() ? Util.getEmpty("health tips") : "");
                 healthtipBinding.emptyItem.getRoot().setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
             });

@@ -2,10 +2,11 @@ package com.apollo.medgift.views;
 
 import android.os.Bundle;
 
-import com.apollo.medgift.common.BaseActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.apollo.medgift.databinding.ActivityAboutusBinding;
 
-public class AboutUsActivity extends BaseActivity {
+public class AboutUsActivity extends AppCompatActivity {
 
     ActivityAboutusBinding binding;
 

@@ -13,21 +13,24 @@ import com.apollo.medgift.models.HealthTip;
 public class HealthTipDetailActivity extends BaseActivity {
 
     private ActivityHealthtipdetailBinding binding ;
-    private HealthTip healthTip;
+    private HealthTip healthTip;//holds the health tip obj passed to this activity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
 
+        //set content view
         binding = ActivityHealthtipdetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
 //        setupToolbar(binding.homeAppBar.getRoot(), getString(R.string.healthTipTitle), true);
         applyWindowInsetsListenerTo(this, binding.main);
 
+        //retrieve health tip obj from previous activity
         Intent intent = getIntent();
         healthTip = (HealthTip) intent.getSerializableExtra(HealthTip.STORE, HealthTip.class);
+        //get and display the health tip details
         setup();
 
     }
